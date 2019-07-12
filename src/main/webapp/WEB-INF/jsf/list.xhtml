@@ -8,53 +8,70 @@
 	xmlns:o="http://omnifaces.org/ui"
 	xmlns:cegedim="http://java.sun.com/jsf/composite/components">
 	<ui:define name="content">
-		<h:form id="datosUsuarioSistemaForm">
-			<div class="ui-g ui-fluid">
-			    <div class="ui-g-12 ui-g-nopad">
-			    	<div class="card card-w-title" style="max-width: 500px;margin: 0 auto 0 auto">
-						<h1 align="center">#{bundle['app.wizard.registro.usuario']}</h1>
-						<div align="center"><h:outputText value="#{bundle['app.wizard.registro.usuario.free']}" rendered="#{autoregistroForm.idProducto == 1}" /></div>
-						<p:spacer height="10" />
-						<div class="ui-g">
-							<div class="ui-g-12">
-					        	<cegedim:inputText id="nombres" inputValue="#{autoregistroForm.nombres}" 
-					        		bundleLabel="#{bundle['app.wizard.nombres']}" required="true"
-									maxChars="64">
-								</cegedim:inputText>
-							</div>
-							<div class="ui-g-12">
-								<cegedim:inputText id="apellidos" inputValue="#{autoregistroForm.apellidos}" 
-					        		bundleLabel="#{bundle['app.wizard.apellidos']}" required="true"
-									maxChars="64">
-								</cegedim:inputText>
-							</div>
-							<div class="ui-g-12">
-								<cegedim:inputText id="email" inputValue="#{autoregistroForm.email}" 
-					        		bundleLabel="#{bundle['app.wizard.email']}" required="true" type="email"
-									maxChars="64">
-									<f:attribute name="validatorMessage" value="#{commonBundle['email.invalido']}" />
-									<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" for="datosUsuarioSistemaForm-email-emailControl" />
-								</cegedim:inputText>
-							</div>
-							<div class="ui-g-12">
-								<cegedim:inputPassword id="contrasena" inputValue="#{autoregistroForm.contrasena}" 
-					        		bundleLabel="#{bundle['app.wizard.contrasena']}" required="true" minLength="6" maxLength="15" feedback="true">
-								</cegedim:inputPassword>
-							</div>
-							<div class="ui-g-12">
-								<p:commandButton action="next" value="#{bundle['app.wizard.button.sigin']}" update="@form" 
-									validateClient="true" styleClass="block-on-submit"/>
-							</div>
-						</div>
-			        </div>
-				</div>
-				<div class="ui-g-12" align="center">
-					<h:outputText value="#{bundle['app.wizard.acepta.politicas.part.1']}" /> 
-					<p:spacer width="5px" /> 
-					<h:outputLink target="_blank" value="${request.contextPath}/contratoGratis" style="text-decoration: underline;">#{bundle['app.wizard.acepta.politicas.part.2']}</h:outputLink>
-				</div>
-			</div>
-			<p:focus for="datosUsuarioSistemaForm-nombres-nombresControl" />
-		</h:form>
+		<style>
+			.ui-datatable .ui-datatable-header {
+			    text-align: right !important;
+			}
+		</style>
+	
+		<div class="card">
+			<h:form id="listForm">
+				<p:toolbar rendered="true">
+					<f:facet name="right">
+					</f:facet>
+				</p:toolbar>
+				<p:dataTable id="dataTable" value="#{patientListPaginator}" widgetVar="dataTableWdg" selection="#{patientListPaginator.selectedItem}"
+					lazy="true" paginator="true" var="elemento" rows="#{patientListPaginator.rowsPerPage}" selectionMode="single"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					paginatorPosition="top" rowsPerPageTemplate="5,10,15,50,75,100" 
+					first="#{patientListPaginator.first}" filters="#{patientListPaginator.filters}">
+					<p:ajax event="page" listener="#{patientListPaginator.onPageChange}"/>  
+					<p:ajax event="filter" listener="#{patientListPaginator.filterListener}"/>
+					<f:facet name="header">
+			            <p:outputPanel>
+			                <span>Search all fields:</span>
+			                <p:inputText id="globalFilter" value="#{patientListPaginator.filters['globalFilter']}" onkeyup="PF('dataTableWdg').filter()" style="width:150px" />
+			            </p:outputPanel>
+			        </f:facet>
+			        <p:column headerText="#{bundle['patient.list.name']}">
+						<h:outputText value="#{elemento.person.name}" />
+					</p:column>
+					<p:column headerText="#{bundle['patient.list.surname1']}">
+						<h:outputText value="#{elemento.person.surname1}" />
+					</p:column>
+					<p:column headerText="#{bundle['patient.list.age']}">
+						<h:outputText value="#{PatientListController.calculateAge(elemento.person.birthday)} years" />
+					</p:column>
+					<p:column headerText="#{bundle['patient.list.gender']}">
+						<ui:param name="genderText" value="SEXO_#{elemento.person.gender.toUpperCase()}.key" />
+						<h:outputText value="#{bundle[genderText]}" />
+					</p:column>
+					<p:column headerText="#{bundle['patient.list.status']}" width="40" style="text-align: center">
+						<h:graphicImage library="custom" name="images/i_bullet_green.png" rendered="#{elemento.person.status eq 'V'}" />
+						<h:graphicImage library="custom" name="images/i_bullet_red.png" rendered="#{!elemento.person.status eq 'V'}" />
+					</p:column>
+					<p:column style="width:32px;text-align: center">
+             			<p:link href="#{configParameters.springDispatcherMapping}/patient?id=#{elemento.perId}" rendered="false">
+							<i class="fa fa-edit" />
+			            </p:link>
+			            <p:commandLink action="editItem">
+			             	<i class="fa fa-edit" />
+			             	<f:param name="idSelected" value="#{elemento.perId}"></f:param>
+			            </p:commandLink>
+			        </p:column>
+			        <p:column style="width:32px;text-align: center">
+			            <p:commandLink action="deleteItem">
+			             	<i class="fa fa-trash-alt" />
+			             	<f:param name="idSelected" value="#{elemento.perId}"></f:param>
+			            </p:commandLink>
+			        </p:column>
+				</p:dataTable>
+				<p:toolbar>
+					<f:facet name="right">
+						<p:button href="#{configParameters.springDispatcherMapping}/patient" value="New Patient" />
+					</f:facet>
+				</p:toolbar>
+			</h:form>
+		</div>
 	</ui:define>
 </ui:composition>
