@@ -1,0 +1,62 @@
+body, input, .ui-widget, .ui-widget .ui-widget {
+	font-size: 12px;
+	margin: 0;
+}
+
+label {
+	font-weight: bold;
+}
+
+h1 {
+	color: #1F9BDE;
+}
+
+tr.ui-widget-content.ui-datatable-odd:hover, tr.ui-widget-content.ui-datatable-even:hover { 
+    background: #1F89CE;
+    color: #fff;
+}
+
+.ui-layout-north, .ui-layout-north .ui-layout-unit-content {
+	background-color: #1F9BDE;
+}
+
+.ui-layout-west, .ui-layout-west .ui-layout-unit-content {
+	background-color: #f0f0f0;
+	background-image: -ms-linear-gradient(top, #f0f0f0, #ffffff);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f0f0f0),
+		to(#ffffff));
+	background-image: -webkit-linear-gradient(top, #f0f0f0, #ffffff);
+	background-image: -o-linear-gradient(top, #f0f0f0, #ffffff);
+	background-image: linear-gradient(top, #f0f0f0, #ffffff);
+	background-image: -moz-linear-gradient(top, #f0f0f0, #ffffff);
+	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#f0f0f0',
+		endColorstr='#ffffff', GradientType=0);
+	filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+
+.main-container .ui-layout-unit-content {
+	background-color: #fff !important;
+}
+
+.ui-button, button.ui-button.ui-state-default, .ui-button.ui-state-default {
+    background: #1F9BDE;
+}
+
+.ui-panelmenu .ui-panelmenu-header.ui-state-active, .ui-panelmenu .ui-panelmenu-header.ui-state-active a {
+    background: #EF8025;
+    color: #fff;
+}
+
+.login-app-name {
+	font-size: 24px;
+	padding: 20px 0;
+	text-align: center;
+}
+
+.banner-top {
+	background-color: #006DFF;
+}
+
+div.ui-toolbar.ui-widget {
+	margin: 10px 0;
+}

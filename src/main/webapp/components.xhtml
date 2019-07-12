@@ -1,0 +1,167 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="#{deviceResourceHandler.resolveTemplate()}"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:cegedim="http://java.sun.com/jsf/composite/components">
+	<ui:define name="content">
+		<style>
+			.parameters .ui-g {
+				text-align: center;
+			}
+			
+			.ui-selectbooleanbutton {
+				width: 120px;
+			}
+		</style>
+		<h:form id="testComponentsForm">
+			<div class="card parameters">
+				<p:fragment>
+					<h1>#{bundle['components.configuration.properties']}</h1>
+					<ul>
+						<li>#{bundle['components.configuration.properties.componentsShowTopLabel']}: <b>#{configParameters.componentsShowTopLabel}</b></li>
+						<li>#{bundle['components.configuration.properties.enableClientEventValidator']}: <b>#{configParameters.enableClientEventValidator}</b></li>
+						<li>#{bundle['components.current.device']}: <b>#{currentDevice}</b></li>
+						<li>#{bundle['components.current.date']}: <b>#{now}</b></li>
+						<li>#{bundle['components.validate.client']} <b>#{componentsTestController.validateClient}</b></li>
+					</ul>
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-6 ui-lg-4">
+							<cegedim:selectBooleanButton id="showTopLabelControl" bundleLabel="#{bundle['components.show.top.label']}" showLabel="true"
+								inputValue="#{configParameters.componentsShowTopLabel}">
+								<p:ajax update="@form" />
+							</cegedim:selectBooleanButton>
+						</div>
+						<div class="ui-g-12 ui-md-6 ui-lg-4">
+							<cegedim:selectBooleanButton id="disableControl" bundleLabel="#{bundle['components.disable']}" showLabel="true"
+								inputValue="#{componentsTestController.propDisabled}">
+								<p:ajax update="@form" />
+							</cegedim:selectBooleanButton>
+						</div>
+						<div class="ui-g-12 ui-md-6 ui-lg-4">
+							<cegedim:selectBooleanButton id="readonlyControl" bundleLabel="#{bundle['components.readonly']}" showLabel="true"
+								inputValue="#{componentsTestController.propReadOnly}">
+								<p:ajax update="@form" />
+							</cegedim:selectBooleanButton>
+						</div>
+					</div>
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-6 ui-lg-6">
+							<cegedim:selectOneButton id="changeBackgroundControl" bundleLabel="#{bundle['components.style.background.color']}" showLabel="true"
+								inputValue="#{componentsTestController.propStyle}">
+								<p:ajax update="@form" />
+					            <f:selectItem itemLabel="#{bundle['color.blue']}" itemValue="background-color: blue" />
+					            <f:selectItem itemLabel="#{bundle['color.red']}" itemValue="background-color: red" />
+					            <f:selectItem itemLabel="#{bundle['color.green']}" itemValue="background-color: green" />
+					            <f:selectItem itemLabel="#{bundle['none']}" itemValue="background-color: none" />
+							</cegedim:selectOneButton>
+						</div>
+						<div class="ui-g-12 ui-md-6 ui-lg-6">
+							<cegedim:selectBooleanButton id="showControl" bundleLabel="#{bundle['components.show']}" showLabel="true"
+								inputValue="#{componentsTestController.propShowComponent}">
+								<p:ajax update="@form" />
+							</cegedim:selectBooleanButton>
+						</div>
+					</div>
+					<div class="ui-g">
+						<div class="ui-g-12 ui-md-6 ui-lg-4">
+							<cegedim:selectBooleanButton id="showTooltopControl" bundleLabel="#{bundle['components.show.tooltip']}" showLabel="true"
+								inputValue="#{componentsTestController.propShowTooltipComponent}">
+								<p:ajax update="@form" />
+							</cegedim:selectBooleanButton>
+						</div>
+						<div class="ui-g-12 ui-md-6 ui-lg-4">
+							<cegedim:selectBooleanButton id="enableValidateInClientControl" bundleLabel="#{bundle['components.validate.client']}" showLabel="true"
+								inputValue="#{componentsTestController.validateClient}">
+								<p:ajax update="@form" />
+							</cegedim:selectBooleanButton>
+						</div>
+						<div class="ui-g-12 ui-md-6 ui-lg-4">
+							<cegedim:selectOneButton bundleLabel="#{bundle['components.autocomplete']}" showLabel="true"
+								inputValue="#{componentsTestController.propAutocomplete}">
+								<p:ajax update="@form" />
+					            <f:selectItem itemLabel="#{bundle['component.boolean.button.on']}" itemValue="on" />
+					            <f:selectItem itemLabel="#{bundle['component.boolean.button.off']}" itemValue="off" />
+							</cegedim:selectOneButton>
+						</div>
+					</div>
+				</p:fragment>
+			</div>
+			<div class="card">
+				<h1>#{bundle['app.title']}</h1>
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-6 ui-lg-6">
+						<cegedim:inputText id="inputText" bundleLabel="#{bundle['controllers.input.text']}" disabled="#{componentsTestController.propDisabled}"
+							inputValue="#{componentsTestController.inputTextValue}" readonly="#{componentsTestController.propReadOnly}" required="true"
+							showComponent="#{componentsTestController.propShowComponent}" style="#{componentsTestController.propStyle}" styleClass="input-class"
+							tooltipMsg="#{componentsTestController.propShowTooltipComponent ? bundle['controllers.tooltip'] : ''}" 
+							autocomplete="#{componentsTestController.propAutocomplete}" maxChars="20" textoNota="#{bundle['controllers.additional.text']}" 
+							onblur="console.log('onblur event')" 
+							onkeyup="console.log('onkeyup event')">
+							<p:ajax event="keyup" update="@(.output1)" async="true" process="@this" />
+						</cegedim:inputText>
+						<label>#{bundle['components.output']}:</label><p:outputPanel styleClass="output1" layout="inline">#{componentsTestController.inputTextValue}</p:outputPanel>
+					</div>
+					<div class="ui-g-12 ui-md-6 ui-lg-6">
+						<cegedim:inputTextarea id="inputTextArea" bundleLabel="#{bundle['controllers.input.text.area']}" disabled="#{componentsTestController.propDisabled}"
+							inputValue="#{componentsTestController.inputTextAreaValue}" readonly="#{componentsTestController.propReadOnly}" required="false"
+							showComponent="#{componentsTestController.propShowComponent}" style="#{componentsTestController.propStyle}" styleClass="input-class"
+							tooltipMsg="#{componentsTestController.propShowTooltipComponent ? bundle['controllers.tooltip'] : ''}" 
+							autocomplete="#{componentsTestController.propAutocomplete}" maxChars="20" textoNota="#{bundle['controllers.additional.text']}" 
+							onblur="console.log('onblur event')" 
+							onkeyup="console.log('onkeyup event')">
+							<p:ajax event="keyup" update="@(.output2)" />
+						</cegedim:inputTextarea>
+						<label>#{bundle['components.output']}:</label><p:outputPanel styleClass="output2" layout="inline">#{componentsTestController.inputTextAreaValue}</p:outputPanel>
+					</div>
+					<div class="ui-g-12 ui-md-6 ui-lg-6">
+						<cegedim:autocomplete id="autocomplete" bundleLabel="#{bundle['controllers.autocomplete']}" disabled="#{componentsTestController.propDisabled}"
+							inputValue="#{componentsTestController.autocompleteValue}" readonly="#{componentsTestController.propReadOnly}" required="false"
+							showComponent="#{componentsTestController.propShowComponent}" style="#{componentsTestController.propStyle}" styleClass="input-class"
+							tooltipMsg="#{componentsTestController.propShowTooltipComponent ? bundle['controllers.tooltip'] : ''}"  
+							textoNota="#{bundle['controllers.additional.text']}" 
+							dropdown="true" autocompleteBean="#{componentsTestController.completeText}">
+							<p:ajax event="itemSelect" update="@(.output3)" />
+						</cegedim:autocomplete>
+						<label>#{bundle['components.output']}:</label><p:outputPanel styleClass="output3" layout="inline">#{componentsTestController.autocompleteValue}</p:outputPanel>
+					</div>
+					<div class="ui-g-12 ui-md-6 ui-lg-6">
+						<cegedim:autocompletePojo id="autocompleteBean" bundleLabel="#{bundle['controllers.autocomplete']}" disabled="#{componentsTestController.propDisabled}"
+							inputValue="#{componentsTestController.playerValue}" readonly="#{componentsTestController.propReadOnly}" required="false"
+							showComponent="#{componentsTestController.propShowComponent}" style="#{componentsTestController.propStyle}" styleClass="input-class"
+							tooltipMsg="#{componentsTestController.propShowTooltipComponent ? bundle['controllers.tooltip'] : ''}"  
+							textoNota="#{bundle['controllers.additional.text']}" itemList="#{sessionScope['playerList']}"
+							dropdown="true" autocompleteBean="#{componentsTestController.completeWithBean}" itemLabel="name">
+							<p:ajax event="itemSelect" update="@(.output4)" />
+						</cegedim:autocompletePojo>
+						<label>#{bundle['components.output']}:</label><p:outputPanel styleClass="output4" layout="inline">#{componentsTestController.playerValue.name}</p:outputPanel>
+					</div>
+					<div class="ui-g-12 ui-md-6 ui-lg-6">
+						<cegedim:calendar id="calendar" bundleLabel="#{bundle['controllers.calendar']}" disabled="#{componentsTestController.propDisabled}"
+							inputValue="#{componentsTestController.calendarValue}" readonly="#{componentsTestController.propReadOnly}" required="false"
+							showComponent="#{componentsTestController.propShowComponent}" style="#{componentsTestController.propStyle}" styleClass="input-class"
+							tooltipMsg="#{componentsTestController.propShowTooltipComponent ? bundle['controllers.tooltip'] : ''}" 
+							textoNota="#{bundle['controllers.additional.text']}" >
+							<p:ajax event="dateSelect" update="@(.output5)" />
+							<p:ajax event="blur" update="@(.output5)" />
+						</cegedim:calendar>
+						<label>#{bundle['components.output']}:</label>
+						<p:outputPanel styleClass="output5" layout="inline">
+							<h:outputText value="#{componentsTestController.calendarValue}">
+								<f:convertDateTime timeZone="Europe/Madrid" />
+							</h:outputText>
+						</p:outputPanel>
+					</div>
+					<p:panel id="botonera" styleClass="ui-g-12">
+						<p:commandButton value="Ajax" styleClass="ui-priority-primary blockButton" action="#{componentsTestController.processComplete}" validateClient="#{componentsTestController.validateClient and currentDevice.isNormal()}" update="@form" />
+						<p:commandButton value="Div by zero" styleClass="blockButton" action="#{componentsTestController.divByZero}" validateClient="#{componentsTestController.validateClient and currentDevice.isNormal()}" update="@form" process="@this" />
+						<p:commandButton value="Invalidate Session" styleClass="blockButton" action="#{componentsTestController.invalidateSession}" process="@this" />
+					</p:panel>
+					<p:blockUI block="botonera" trigger="@(.blockButton)" />
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

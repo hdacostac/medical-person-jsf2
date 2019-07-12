@@ -1,0 +1,55 @@
+<flow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/webflow"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/webflow
+		http://www.springframework.org/schema/webflow/spring-webflow.xsd"
+	parent="parent-flow">
+	
+	<var name="autoregistroForm" class="com.gvt.gpc.helper.Autoregistro" />
+	
+<!-- 	<input name="idTipoProductoSeleccionado" required="false"/> -->
+	<input name="ticket" required="false"/>
+	<input name="email" required="false"/>
+<!-- 	<input name="isPayPal" required="false"/> -->
+	<input name="emailFromWebPage" required="false"/>
+    
+<!--     <decision-state id="verificarCompraDesdeTrial"> -->
+<!--         <if then="configuracionPagoYUsuarios" else="ticketExist" test="ticket != null and email != null and wizard.validateTicket(autoregistroForm,ticket,email)"/> -->
+<!--     </decision-state> -->
+    
+    <decision-state id="ticketExist">
+        <if then="versionGratisSeleccionada" else="datosUsuarioSistema" test="ticket != null and wizard.validateTicket(autoregistroForm,ticket)"/>
+    </decision-state>
+    
+<!--     <action-state id="idTipoProductoSeleccionadoExist"> -->
+<!-- 		<evaluate expression="idTipoProductoSeleccionado != null" /> -->
+<!-- 		<transition on="yes" to="datosUsuarioSistema"> -->
+<!-- 			<evaluate expression="wizard.initAutoregistroForm(autoregistroForm,emailFromWebPage)" /> --><!-- 			<evaluate expression="wizard.setTipoProductoSeleccionado(autoregistroForm,idTipoProductoSeleccionado)" /> -->
+<!-- 		</transition> -->
+<!-- 		<transition on="no" to="datosUsuarioSistema" /> -->
+<!-- 	</action-state> -->
+
+	<view-state id="datosUsuarioSistema" view="/WEB-INF/jsf/datosUsuarioSistema.xhtml">
+		<on-entry>
+			<set name="viewScope.flowPosition" value="1" type="int" />
+			
+			<evaluate expression="wizard.initAutoregistroForm(autoregistroForm,emailFromWebPage)" />
+		</on-entry>
+		<transition on="next" to="checkEmail">
+			<evaluate expression="wizard.save(autoregistroForm)" />
+			
+<!-- 			<evaluate expression="autoregistroForm.setTipoMail(1)" /> -->
+<!-- 			<evaluate expression="adminServiceRestHandler.sendFreeSubscriptionMail(autoregistroForm)" /> -->
+		</transition>
+	</view-state>
+	
+	<action-state id="versionGratisSeleccionada">
+	    <evaluate expression="adminServiceRestHandler.createSubscription(autoregistroForm)" />
+	    
+	    <transition to="suscripcionFinalizada" />
+	</action-state>
+	
+	<end-state id="gotoLogin" view="externalRedirect:#{configParameters.historiaURL}" />
+	<end-state id="checkEmail" view="externalRedirect:contextRelative:/checkEmail" />
+	<end-state id="suscripcionFinalizada" view="externalRedirect:contextRelative:/finish" />
+</flow>

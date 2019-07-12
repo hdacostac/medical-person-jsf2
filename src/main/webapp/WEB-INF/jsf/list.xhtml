@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="#{deviceResourceHandler.resolveSimpleTemplate()}"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:t="http://myfaces.apache.org/tomahawk" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:cegedim="http://java.sun.com/jsf/composite/components">
+	<ui:define name="content">
+		<h:form id="datosUsuarioSistemaForm">
+			<div class="ui-g ui-fluid">
+			    <div class="ui-g-12 ui-g-nopad">
+			    	<div class="card card-w-title" style="max-width: 500px;margin: 0 auto 0 auto">
+						<h1 align="center">#{bundle['app.wizard.registro.usuario']}</h1>
+						<div align="center"><h:outputText value="#{bundle['app.wizard.registro.usuario.free']}" rendered="#{autoregistroForm.idProducto == 1}" /></div>
+						<p:spacer height="10" />
+						<div class="ui-g">
+							<div class="ui-g-12">
+					        	<cegedim:inputText id="nombres" inputValue="#{autoregistroForm.nombres}" 
+					        		bundleLabel="#{bundle['app.wizard.nombres']}" required="true"
+									maxChars="64">
+								</cegedim:inputText>
+							</div>
+							<div class="ui-g-12">
+								<cegedim:inputText id="apellidos" inputValue="#{autoregistroForm.apellidos}" 
+					        		bundleLabel="#{bundle['app.wizard.apellidos']}" required="true"
+									maxChars="64">
+								</cegedim:inputText>
+							</div>
+							<div class="ui-g-12">
+								<cegedim:inputText id="email" inputValue="#{autoregistroForm.email}" 
+					        		bundleLabel="#{bundle['app.wizard.email']}" required="true" type="email"
+									maxChars="64">
+									<f:attribute name="validatorMessage" value="#{commonBundle['email.invalido']}" />
+									<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" for="datosUsuarioSistemaForm-email-emailControl" />
+								</cegedim:inputText>
+							</div>
+							<div class="ui-g-12">
+								<cegedim:inputPassword id="contrasena" inputValue="#{autoregistroForm.contrasena}" 
+					        		bundleLabel="#{bundle['app.wizard.contrasena']}" required="true" minLength="6" maxLength="15" feedback="true">
+								</cegedim:inputPassword>
+							</div>
+							<div class="ui-g-12">
+								<p:commandButton action="next" value="#{bundle['app.wizard.button.sigin']}" update="@form" 
+									validateClient="true" styleClass="block-on-submit"/>
+							</div>
+						</div>
+			        </div>
+				</div>
+				<div class="ui-g-12" align="center">
+					<h:outputText value="#{bundle['app.wizard.acepta.politicas.part.1']}" /> 
+					<p:spacer width="5px" /> 
+					<h:outputLink target="_blank" value="${request.contextPath}/contratoGratis" style="text-decoration: underline;">#{bundle['app.wizard.acepta.politicas.part.2']}</h:outputLink>
+				</div>
+			</div>
+			<p:focus for="datosUsuarioSistemaForm-nombres-nombresControl" />
+		</h:form>
+	</ui:define>
+</ui:composition>

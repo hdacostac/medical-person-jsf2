@@ -1,0 +1,100 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>swf.assent</groupId>
+		<artifactId>swf-myfaces-bom</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.cegedim</groupId>
+	<artifactId>web-example</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>${packagingType}</packaging>
+
+	<properties>
+		<spring.boot.mainClass>com.cegedim.web.WebConfiguration</spring.boot.mainClass>
+	</properties>
+
+	<build>
+		<finalName>web-example</finalName>
+
+		<plugins>
+			<!-- Sass compiler -->
+			<plugin>
+				<groupId>org.jasig.maven</groupId>
+				<artifactId>sass-maven-plugin</artifactId>
+				<version>1.1.1</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>update-stylesheets</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<resources>
+						<resource>
+							<!-- Set source and destination dirs -->
+							<source>
+								<directory>${project.basedir}/src/main/webapp/sass</directory>
+							</source>
+							<destination>${project.basedir}/src/main/webapp/resources/custom/css/</destination>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>barcelona-theme</artifactId>
+			<version>1.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>all-themes</artifactId>
+			<version>1.0.10</version>
+		</dependency>
+
+		<dependency>
+			<groupId>de.odysseus.juel</groupId>
+			<artifactId>juel-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.odysseus.juel</groupId>
+			<artifactId>juel-impl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.odysseus.juel</groupId>
+			<artifactId>juel-spi</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.ocpsoft</groupId>
+			<artifactId>prettyfaces-jsf2</artifactId>
+			<version>3.3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.myfaces.tomahawk</groupId>
+			<artifactId>tomahawk20</artifactId>
+			<version>1.1.14</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.jmapper-framework</groupId>
+			<artifactId>jmapper-core</artifactId>
+			<version>1.6.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.gvt</groupId>
+			<artifactId>medical-commons</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+</project>

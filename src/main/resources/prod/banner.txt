@@ -1,0 +1,8 @@
+==========================================================
+Starting @@project.artifactId@@ deployment with profile:@@envName@@
+
+Application Version: @@application.version@@
+Application Title: @@project.artifactId@@
+Application Description: @@project.description@@
+Spring Version: @@spring.version@@
+==========================================================

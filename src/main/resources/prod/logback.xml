@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{dd/MM HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>${jboss.server.log.dir}/web-example.log</file>
+		<append>true</append>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+		<encoder>
+			<pattern>%d{dd/MM HH:mm:ss} %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="ANALYTICS-FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${jboss.server.log.dir}/web-example-monitor.log</file>
+        <append>true</append>
+        <encoder>
+			<pattern>%d{dd/MM HH:mm:ss} %logger{36} - %msg%n</pattern>
+		</encoder>
+    </appender>
+
+	<logger name="swf.cegedim" level="info" />
+	<logger name="com.cegedim" level="info" />
+	<!-- <logger name="org.springframework.security" level="debug" /> -->
+
+	<logger name="MonitorLogging" level="INFO" additivity="true">
+		<appender-ref ref="STDOUT"/>
+        <appender-ref ref="ANALYTICS-FILE"/>
+    </logger>
+    
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>

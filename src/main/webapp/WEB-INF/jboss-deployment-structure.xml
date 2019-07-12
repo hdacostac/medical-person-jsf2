@@ -1,0 +1,22 @@
+<jboss-deployment-structure>
+	<deployment>
+		<!-- exclude-subsystem prevents a subsystems deployment unit processors 
+			running on a deployment -->
+		<!-- which gives basically the same effect as removing the subsystem, but 
+			it only affects single deployment -->
+		<exclude-subsystems>
+			<subsystem name="batch" />
+			<subsystem name="jaxrs" />
+			<subsystem name="logging" />
+			<subsystem name="jpa" />
+			<subsystem name="jsf" />
+			<subsystem name="webservices" />
+			<subsystem name="weld" />
+		</exclude-subsystems>
+		<!-- Exclusions allow you to prevent the server from automatically adding some dependencies -->
+		<!-- <exclusions>
+			<module name="org.hibernate.validator" />
+			<module name="javax.validation.api" />
+		</exclusions>-->
+	</deployment>
+</jboss-deployment-structure>
