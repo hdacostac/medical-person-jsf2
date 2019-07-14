@@ -7,25 +7,25 @@ import org.springframework.hateoas.PagedResources;
 
 import com.cegedim.web.service.PersonService;
 import com.cegedim.web.service.rest.PersonServiceRestHandler;
-import com.gvt.main.hibernate.model.Persona;
+import com.gvt.gpc.helper.PersonListHolder;
 
 import swf.cegedim.web.context.CustomApplicationContext;
 import swf.cegedim.web.controllers.BaseActionList;
 
-public class PatientListPaginator extends BaseActionList<Persona> {
+public class PatientListPaginator extends BaseActionList<PersonListHolder> {
 
 	private static final long serialVersionUID = 7652225764105360134L;
 
 	@Override
-	public Object getRowKey(Persona item) {
+	public Object getRowKey(PersonListHolder item) {
 		return item.getId();
 	}
 
 	@Override
-	public Persona getRowData(String rowKey) {
+	public PersonListHolder getRowData(String rowKey) {
 		logger.debug("Executing getRowData:{}", rowKey);
 
-		for (Persona item : getWrappedData()) {
+		for (PersonListHolder item : getWrappedData()) {
 			if (item.getId() == Long.parseLong(rowKey)) {
 				return item;
 			}
@@ -35,12 +35,12 @@ public class PatientListPaginator extends BaseActionList<Persona> {
 	}
 
 	@Override
-	protected PagedResources<Persona> dataSource(int first, int pageSize, String sortField, SortOrder sortOrder,
-			Map<String, Object> filters) {
+	protected PagedResources<PersonListHolder> dataSource(int first, int pageSize, String sortField,
+			SortOrder sortOrder, Map<String, Object> filters) {
 		PersonService restHandler = CustomApplicationContext.getContext().getBean(PersonServiceRestHandler.class);
 
-		return restHandler.getPaginationPatients(first, pageSize, "nombrePersona",
-				sortOrder != null ? sortOrder.name() : null, filters);
+		return restHandler.getPaginationPatients(first, pageSize, null, sortOrder != null ? sortOrder.name() : null,
+				filters);
 	}
 
 }

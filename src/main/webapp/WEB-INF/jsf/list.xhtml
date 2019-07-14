@@ -1,4 +1,4 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="#{deviceResourceHandler.resolveSimpleTemplate()}"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="#{deviceResourceHandler.resolveTemplate()}"
 	xmlns:ui="http://java.sun.com/jsf/facelets" 
 	xmlns:h="http://java.sun.com/jsf/html" 
 	xmlns:f="http://java.sun.com/jsf/core" 
@@ -34,37 +34,11 @@
 			            </p:outputPanel>
 			        </f:facet>
 			        <p:column headerText="#{bundle['patient.list.name']}">
-						<h:outputText value="#{elemento.person.name}" />
+						<h:outputText value="#{elemento.name}" />
 					</p:column>
-					<p:column headerText="#{bundle['patient.list.surname1']}">
-						<h:outputText value="#{elemento.person.surname1}" />
+					<p:column headerText="#{bundle['patient.list.last.name']}">
+						<h:outputText value="#{elemento.lastName}" />
 					</p:column>
-					<p:column headerText="#{bundle['patient.list.age']}">
-						<h:outputText value="#{PatientListController.calculateAge(elemento.person.birthday)} years" />
-					</p:column>
-					<p:column headerText="#{bundle['patient.list.gender']}">
-						<ui:param name="genderText" value="SEXO_#{elemento.person.gender.toUpperCase()}.key" />
-						<h:outputText value="#{bundle[genderText]}" />
-					</p:column>
-					<p:column headerText="#{bundle['patient.list.status']}" width="40" style="text-align: center">
-						<h:graphicImage library="custom" name="images/i_bullet_green.png" rendered="#{elemento.person.status eq 'V'}" />
-						<h:graphicImage library="custom" name="images/i_bullet_red.png" rendered="#{!elemento.person.status eq 'V'}" />
-					</p:column>
-					<p:column style="width:32px;text-align: center">
-             			<p:link href="#{configParameters.springDispatcherMapping}/patient?id=#{elemento.perId}" rendered="false">
-							<i class="fa fa-edit" />
-			            </p:link>
-			            <p:commandLink action="editItem">
-			             	<i class="fa fa-edit" />
-			             	<f:param name="idSelected" value="#{elemento.perId}"></f:param>
-			            </p:commandLink>
-			        </p:column>
-			        <p:column style="width:32px;text-align: center">
-			            <p:commandLink action="deleteItem">
-			             	<i class="fa fa-trash-alt" />
-			             	<f:param name="idSelected" value="#{elemento.perId}"></f:param>
-			            </p:commandLink>
-			        </p:column>
 				</p:dataTable>
 				<p:toolbar>
 					<f:facet name="right">

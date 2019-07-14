@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.cegedim.web.service.PersonService;
-import com.gvt.main.hibernate.model.Persona;
+import com.gvt.gpc.helper.PersonListHolder;
 
 import swf.cegedim.rest.handlers.URLRestHandler;
 
@@ -25,28 +25,42 @@ public class PersonServiceRestHandler implements PersonService {
 		this.urlHrRestHandler = urlHrRestHandler;
 	}
 
-	private static final class PatientParametrizedReturnType extends TypeReferences.PagedResourcesType<Persona> {
+	private static final class PatientParametrizedReturnType
+			extends TypeReferences.PagedResourcesType<PersonListHolder> {
 	}
 
 //	private static final class LookupParametrizedReturnType extends TypeReferences.PagedResourcesType<LookupDTO> {
 //	}
 
+//	@Override
+//	public PagedResources<Persona> getPaginationPatients(int first, int pageSize, String sortField, String sortOrder,
+//			Map<String, Object> filters) {
+//		Map<String, Object> params = urlHrRestHandler.buildFilterParams(first, pageSize, sortField, sortOrder, filters);
+//
+//		if (filters != null && StringUtils.isNotBlank((String) filters.get("globalFilter"))) {
+//			params.put("globalFilter", "%" + filters.get("globalFilter") + "%"); // Overwrite the globalFilter param
+//
+//			return restTemplate.exchange(urlHrRestHandler.buildURI("/person/search/dataTableSearch", params),
+//					HttpMethod.GET, null, new PatientParametrizedReturnType()).getBody();
+//		}
+//
+//		return restTemplate.exchange(
+//				urlHrRestHandler.buildURI("/person",
+//						urlHrRestHandler.buildFilterParams(first, pageSize, sortField, sortOrder, filters)),
+//				HttpMethod.GET, null, new PatientParametrizedReturnType()).getBody();
+//	}
+
 	@Override
-	public PagedResources<Persona> getPaginationPatients(int first, int pageSize, String sortField, String sortOrder,
-			Map<String, Object> filters) {
+	public PagedResources<PersonListHolder> getPaginationPatients(int first, int pageSize, String sortField,
+			String sortOrder, Map<String, Object> filters) {
 		Map<String, Object> params = urlHrRestHandler.buildFilterParams(first, pageSize, sortField, sortOrder, filters);
 
 		if (filters != null && StringUtils.isNotBlank((String) filters.get("globalFilter"))) {
-			params.put("name", filters.get("globalFilter"));
-
-			return restTemplate.exchange(urlHrRestHandler.buildURI("/person/search/dataTableSearch", params),
-					HttpMethod.GET, null, new PatientParametrizedReturnType()).getBody();
+			params.put("globalFilter", "%" + filters.get("globalFilter") + "%"); // Overwrite the globalFilter param
 		}
 
-		return restTemplate.exchange(
-				urlHrRestHandler.buildURI("/person",
-						urlHrRestHandler.buildFilterParams(first, pageSize, sortField, sortOrder, filters)),
-				HttpMethod.GET, null, new PatientParametrizedReturnType()).getBody();
+		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/persons", params), HttpMethod.GET, null,
+				new PatientParametrizedReturnType()).getBody();
 	}
 
 }
