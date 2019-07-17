@@ -52,6 +52,12 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework.security.oauth.boot</groupId>
+			<artifactId>spring-security-oauth2-autoconfigure</artifactId>
+			<version>2.1.4.RELEASE</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.primefaces.themes</groupId>
 			<artifactId>barcelona-theme</artifactId>
 			<version>1.0.4</version>

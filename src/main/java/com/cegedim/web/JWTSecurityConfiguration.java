@@ -7,9 +7,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 import swf.cegedim.web.BaseJWTSecurityConfiguration;
 
-@Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@Configuration
+//@EnableWebSecurity
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class JWTSecurityConfiguration extends BaseJWTSecurityConfiguration {
 
 	@Override
