@@ -6,10 +6,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.cegedim.web.service.PersonService;
-import com.gvt.gpc.helper.Autoregistro;
-
-import swf.cegedim.web.controllers.BaseActionForm;
-import swf.cegedim.web.handlers.LocaleHandler;
+import com.gvt.commons.helper.Autoregistro;
+import com.gvt.web.controllers.BaseActionForm;
+import com.gvt.web.handlers.LocaleHandler;
 
 @Scope("request")
 @Controller("wizard")

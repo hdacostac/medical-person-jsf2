@@ -10,9 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.cegedim.web.service.PersonService;
-import com.gvt.gpc.helper.PersonListHolder;
-
-import swf.cegedim.rest.handlers.URLRestHandler;
+import com.gvt.commons.helper.PersonListHolder;
+import com.gvt.support.rest.handlers.URLRestHandler;
 
 @Component
 public class PersonServiceRestHandler implements PersonService {

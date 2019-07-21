@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import swf.cegedim.web.BaseDefaultViewConfiguration;
+import com.gvt.web.BaseDefaultViewConfiguration;
 
 @Configuration
 public class DefaultViewConfiguration extends BaseDefaultViewConfiguration {

@@ -7,10 +7,9 @@ import org.springframework.hateoas.PagedResources;
 
 import com.cegedim.web.service.PersonService;
 import com.cegedim.web.service.rest.PersonServiceRestHandler;
-import com.gvt.gpc.helper.PersonListHolder;
-
-import swf.cegedim.web.context.CustomApplicationContext;
-import swf.cegedim.web.controllers.BaseActionList;
+import com.gvt.commons.helper.PersonListHolder;
+import com.gvt.web.context.CustomApplicationContext;
+import com.gvt.web.controllers.BaseActionList;
 
 public class PatientListPaginator extends BaseActionList<PersonListHolder> {
 

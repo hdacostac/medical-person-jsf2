@@ -5,7 +5,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
-import swf.cegedim.web.BaseJWTSecurityConfiguration;
+import com.gvt.web.security.BaseJWTSecurityConfiguration;
 
 //@Configuration
 //@EnableWebSecurity

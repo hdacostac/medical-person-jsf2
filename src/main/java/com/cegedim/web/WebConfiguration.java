@@ -11,13 +11,12 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
+import com.gvt.web.BaseConfiguration;
 import com.ocpsoft.pretty.PrettyFilter;
 
-import swf.cegedim.web.BaseConfiguration;
-
 @SpringBootApplication(exclude = { DispatcherServletAutoConfiguration.class, ErrorMvcAutoConfiguration.class })
-@ServletComponentScan(basePackages = { "swf.cegedim", "com.cegedim" })
-@ComponentScan(basePackages = { "swf.cegedim", "com.cegedim" })
+@ServletComponentScan(basePackages = { "com.gvt", "com.cegedim" })
+@ComponentScan(basePackages = { "com.gvt", "com.cegedim" })
 public class WebConfiguration extends BaseConfiguration {
 
 	public static void main(String[] args) {

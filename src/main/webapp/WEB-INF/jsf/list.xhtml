@@ -16,8 +16,9 @@
 	
 		<div class="card">
 			<h:form id="listForm">
-				<p:toolbar rendered="true">
+				<p:toolbar>
 					<f:facet name="right">
+						<p:button href="#{configParameters.springDispatcherMapping}/patient" value="#{bundle['button.add.patient']}" />
 					</f:facet>
 				</p:toolbar>
 				<p:dataTable id="dataTable" value="#{patientListPaginator}" widgetVar="dataTableWdg" selection="#{patientListPaginator.selectedItem}"
@@ -42,7 +43,7 @@
 				</p:dataTable>
 				<p:toolbar>
 					<f:facet name="right">
-						<p:button href="#{configParameters.springDispatcherMapping}/patient" value="New Patient" />
+						<p:button href="#{configParameters.springDispatcherMapping}/patient" value="#{bundle['button.add.patient']}" />
 					</f:facet>
 				</p:toolbar>
 			</h:form>

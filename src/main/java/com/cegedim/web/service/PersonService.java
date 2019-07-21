@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.springframework.hateoas.PagedResources;
 
-import com.gvt.gpc.helper.PersonListHolder;
+import com.gvt.commons.helper.PersonListHolder;
 import com.gvt.main.hibernate.model.Persona;
 
 public interface PersonService {

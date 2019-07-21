@@ -5,9 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.annotation.SessionScope;
 
 import com.cegedim.web.components.CustomMenuComponent;
-
-import swf.cegedim.web.BaseComponentsConfiguration;
-import swf.cegedim.web.components.MenuComponent;
+import com.gvt.web.BaseComponentsConfiguration;
+import com.gvt.web.components.MenuComponent;
 
 @Configuration
 public class ComponentsConfiguration extends BaseComponentsConfiguration {

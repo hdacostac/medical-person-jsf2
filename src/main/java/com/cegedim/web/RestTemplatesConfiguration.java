@@ -11,13 +11,14 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import swf.cegedim.rest.BaseRestTemplateConfiguration;
-import swf.cegedim.rest.handlers.CustomResponseErrorHandler;
-import swf.cegedim.rest.handlers.URLRestHandler;
+import com.gvt.support.http.ClientHttpConfiguration;
+import com.gvt.support.rest.handlers.CustomResponseErrorHandler;
+import com.gvt.support.rest.handlers.URLRestHandler;
+
 import swf.cegedim.web.interceptors.HeaderInterceptor;
 
 @Configuration
-public class RestTemplatesConfiguration extends BaseRestTemplateConfiguration {
+public class RestTemplatesConfiguration extends ClientHttpConfiguration {
 
 	@Value("${app.rest.port}")
 	protected String restPort;

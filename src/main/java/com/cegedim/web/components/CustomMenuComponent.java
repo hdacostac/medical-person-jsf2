@@ -11,7 +11,7 @@ import org.primefaces.model.menu.MenuModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import swf.cegedim.web.components.MenuComponent;
+import com.gvt.web.components.MenuComponent;
 
 public class CustomMenuComponent implements MenuComponent, Serializable {
 
