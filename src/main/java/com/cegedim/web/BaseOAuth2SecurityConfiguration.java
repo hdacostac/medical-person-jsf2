@@ -35,7 +35,7 @@ public class BaseOAuth2SecurityConfiguration extends WebSecurityConfigurerAdapte
 			"/api-docs/**", "/performance-monitor/**" };
 
 	@Autowired
-	private ConfigParameters configParameters;
+	private ConfigParameters webConfigParameters;
 
 	@Autowired
 	private OAuth2ClientContextFilter oauth2ClientContextFilter;
@@ -52,9 +52,9 @@ public class BaseOAuth2SecurityConfiguration extends WebSecurityConfigurerAdapte
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers(AUTH_WHITELIST).antMatchers("/javax.faces.resource/**",
-				configParameters.getSpringDispatcherMapping() + "/javax.faces.resource/**",
-				configParameters.getSpringDispatcherMapping() + "/api/monitor/**",
-				configParameters.getSpringDispatcherMapping() + "/lifecheck");
+				webConfigParameters.getSpringDispatcherMapping() + "/javax.faces.resource/**",
+				webConfigParameters.getSpringDispatcherMapping() + "/api/monitor/**",
+				webConfigParameters.getSpringDispatcherMapping() + "/lifecheck");
 	}
 
 	@Bean
