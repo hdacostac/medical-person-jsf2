@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import com.gvt.support.http.ClientHttpConfiguration;
 import com.gvt.support.rest.handlers.CustomResponseErrorHandler;
 import com.gvt.support.rest.handlers.URLRestHandler;
+import com.gvt.web.security.interceptors.OAuth2AuthorizationInterceptor;
 
 import swf.cegedim.web.interceptors.HeaderInterceptor;
 
@@ -56,7 +57,7 @@ public class RestTemplatesConfiguration extends ClientHttpConfiguration {
 		restTemplate.setErrorHandler(new CustomResponseErrorHandler());
 		restTemplate.setMessageConverters(messageConverters);
 		restTemplate.getInterceptors().add(new HeaderInterceptor());
-//		restTemplate.getInterceptors().add(new JWTAuthorizationInterceptor());
+		restTemplate.getInterceptors().add(new OAuth2AuthorizationInterceptor());
 
 		return restTemplate;
 	}

@@ -27,7 +27,8 @@
     </appender>
 
 	<logger name="com.gvt.web.handlers.DeviceResourceHandler" level="error" />
-	<logger name="swf.cegedim" level="trace" />
+	<logger name="com.gvt.web.handlers.LocaleHandler" level="error" />
+	<logger name="com.gvt" level="trace" />
 	<logger name="com.cegedim" level="trace" />
 	<!-- <logger name="org.springframework.security" level="debug" /> -->
 
