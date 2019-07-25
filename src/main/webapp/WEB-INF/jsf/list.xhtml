@@ -24,8 +24,8 @@
 				<p:dataTable id="dataTable" value="#{patientListPaginator}" widgetVar="dataTableWdg" selection="#{patientListPaginator.selectedItem}"
 					lazy="true" paginator="true" var="elemento" rows="#{patientListPaginator.rowsPerPage}" selectionMode="single"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					paginatorPosition="top" rowsPerPageTemplate="5,10,15,50,75,100" 
-					first="#{patientListPaginator.first}" filters="#{patientListPaginator.filters}">
+					paginatorPosition="top" rowsPerPageTemplate="5,10,15,50,75,100"
+					first="#{patientListPaginator.first}" filters="#{patientListPaginator.filters}" initMode="immediate" stickyHeader="true" stickyTopAt=".topbar">
 					<p:ajax event="page" listener="#{patientListPaginator.onPageChange}"/>  
 					<p:ajax event="filter" listener="#{patientListPaginator.filterListener}"/>
 					<f:facet name="header">

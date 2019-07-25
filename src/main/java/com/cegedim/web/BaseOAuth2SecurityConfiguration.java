@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,21 +20,19 @@ import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 
-import com.gvt.web.config.ConfigParameters;
-
 @Configuration
 @EnableWebSecurity
 @EnableOAuth2Sso
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class BaseOAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	private static final String[] AUTH_WHITELIST = {
-			// -- swagger ui
-			"/v2/api-docs", "/configuration/**", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**",
-			"/api-docs/**", "/performance-monitor/**" };
+//	private static final String[] AUTH_WHITELIST = {
+//			// -- swagger ui
+//			"/v2/api-docs", "/configuration/**", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**",
+//			"/api-docs/**", "/performance-monitor/**" };
 
-	@Autowired
-	private ConfigParameters webConfigParameters;
+//	@Autowired
+//	private ConfigParameters webConfigParameters;
 
 	@Autowired
 	private OAuth2ClientContextFilter oauth2ClientContextFilter;
@@ -49,13 +46,13 @@ public class BaseOAuth2SecurityConfiguration extends WebSecurityConfigurerAdapte
 	@Value("${security.oauth2.client.clientSecret}")
 	private String clientSecret;
 
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers(AUTH_WHITELIST).antMatchers("/javax.faces.resource/**",
-				webConfigParameters.getSpringDispatcherMapping() + "/javax.faces.resource/**",
-				webConfigParameters.getSpringDispatcherMapping() + "/api/monitor/**",
-				webConfigParameters.getSpringDispatcherMapping() + "/lifecheck");
-	}
+//	@Override
+//	public void configure(WebSecurity web) throws Exception {
+//		web.ignoring().antMatchers(AUTH_WHITELIST).antMatchers("/javax.faces.resource/**",
+//				webConfigParameters.getSpringDispatcherMapping() + "/javax.faces.resource/**",
+//				webConfigParameters.getSpringDispatcherMapping() + "/api/monitor/**",
+//				webConfigParameters.getSpringDispatcherMapping() + "/lifecheck");
+//	}
 
 	@Bean
 	public FilterRegistrationBean<OAuth2ClientContextFilter> oauth2ClientFilterRegistration(
