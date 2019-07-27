@@ -10,13 +10,13 @@ import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.web.client.RestTemplate;
 
 import com.gvt.support.rest.handlers.CustomResponseErrorHandler;
 import com.gvt.support.rest.handlers.URLRestHandler;
+import com.gvt.web.security.interceptors.HeaderInterceptor;
 import com.gvt.web.security.interceptors.OAuth2AuthorizationInterceptor;
-
-import swf.cegedim.web.interceptors.HeaderInterceptor;
 
 @Configuration
 public class RestTemplatesConfiguration {
@@ -47,7 +47,7 @@ public class RestTemplatesConfiguration {
 
 	@Bean
 	public RestTemplate restTemplate(MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter,
-			ClientHttpRequestFactory clientHttpRequestFactory) {
+			ClientHttpRequestFactory clientHttpRequestFactory, OAuth2ClientContext oAuth2ClientContext) {
 		RestTemplate restTemplate = new RestTemplate();
 
 		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
@@ -58,7 +58,8 @@ public class RestTemplatesConfiguration {
 		restTemplate.setErrorHandler(new CustomResponseErrorHandler());
 		restTemplate.setMessageConverters(messageConverters);
 		restTemplate.getInterceptors().add(new HeaderInterceptor());
-		restTemplate.getInterceptors().add(new OAuth2AuthorizationInterceptor());
+		restTemplate.getInterceptors().add(new OAuth2AuthorizationInterceptor(mappingJackson2HttpMessageConverter,
+				clientHttpRequestFactory, oAuth2ClientContext));
 
 		return restTemplate;
 	}
