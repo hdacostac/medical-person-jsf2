@@ -21,26 +21,28 @@
 						<p:button href="#{configParameters.springDispatcherMapping}/patient" value="#{bundle['button.add.patient']}" />
 					</f:facet>
 				</p:toolbar>
-				<p:dataTable id="dataTable" value="#{patientListPaginator}" widgetVar="dataTableWdg" selection="#{patientListPaginator.selectedItem}"
-					lazy="true" paginator="true" var="elemento" rows="#{patientListPaginator.rowsPerPage}" selectionMode="single"
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					paginatorPosition="top" rowsPerPageTemplate="5,10,15,50,75,100"
-					first="#{patientListPaginator.first}" filters="#{patientListPaginator.filters}" initMode="immediate" stickyHeader="true" stickyTopAt=".topbar">
-					<p:ajax event="page" listener="#{patientListPaginator.onPageChange}"/>  
-					<p:ajax event="filter" listener="#{patientListPaginator.filterListener}"/>
-					<f:facet name="header">
-			            <p:outputPanel>
-			                <span>Search all fields:</span>
-			                <p:inputText id="globalFilter" value="#{patientListPaginator.filters['globalFilter']}" onkeyup="PF('dataTableWdg').filter()" style="width:150px" />
-			            </p:outputPanel>
-			        </f:facet>
-			        <p:column headerText="#{bundle['patient.list.name']}">
-						<h:outputText value="#{elemento.name}" />
-					</p:column>
-					<p:column headerText="#{bundle['patient.list.last.name']}">
-						<h:outputText value="#{elemento.lastName}" />
-					</p:column>
-				</p:dataTable>
+				<p:outputPanel deferred="true">
+					<p:dataTable id="dataTable" value="#{patientListPaginator}" widgetVar="dataTableWdg" selection="#{patientListPaginator.selectedItem}"
+						lazy="true" paginator="true" var="elemento" rows="#{patientListPaginator.rowsPerPage}" selectionMode="single"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						paginatorPosition="top" rowsPerPageTemplate="5,10,15,50,75,100"
+						first="#{patientListPaginator.first}" filters="#{patientListPaginator.filters}" stickyHeader="true" stickyTopAt=".topbar">
+						<p:ajax event="page" listener="#{patientListPaginator.onPageChange}"/>  
+						<p:ajax event="filter" listener="#{patientListPaginator.filterListener}"/>
+						<f:facet name="header">
+				            <p:outputPanel>
+				                <span>Search all fields:</span>
+				                <p:inputText id="globalFilter" value="#{patientListPaginator.filters['globalFilter']}" onkeyup="PF('dataTableWdg').filter()" style="width:150px" />
+				            </p:outputPanel>
+				        </f:facet>
+				        <p:column headerText="#{bundle['patient.list.name']}">
+							<h:outputText value="#{elemento.name}" />
+						</p:column>
+						<p:column headerText="#{bundle['patient.list.last.name']}">
+							<h:outputText value="#{elemento.lastName}" />
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
 				<p:toolbar>
 					<f:facet name="right">
 						<p:button href="#{configParameters.springDispatcherMapping}/patient" value="#{bundle['button.add.patient']}" />
