@@ -3,7 +3,6 @@ package com.cegedim.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,11 +13,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager;
-import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+
+import com.cegedim.security.factory.CustomJwtTokenConverter;
+import com.cegedim.security.factory.JWTSecretKeyFactory;
 
 @Configuration
 @EnableWebSecurity
@@ -54,15 +55,15 @@ public class BaseOAuth2SecurityConfiguration extends WebSecurityConfigurerAdapte
 //				webConfigParameters.getSpringDispatcherMapping() + "/lifecheck");
 //	}
 
-	@Bean
-	public FilterRegistrationBean<OAuth2ClientContextFilter> oauth2ClientFilterRegistration(
-			OAuth2ClientContextFilter filter) {
-		FilterRegistrationBean<OAuth2ClientContextFilter> registration = new FilterRegistrationBean<>();
-		registration.setFilter(filter);
-		registration.setOrder(-100);
-
-		return registration;
-	}
+//	@Bean
+//	public FilterRegistrationBean<OAuth2ClientContextFilter> oauth2ClientFilterRegistration(
+//			OAuth2ClientContextFilter filter) {
+//		FilterRegistrationBean<OAuth2ClientContextFilter> registration = new FilterRegistrationBean<>();
+//		registration.setFilter(filter);
+//		registration.setOrder(-100);
+//
+//		return registration;
+//	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -73,9 +74,20 @@ public class BaseOAuth2SecurityConfiguration extends WebSecurityConfigurerAdapte
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
 	}
 
+//	@Bean
+//	public AccessTokenConverter accessTokenConverter() {
+//		return new JwtAccessTokenConverter();
+//	}
+
+	@Autowired
+	private JWTSecretKeyFactory jwtSecretKeyFactory;
+
 	@Bean
-	public AccessTokenConverter accessTokenConverter() {
-		return new DefaultAccessTokenConverter();
+	public JwtAccessTokenConverter customAccessTokenConverter() {
+		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+		converter.setAccessTokenConverter(new CustomJwtTokenConverter());
+
+		return converter;
 	}
 
 	@Bean
@@ -84,7 +96,7 @@ public class BaseOAuth2SecurityConfiguration extends WebSecurityConfigurerAdapte
 		remoteTokenServices.setCheckTokenEndpointUrl(checkTokenEndpointUrl);
 		remoteTokenServices.setClientId(clientId);
 		remoteTokenServices.setClientSecret(clientSecret);
-		remoteTokenServices.setAccessTokenConverter(accessTokenConverter());
+		remoteTokenServices.setAccessTokenConverter(customAccessTokenConverter());
 
 		return remoteTokenServices;
 	}
