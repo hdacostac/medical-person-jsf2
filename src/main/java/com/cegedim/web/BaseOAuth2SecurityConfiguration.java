@@ -11,15 +11,19 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.client.OAuth2ClientContext;
+import org.springframework.security.oauth2.client.OAuth2RestOperations;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 
 import com.cegedim.security.factory.CustomJwtTokenConverter;
 import com.cegedim.security.factory.JWTSecretKeyFactory;
+import com.cegedim.security.filter.TokenValidatorFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -65,11 +69,19 @@ public class BaseOAuth2SecurityConfiguration extends WebSecurityConfigurerAdapte
 //		return registration;
 //	}
 
+	@Autowired
+	private OAuth2ClientContext oAuth2ClientContext;
+	
+	@Autowired
+	private OAuth2RestOperations myRestTemplate;
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.headers().frameOptions().disable().and().cors().and().csrf().disable().authorizeRequests().anyRequest()
 				.authenticated().and().logout().permitAll().and()
 				.addFilterAfter(oauth2ClientContextFilter, SecurityContextPersistenceFilter.class)
+				.addFilterAfter(new TokenValidatorFilter(oAuth2ClientContext, customAccessTokenConverter(), myRestTemplate),
+						BasicAuthenticationFilter.class)
 				// this disables session creation on Spring Security
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
 	}
