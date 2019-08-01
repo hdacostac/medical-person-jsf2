@@ -11,13 +11,19 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
-import org.springframework.security.oauth2.client.OAuth2RestOperations;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 
@@ -71,17 +77,33 @@ public class BaseOAuth2SecurityConfiguration extends WebSecurityConfigurerAdapte
 
 	@Autowired
 	private OAuth2ClientContext oAuth2ClientContext;
-	
+
+//	@Autowired
+//	private OAuth2RestOperations myRestTemplate;
+
 	@Autowired
-	private OAuth2RestOperations myRestTemplate;
+	private OAuth2AuthorizedClientService clientService;
+
+	@Bean
+	public ClientRegistrationRepository clientRegistrationRepository() {
+		return new InMemoryClientRegistrationRepository(this.myWebsiteClientRegistration());
+	}
+
+	private ClientRegistration myWebsiteClientRegistration() {
+		return ClientRegistration.withRegistrationId("customOAuth2")
+				.authorizationUri("http://localhost:8080/oauth/authorize").clientId("clientIdPassword").clientSecret("")
+				.tokenUri("http://localhost:8080/oauth/token")
+				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+				.redirectUriTemplate("http://localhost:8081/person").build();
+	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.headers().frameOptions().disable().and().cors().and().csrf().disable().authorizeRequests().anyRequest()
 				.authenticated().and().logout().permitAll().and()
 				.addFilterAfter(oauth2ClientContextFilter, SecurityContextPersistenceFilter.class)
-				.addFilterAfter(new TokenValidatorFilter(oAuth2ClientContext, customAccessTokenConverter(), myRestTemplate),
-						BasicAuthenticationFilter.class)
+				.addFilterAfter(new TokenValidatorFilter(oAuth2ClientContext, customAccessTokenConverter(),
+						clientService, userInfoTokenServices(), tokenStore()), BasicAuthenticationFilter.class)
 				// this disables session creation on Spring Security
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
 	}
@@ -93,6 +115,11 @@ public class BaseOAuth2SecurityConfiguration extends WebSecurityConfigurerAdapte
 
 	@Autowired
 	private JWTSecretKeyFactory jwtSecretKeyFactory;
+
+	@Bean
+	public TokenStore tokenStore() {
+		return new JwtTokenStore(customAccessTokenConverter());
+	}
 
 	@Bean
 	public JwtAccessTokenConverter customAccessTokenConverter() {
