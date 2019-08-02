@@ -26,12 +26,10 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.cegedim.security.factory.CustomJwtTokenConverter;
 import com.cegedim.security.factory.JWTSecretKeyFactory;
 import com.cegedim.security.filter.TokenValidatorFilter;
-import com.cegedim.security.handlers.CustomOAuth2LogoutHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -86,8 +84,8 @@ public class BaseOAuth2SecurityConfiguration extends WebSecurityConfigurerAdapte
 	@Autowired
 	private OAuth2AuthorizedClientService clientService;
 
-	@Autowired
-	private CustomOAuth2LogoutHandler customOAuth2LogoutHandler;
+//	@Autowired
+//	private CustomOAuth2LogoutHandler customOAuth2LogoutHandler;
 
 	@Bean
 	public ClientRegistrationRepository clientRegistrationRepository() {
@@ -104,11 +102,9 @@ public class BaseOAuth2SecurityConfiguration extends WebSecurityConfigurerAdapte
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.headers().frameOptions().disable().and().cors().and().csrf().disable().anonymous().disable()
-				.authorizeRequests().antMatchers("/login").permitAll().anyRequest().authenticated().and().logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).addLogoutHandler(customOAuth2LogoutHandler)
-				.deleteCookies("JSESSIONID").invalidateHttpSession(true).clearAuthentication(true)
-				.logoutSuccessUrl("http://localhost:8080/logout").permitAll().and().rememberMe().disable()
+		http.headers().frameOptions().disable().and().cors().and().csrf().disable().authorizeRequests()
+				.antMatchers("/login").permitAll().anyRequest().authenticated().and().logout()
+				.logoutSuccessUrl("http://localhost:8080/logout").and()
 				.addFilterAfter(oauth2ClientContextFilter, SecurityContextPersistenceFilter.class)
 				.addFilterAfter(new TokenValidatorFilter(oAuth2ClientContext, customAccessTokenConverter(),
 						clientService, userInfoTokenServices(), tokenStore()), BasicAuthenticationFilter.class)

@@ -25,7 +25,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-@Component
+//@Component
 public class CustomOAuth2LogoutHandler implements LogoutHandler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CustomOAuth2LogoutHandler.class);
