@@ -20,7 +20,6 @@ import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResour
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
@@ -76,11 +75,12 @@ public class TokenValidatorFilter extends OncePerRequestFilter {
 				SecurityContextHolder.getContext().setAuthentication(null);
 				oAuth2ClientContext.setAccessToken(null);
 				tokenStore.removeAccessToken(oauthToken);
-				((ConsumerTokenServices) resourceServerTokenServices).revokeToken(oauthToken.getValue());
+//				((ConsumerTokenServices) resourceServerTokenServices).revokeToken(oauthToken.getValue());
 				HttpSession session = servletRequest.getSession(false);
 				session.invalidate();
 				new SecurityContextLogoutHandler().logout(servletRequest, servletResponse, authentication);
-
+				servletResponse.sendRedirect("/person/logout");
+				return;
 			}
 
 //			OAuth2RestTemplate template = new OAuth2RestTemplate(
