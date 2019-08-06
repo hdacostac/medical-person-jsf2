@@ -8,5 +8,8 @@
 	<var name="patientListPaginator" class="com.cegedim.web.paginators.PatientListPaginator"/>
 
 	<view-state id="list" view="/WEB-INF/jsf/list.xhtml">
+		<transition on="showUserInfo">
+			<evaluate expression="patientListPaginator.showUserInfo()"></evaluate>
+		</transition>
 	</view-state>
 </flow>

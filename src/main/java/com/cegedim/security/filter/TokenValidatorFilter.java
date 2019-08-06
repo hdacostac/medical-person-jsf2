@@ -58,7 +58,7 @@ public class TokenValidatorFilter extends OncePerRequestFilter {
 		if (oauthToken != null) {
 			LOGGER.debug("token:{}", oauthToken.getValue());
 			LOGGER.debug("refresh:{}", oauthToken.getRefreshToken());
-			LOGGER.debug("refresh:{}", oauthToken.getExpiresIn());
+			LOGGER.debug("refresh expires in:{}", oauthToken.getExpiresIn());
 			JwtHelper.decodeAndVerify(oauthToken.getValue(), new MacSigner("Q2VnZWRpbSEx"));
 
 			OAuth2Authentication authentication = (OAuth2Authentication) SecurityContextHolder.getContext()
@@ -66,7 +66,8 @@ public class TokenValidatorFilter extends OncePerRequestFilter {
 //			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //			OAuth2AuthenticationToken oauthToken2 = (OAuth2AuthenticationToken) authentication;
 			LOGGER.debug("authentication:{}", authentication);
-//			LOGGER.debug("authentication:{}", authentication.getPrincipal());
+			LOGGER.debug("principal:{}", authentication.getPrincipal());
+			LOGGER.debug("authorities:{}", authentication.getAuthorities());
 
 			if (oauthToken.getExpiresIn() < 0) {
 				LOGGER.debug("Triyng to expire the session");
