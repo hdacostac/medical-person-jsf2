@@ -72,14 +72,14 @@ public class TokenValidatorFilter extends OncePerRequestFilter {
 			if (oauthToken.getExpiresIn() < 0) {
 				LOGGER.debug("Triyng to expire the session");
 
-				SecurityContextHolder.clearContext();
-				SecurityContextHolder.getContext().setAuthentication(null);
-				oAuth2ClientContext.setAccessToken(null);
-				tokenStore.removeAccessToken(oauthToken);
-//				((ConsumerTokenServices) resourceServerTokenServices).revokeToken(oauthToken.getValue());
-				HttpSession session = servletRequest.getSession(false);
-				session.invalidate();
-				new SecurityContextLogoutHandler().logout(servletRequest, servletResponse, authentication);
+//				SecurityContextHolder.clearContext();
+//				SecurityContextHolder.getContext().setAuthentication(null);
+//				oAuth2ClientContext.setAccessToken(null);
+//				tokenStore.removeAccessToken(oauthToken);
+////				((ConsumerTokenServices) resourceServerTokenServices).revokeToken(oauthToken.getValue());
+//				HttpSession session = servletRequest.getSession(false);
+//				session.invalidate();
+//				new SecurityContextLogoutHandler().logout(servletRequest, servletResponse, authentication);
 				servletResponse.sendRedirect("/person/logout");
 				return;
 			}

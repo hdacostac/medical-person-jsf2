@@ -104,7 +104,7 @@ public class BaseOAuth2SecurityConfiguration extends WebSecurityConfigurerAdapte
 	protected void configure(HttpSecurity http) throws Exception {
 		http.headers().frameOptions().disable().and().cors().and().csrf().disable().authorizeRequests()
 				.antMatchers("/login").permitAll().anyRequest().authenticated().and().logout()
-				.logoutSuccessUrl("http://localhost:8080/logout").and()
+				.logoutSuccessUrl("http://localhost:7070/logout").and()
 				.addFilterAfter(oauth2ClientContextFilter, SecurityContextPersistenceFilter.class)
 				.addFilterAfter(new TokenValidatorFilter(oAuth2ClientContext, customAccessTokenConverter(),
 						clientService, userInfoTokenServices(), tokenStore()), BasicAuthenticationFilter.class)
