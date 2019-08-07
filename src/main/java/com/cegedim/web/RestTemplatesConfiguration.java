@@ -4,17 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.ClientHttpRequestFactorySupplier;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
+import org.springframework.security.oauth2.client.http.OAuth2ErrorResponseErrorHandler;
+import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import com.gvt.support.rest.handlers.CustomResponseErrorHandler;
 import com.gvt.support.rest.handlers.URLRestHandler;
+import com.gvt.web.security.converters.CustomTokenResponseConverter;
 import com.gvt.web.security.interceptors.HeaderInterceptor;
 import com.gvt.web.security.interceptors.OAuth2AuthorizationInterceptor;
 
@@ -46,6 +53,7 @@ public class RestTemplatesConfiguration {
 	}
 
 	@Bean
+	@Primary
 	public RestTemplate restTemplate(MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter,
 			ClientHttpRequestFactory clientHttpRequestFactory, OAuth2ClientContext oAuth2ClientContext) {
 		RestTemplate restTemplate = new RestTemplate();
@@ -62,6 +70,23 @@ public class RestTemplatesConfiguration {
 				clientHttpRequestFactory, oAuth2ClientContext));
 
 		return restTemplate;
+	}
+
+	@Bean
+	public RestTemplate oauth2RestTemplate(MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter,
+			ClientHttpRequestFactory clientHttpRequestFactory) {
+		OAuth2AccessTokenResponseHttpMessageConverter tokenResponseHttpMessageConverter = new OAuth2AccessTokenResponseHttpMessageConverter();
+		tokenResponseHttpMessageConverter.setTokenResponseConverter(new CustomTokenResponseConverter());
+
+		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+		messageConverters.add(new FormHttpMessageConverter());
+		messageConverters.add(new StringHttpMessageConverter());
+		messageConverters.add(mappingJackson2HttpMessageConverter);
+
+		return new RestTemplateBuilder().additionalMessageConverters(messageConverters)
+				.requestFactory(new ClientHttpRequestFactorySupplier()).interceptors(new HeaderInterceptor())
+				.errorHandler(new OAuth2ErrorResponseErrorHandler()).basicAuthentication("clientIdPassword", "")
+				.build();
 	}
 
 }

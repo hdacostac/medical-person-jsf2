@@ -1,5 +1,7 @@
 package com.cegedim.web;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
@@ -26,6 +28,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+import org.springframework.web.client.RestTemplate;
 
 import com.cegedim.security.factory.CustomJwtTokenConverter;
 import com.cegedim.security.factory.JWTSecretKeyFactory;
@@ -81,6 +84,9 @@ public class BaseOAuth2SecurityConfiguration extends WebSecurityConfigurerAdapte
 //	@Autowired
 //	private OAuth2RestOperations myRestTemplate;
 
+	@Resource(name = "oauth2RestTemplate")
+	private RestTemplate oauth2RestTemplate;
+
 	@Autowired
 	private OAuth2AuthorizedClientService clientService;
 
@@ -106,8 +112,10 @@ public class BaseOAuth2SecurityConfiguration extends WebSecurityConfigurerAdapte
 				.antMatchers("/login").permitAll().anyRequest().authenticated().and().logout()
 				.logoutSuccessUrl("http://localhost:7070/logout").and()
 				.addFilterAfter(oauth2ClientContextFilter, SecurityContextPersistenceFilter.class)
-				.addFilterAfter(new TokenValidatorFilter(oAuth2ClientContext, customAccessTokenConverter(),
-						clientService, userInfoTokenServices(), tokenStore()), BasicAuthenticationFilter.class)
+				.addFilterAfter(
+						new TokenValidatorFilter(oAuth2ClientContext, customAccessTokenConverter(), clientService,
+								userInfoTokenServices(), tokenStore(), oauth2RestTemplate),
+						BasicAuthenticationFilter.class)
 				// this disables session creation on Spring Security
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
 	}
