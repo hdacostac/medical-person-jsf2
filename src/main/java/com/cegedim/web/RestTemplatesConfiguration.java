@@ -22,8 +22,9 @@ import org.springframework.web.client.RestTemplate;
 import com.gvt.support.rest.handlers.CustomResponseErrorHandler;
 import com.gvt.support.rest.handlers.URLRestHandler;
 import com.gvt.web.security.converters.CustomTokenResponseConverter;
-import com.gvt.web.security.interceptors.HeaderInterceptor;
-import com.gvt.web.security.interceptors.OAuth2AuthorizationInterceptor;
+import com.gvt.web.security.interceptors.LocaleHeaderInterceptor;
+import com.gvt.web.security.interceptors.LoggerInterceptor;
+import com.gvt.web.security.interceptors.AuthorizationHeaderInterceptor;
 
 @Configuration
 public class RestTemplatesConfiguration {
@@ -65,9 +66,9 @@ public class RestTemplatesConfiguration {
 		restTemplate.setRequestFactory(clientHttpRequestFactory);
 		restTemplate.setErrorHandler(new CustomResponseErrorHandler());
 		restTemplate.setMessageConverters(messageConverters);
-		restTemplate.getInterceptors().add(new HeaderInterceptor());
-		restTemplate.getInterceptors().add(new OAuth2AuthorizationInterceptor(mappingJackson2HttpMessageConverter,
-				clientHttpRequestFactory, oAuth2ClientContext));
+		restTemplate.getInterceptors().add(new LocaleHeaderInterceptor());
+		restTemplate.getInterceptors().add(new AuthorizationHeaderInterceptor(oAuth2ClientContext));
+		restTemplate.getInterceptors().add(new LoggerInterceptor());
 
 		return restTemplate;
 	}
@@ -84,7 +85,7 @@ public class RestTemplatesConfiguration {
 		messageConverters.add(mappingJackson2HttpMessageConverter);
 
 		return new RestTemplateBuilder().additionalMessageConverters(messageConverters)
-				.requestFactory(new ClientHttpRequestFactorySupplier()).interceptors(new HeaderInterceptor())
+				.requestFactory(new ClientHttpRequestFactorySupplier()).interceptors(new LocaleHeaderInterceptor())
 				.errorHandler(new OAuth2ErrorResponseErrorHandler()).basicAuthentication("clientIdPassword", "")
 				.build();
 	}

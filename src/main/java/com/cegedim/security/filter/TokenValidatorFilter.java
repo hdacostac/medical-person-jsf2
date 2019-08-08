@@ -31,6 +31,7 @@ import org.springframework.security.oauth2.client.token.grant.password.ResourceO
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
@@ -91,6 +92,7 @@ public class TokenValidatorFilter extends OncePerRequestFilter {
 			LOGGER.debug("authentication:{}", authentication);
 			LOGGER.debug("principal:{}", authentication.getPrincipal());
 			LOGGER.debug("authorities:{}", authentication.getAuthorities());
+			LOGGER.debug("details:{}", ((OAuth2AuthenticationDetails) authentication.getDetails()).getDecodedDetails());
 
 			if (oauthToken.getExpiresIn() < 10) {
 				LOGGER.debug("Triyng to expire the session");
