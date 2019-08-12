@@ -87,6 +87,7 @@ public class TokenValidatorFilter extends OncePerRequestFilter {
 
 			OAuth2Authentication authentication = (OAuth2Authentication) SecurityContextHolder.getContext()
 					.getAuthentication();
+//			authentication.getOAuth2Request()
 //			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //			OAuth2AuthenticationToken oauthToken2 = (OAuth2AuthenticationToken) authentication;
 			LOGGER.debug("authentication:{}", authentication);
