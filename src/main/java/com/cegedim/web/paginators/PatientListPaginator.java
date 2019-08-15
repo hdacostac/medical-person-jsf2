@@ -2,7 +2,6 @@ package com.cegedim.web.paginators;
 
 import java.util.Map;
 
-import org.omnifaces.util.Faces;
 import org.primefaces.model.SortOrder;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -47,7 +46,7 @@ public class PatientListPaginator extends BaseActionList<PersonListHolder> {
 
 	public void showUserInfo() {
 		logger.debug("Información de usuario");
-		
+
 		OAuth2Authentication authentication = (OAuth2Authentication) SecurityContextHolder.getContext()
 				.getAuthentication();
 	}
