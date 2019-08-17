@@ -16,6 +16,7 @@ import com.gvt.web.security.signature.JWTSecretKeyFactory;
 @EnableWebSecurity
 @EnableOAuth2Sso
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+//@Order(3)
 public class OAuth2SecurityConfiguration extends BaseOAuth2SecurityConfiguration {
 
 	@Override

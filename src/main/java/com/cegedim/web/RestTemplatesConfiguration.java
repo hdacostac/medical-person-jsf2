@@ -22,9 +22,9 @@ import org.springframework.web.client.RestTemplate;
 import com.gvt.support.rest.handlers.CustomResponseErrorHandler;
 import com.gvt.support.rest.handlers.URLRestHandler;
 import com.gvt.web.security.converters.CustomTokenResponseConverter;
+import com.gvt.web.security.interceptors.AuthorizationHeaderInterceptor;
 import com.gvt.web.security.interceptors.LocaleHeaderInterceptor;
 import com.gvt.web.security.interceptors.LoggerInterceptor;
-import com.gvt.web.security.interceptors.AuthorizationHeaderInterceptor;
 
 @Configuration
 public class RestTemplatesConfiguration {
