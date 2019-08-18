@@ -41,6 +41,9 @@ public class RestTemplatesConfiguration {
 	@Value("${app.rest.context}")
 	protected String restContext;
 
+	@Value("${security.oauth2.client.clientId}")
+	private String clientId;
+
 	@Bean
 	public URLRestHandler urlHrRestHandler() {
 		URLRestHandler baseRestHandler = new URLRestHandler();
@@ -85,9 +88,9 @@ public class RestTemplatesConfiguration {
 		messageConverters.add(mappingJackson2HttpMessageConverter);
 
 		return new RestTemplateBuilder().additionalMessageConverters(messageConverters)
-				.requestFactory(new ClientHttpRequestFactorySupplier()).interceptors(new LocaleHeaderInterceptor())
-				.errorHandler(new OAuth2ErrorResponseErrorHandler()).basicAuthentication("clientIdPassword", "")
-				.build();
+				.requestFactory(new ClientHttpRequestFactorySupplier())
+				.interceptors(new LocaleHeaderInterceptor(), new LoggerInterceptor())
+				.errorHandler(new OAuth2ErrorResponseErrorHandler()).basicAuthentication(clientId, "").build();
 	}
 
 }
