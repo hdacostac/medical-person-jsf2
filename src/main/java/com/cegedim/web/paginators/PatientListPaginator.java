@@ -37,8 +37,7 @@ public class PatientListPaginator extends BaseActionList<PersonListHolder> {
 			SortOrder sortOrder, Map<String, Object> filters) {
 		PersonService restHandler = CustomApplicationContext.getContext().getBean(PersonService.class);
 
-		return restHandler.getPaginationPatients(first, pageSize, null, sortOrder != null ? sortOrder.name() : null,
-				filters);
+		return restHandler.getPatients(first, pageSize, null, sortOrder != null ? sortOrder.name() : null, filters);
 	}
 
 }

@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="#{deviceResourceHandler.resolveTemplate()}"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:t="http://myfaces.apache.org/tomahawk" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:cegedim="http://java.sun.com/jsf/composite/components">
+	<ui:define name="content">
+		<div class="ui-g ui-fluid">
+            <div class="ui-g-12 ui-lg-6">
+                <!-- Left Side -->
+                <div class="card card-w-title">
+                    <h1>InputText</h1>
+                    <p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText />
+                            <label>Name</label>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText />
+                            <label>Email</label>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText />
+                            <label>Phone</label>
+                        </h:panelGroup>
+                        <p:inputText placeholder="Disabled Input" disabled="true"/>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText />
+                            <label>Address</label>
+                        </h:panelGroup>
+                        <p:inputText />
+                    </p:panelGrid>
+                </div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

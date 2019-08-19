@@ -4,6 +4,9 @@
 		http://www.springframework.org/schema/webflow
 		http://www.springframework.org/schema/webflow/spring-webflow.xsd">
 
+	<view-state id="parentFormState">
+	</view-state>
+
 	<exception-handler bean="flowExceptionHandler" />
 
 </flow>

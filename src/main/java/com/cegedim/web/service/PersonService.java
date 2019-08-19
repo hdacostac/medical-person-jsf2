@@ -9,7 +9,7 @@ import com.gvt.main.hibernate.model.Persona;
 
 public interface PersonService {
 
-	PagedResources<PersonListHolder> getPaginationPatients(int first, int pageSize, String sortField, String sortOrder,
+	PagedResources<PersonListHolder> getPatients(int first, int pageSize, String sortField, String sortOrder,
 			Map<String, Object> filters);
 
 }

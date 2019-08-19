@@ -29,8 +29,8 @@ public class PersonServiceRestHandler implements PersonService {
 	}
 
 	@Override
-	public PagedResources<PersonListHolder> getPaginationPatients(int first, int pageSize, String sortField,
-			String sortOrder, Map<String, Object> filters) {
+	public PagedResources<PersonListHolder> getPatients(int first, int pageSize, String sortField, String sortOrder,
+			Map<String, Object> filters) {
 		Map<String, Object> params = urlHrRestHandler.buildFilterParams(first, pageSize, sortField, sortOrder, filters);
 
 		if (filters != null && StringUtils.isNotBlank((String) filters.get("globalFilter"))) {
