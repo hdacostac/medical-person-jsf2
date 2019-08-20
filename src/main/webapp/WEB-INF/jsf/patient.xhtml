@@ -8,33 +8,53 @@
 	xmlns:o="http://omnifaces.org/ui"
 	xmlns:cegedim="http://java.sun.com/jsf/composite/components">
 	<ui:define name="content">
-		<div class="ui-g ui-fluid">
-            <div class="ui-g-12 ui-lg-6">
-                <!-- Left Side -->
-                <div class="card card-w-title">
-                    <h1>InputText</h1>
-                    <p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank form-group">
-                        <h:panelGroup styleClass="md-inputfield">
-                            <p:inputText />
-                            <label>Name</label>
-                        </h:panelGroup>
-                        <h:panelGroup styleClass="md-inputfield">
-                            <p:inputText />
-                            <label>Email</label>
-                        </h:panelGroup>
-                        <h:panelGroup styleClass="md-inputfield">
-                            <p:inputText />
-                            <label>Phone</label>
-                        </h:panelGroup>
-                        <p:inputText placeholder="Disabled Input" disabled="true"/>
-                        <h:panelGroup styleClass="md-inputfield">
-                            <p:inputText />
-                            <label>Address</label>
-                        </h:panelGroup>
-                        <p:inputText />
-                    </p:panelGrid>
-                </div>
-			</div>
+		<div class="card card-w-title">
+			<h1>#{bundle['patient.card']}</h1>
+			<h:form id="patientForm" enctype="multipart/form-data">
+				<p:tabView id="idTabView" widgetVar="panelTabViewFichaExtendida">
+					<p:tab title="#{bundle['patient.info']}">
+						<div class="ui-g ui-fluid">
+							<div class="ui-g-3">
+								 <p:panel header="#{bundle['patient.form.panel.photo']}" styleClass="ui-shadow-content">
+								 </p:panel>
+							</div>
+							<div class="ui-g-9">
+								<div class="ui-g">
+									<div class="ui-g-6">
+										<cegedim:inputText id="patientName" bundleLabel="#{bundle['patient.form.name']}"
+											inputValue="#{patientBean.nombrePersona}" required="true">
+										</cegedim:inputText>
+									</div>
+									<div class="ui-g-6">
+										<cegedim:inputText id="patientLastName" bundleLabel="#{bundle['patient.form.last.name']}"
+											inputValue="#{patientBean.apellidoPersona}" required="true">
+										</cegedim:inputText>
+									</div>
+									<div class="ui-g-12">
+										<cegedim:inputText id="patientIdentityDocument" bundleLabel="#{bundle['patient.form.identity.document']}"
+											inputValue="#{patientBean.cedulaPersona}" required="true">
+										</cegedim:inputText>
+									</div>
+									<div class="ui-g-6">
+										<cegedim:selectOneRadio id="patientSex" bundleLabel="#{bundle['patient.form.sex']}" showLabel="true"
+											inputValue="#{patientBean.sexo}">
+											<f:selectItems value="#{sexItems}" var="sexItem" itemValue="#{sexItem}" itemLabel="#{bundle['lookup.sex.'.concat(sexItem.codigoSexo)]}" />
+										</cegedim:selectOneRadio>
+									</div>
+									<div class="ui-g-6">
+										<cegedim:selectOneMenu id="patientBloodElement" bundleLabel="#{bundle['patient.form.blood.groups']}" showLabel="true"
+											inputValue="#{patientBean.tipoSangre}">
+											<f:selectItems value="#{bloodGroupsItems}" var="bloodGroupsItem" itemValue="#{bloodGroupsItem}" itemLabel="#{bloodGroupsItem.nombreTipoSangre}" />
+										</cegedim:selectOneMenu>
+									</div>
+								</div>
+							</div>
+						</div>
+					</p:tab>
+					<p:tab title="#{bundle['patient.info.backgound']}">
+					</p:tab>
+				</p:tabView>
+			</h:form>
 		</div>
 	</ui:define>
 </ui:composition>

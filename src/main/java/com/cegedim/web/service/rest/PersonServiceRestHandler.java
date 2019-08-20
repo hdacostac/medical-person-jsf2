@@ -1,5 +1,6 @@
 package com.cegedim.web.service.rest;
 
+import java.util.Collection;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -11,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.cegedim.web.service.PersonService;
 import com.gvt.commons.helper.PersonListHolder;
+import com.gvt.main.hibernate.model.TipoSangre;
 import com.gvt.support.rest.handlers.URLRestHandler;
 
 @Component
@@ -28,6 +30,9 @@ public class PersonServiceRestHandler implements PersonService {
 			extends TypeReferences.PagedResourcesType<PersonListHolder> {
 	}
 
+	private static final class BloodGroupsParametrizedReturnType extends TypeReferences.PagedResourcesType<TipoSangre> {
+	}
+
 	@Override
 	public PagedResources<PersonListHolder> getPatients(int first, int pageSize, String sortField, String sortOrder,
 			Map<String, Object> filters) {
@@ -39,6 +44,12 @@ public class PersonServiceRestHandler implements PersonService {
 
 		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/persons", params), HttpMethod.GET, null,
 				new PatientParametrizedReturnType()).getBody();
+	}
+
+	@Override
+	public Collection<TipoSangre> getBloodGroups() {
+		return restTemplate.exchange(urlHrRestHandler.buildURI("/bloodGroups/search/findAll"), HttpMethod.GET, null,
+				new BloodGroupsParametrizedReturnType()).getBody().getContent();
 	}
 
 }
