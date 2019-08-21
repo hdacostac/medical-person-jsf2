@@ -47,6 +47,25 @@
 											<f:selectItems value="#{bloodGroupsItems}" var="bloodGroupsItem" itemValue="#{bloodGroupsItem}" itemLabel="#{bloodGroupsItem.nombreTipoSangre}" />
 										</cegedim:selectOneMenu>
 									</div>
+									<div class="ui-g-6">
+										<cegedim:calendar id="patientBirthDate" bundleLabel="#{bundle['patient.form.birthdate']}"
+											inputValue="#{patientBean.fechaNacimientoPersona}">
+											<p:ajax event="dateSelect" update="patientForm-idTabView-patientAgeCalculationPanel" process="@this" />
+											<p:ajax event="blur" update="patientForm-idTabView-patientAgeCalculationPanel" process="@this" />
+										</cegedim:calendar>
+									</div>
+									<div class="ui-g-6">
+										<p:outputPanel id="patientAgeCalculationPanel">
+											<p:outputPanel rendered="#{patientBean.fechaNacimientoPersona != null}">
+												<h:outputText id="patientAgeCalculated" value="#{patientBean.edad}" converter="javax.faces.Integer" />
+												<h:outputLabel for="patientAgeCalculated" value="#{bundle['patient.label.age.singular']}" rendered="#{patientBean.edad == 1}" style="padding-left:3px" />
+												<h:outputLabel for="patientAgeCalculated" value="#{bundle['patient.label.age.plural']}" rendered="#{patientBean.edad > 1}" style="padding-left:3px" />
+											</p:outputPanel>
+											<p:outputPanel rendered="#{patientBean.fechaNacimientoPersona == null}">
+												<div>#{bundle['patient.label.age.not.calculated']}</div>
+											</p:outputPanel>
+										</p:outputPanel>
+									</div>
 								</div>
 							</div>
 						</div>

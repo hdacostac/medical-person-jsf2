@@ -1,11 +1,15 @@
 package com.cegedim.web.controllers;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.annotation.RequestScope;
 
+import com.gvt.main.hibernate.model.Persona;
 import com.gvt.main.hibernate.model.Sexo;
 import com.gvt.web.controllers.BaseActionForm;
 
@@ -25,6 +29,18 @@ public class PatientController extends BaseActionForm {
 		items.add(sex);
 
 		return items;
+	}
+
+	public void updatePatientAge(Persona patient) {
+		logger.debug("Calculating the age of a patient");
+
+		if (patient.getFechaNacimientoPersona() != null) {
+			LocalDate birthDate = patient.getFechaNacimientoPersona().toInstant().atZone(ZoneId.systemDefault())
+					.toLocalDate();
+			LocalDate currentDate = LocalDate.now();
+
+			patient.setEdad(new Float(Period.between(birthDate, currentDate).getYears()));
+		}
 	}
 
 }

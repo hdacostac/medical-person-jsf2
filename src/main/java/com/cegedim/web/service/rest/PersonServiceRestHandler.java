@@ -1,9 +1,10 @@
 package com.cegedim.web.service.rest;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.mvc.TypeReferences;
 import org.springframework.http.HttpMethod;
@@ -30,7 +31,7 @@ public class PersonServiceRestHandler implements PersonService {
 			extends TypeReferences.PagedResourcesType<PersonListHolder> {
 	}
 
-	private static final class BloodGroupsParametrizedReturnType extends TypeReferences.PagedResourcesType<TipoSangre> {
+	private static final class BloodGroupsParametrizedReturnType extends ParameterizedTypeReference<List<TipoSangre>> {
 	}
 
 	@Override
@@ -47,9 +48,9 @@ public class PersonServiceRestHandler implements PersonService {
 	}
 
 	@Override
-	public Collection<TipoSangre> getBloodGroups() {
-		return restTemplate.exchange(urlHrRestHandler.buildURI("/bloodGroups/search/findAll"), HttpMethod.GET, null,
-				new BloodGroupsParametrizedReturnType()).getBody().getContent();
+	public List<TipoSangre> getBloodGroups() {
+		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/bloodGroups"), HttpMethod.GET, null,
+				new BloodGroupsParametrizedReturnType()).getBody();
 	}
 
 }

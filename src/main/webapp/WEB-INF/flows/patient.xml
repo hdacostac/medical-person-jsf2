@@ -12,6 +12,9 @@
 			<set name="viewScope.sexItems" value="patientController.buildSexItems()" />
 			<set name="viewScope.bloodGroupsItems" value="personServiceRestHandler.getBloodGroups()" />
 		</on-entry>
+		<on-render>
+			<evaluate expression="patientController.updatePatientAge(patientBean)" />
+		</on-render>
 	
 	</view-state>
 	
