@@ -8,12 +8,21 @@
 	xmlns:o="http://omnifaces.org/ui"
 	xmlns:cegedim="http://java.sun.com/jsf/composite/components">
 	<ui:define name="content">
+		<style>
+			.patientAddress-component-panel {
+				height: 125px;
+			}
+		</style>
+	
 		<div class="card card-w-title">
 			<h1>#{bundle['patient.card']}</h1>
 			<h:form id="patientForm" enctype="multipart/form-data">
 				<p:tabView id="idTabView" widgetVar="panelTabViewFichaExtendida">
 					<p:tab title="#{bundle['patient.info']}">
 						<div class="ui-g ui-fluid">
+							<div class="ui-g-12">
+								<h1>#{bundle['patient.personal.information']}</h1>
+							</div>
 							<div class="ui-g-3">
 								 <p:panel header="#{bundle['patient.form.panel.photo']}" styleClass="ui-shadow-content">
 								 </p:panel>
@@ -42,7 +51,7 @@
 										</cegedim:selectOneRadio>
 									</div>
 									<div class="ui-g-6">
-										<cegedim:selectOneMenu id="patientBloodElement" bundleLabel="#{bundle['patient.form.blood.groups']}" showLabel="true"
+										<cegedim:selectOneMenu id="patientBloodGroup" bundleLabel="#{bundle['patient.form.blood.groups']}" showLabel="true"
 											inputValue="#{patientBean.tipoSangre}">
 											<f:selectItems value="#{bloodGroupsItems}" var="bloodGroupsItem" itemValue="#{bloodGroupsItem}" itemLabel="#{bloodGroupsItem.nombreTipoSangre}" />
 										</cegedim:selectOneMenu>
@@ -56,17 +65,45 @@
 									</div>
 									<div class="ui-g-6">
 										<p:outputPanel id="patientAgeCalculationPanel">
-											<p:outputPanel rendered="#{patientBean.fechaNacimientoPersona != null}">
+											<p:outputPanel rendered="#{patientBean.fechaNacimientoPersona != null}" style="text-align: center">
+												<p:outputPanel styleClass="component-label">
+													<h:outputLabel value="#{bundle['patient.label.age.calculated']}" />
+												</p:outputPanel>
 												<h:outputText id="patientAgeCalculated" value="#{patientBean.edad}" converter="javax.faces.Integer" />
 												<h:outputLabel for="patientAgeCalculated" value="#{bundle['patient.label.age.singular']}" rendered="#{patientBean.edad == 1}" style="padding-left:3px" />
 												<h:outputLabel for="patientAgeCalculated" value="#{bundle['patient.label.age.plural']}" rendered="#{patientBean.edad > 1}" style="padding-left:3px" />
 											</p:outputPanel>
-											<p:outputPanel rendered="#{patientBean.fechaNacimientoPersona == null}">
-												<div>#{bundle['patient.label.age.not.calculated']}</div>
+											<p:outputPanel rendered="#{patientBean.fechaNacimientoPersona == null}" style="text-align: center">
+												<span>#{bundle['patient.label.age.not.calculated']}</span>
 											</p:outputPanel>
 										</p:outputPanel>
 									</div>
 								</div>
+							</div>
+						</div>
+						<div class="ui-g ui-fluid">
+							<div class="ui-g-12">
+								<h1>#{bundle['patient.contact.information']}</h1>
+							</div>
+							<div class="ui-g-6">
+								<cegedim:inputText id="patientMobile" bundleLabel="#{bundle['patient.form.mobile']}"
+									inputValue="#{patientBean.nombrePersona}" required="true">
+								</cegedim:inputText>
+							</div>
+							<div class="ui-g-6">
+								<cegedim:inputText id="patientHomePhone" bundleLabel="#{bundle['patient.form.home.phone']}"
+									inputValue="#{patientBean.nombrePersona}" required="true">
+								</cegedim:inputText>
+							</div>
+							<div class="ui-g-12">
+								<cegedim:inputText id="patientEmail" bundleLabel="#{bundle['patient.form.email']}"
+									inputValue="#{patientBean.cedulaPersona}" required="true">
+								</cegedim:inputText>
+							</div>
+							<div class="ui-g-12">
+								<cegedim:inputTextArea id="patientAddress" bundleLabel="#{bundle['patient.form.address']}"
+									inputValue="#{patientBean.nombrePersona}" required="true">
+								</cegedim:inputTextArea>
 							</div>
 						</div>
 					</p:tab>

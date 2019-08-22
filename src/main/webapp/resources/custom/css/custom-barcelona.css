@@ -5,3 +5,19 @@
 .topbar-menu .ui-selectonemenu-label {
 	color: #BBDEFB;
 }
+
+.component-label label {
+	font-size: 14px;
+    color: #1976d2;
+    padding-left: 5px;
+}
+
+body .md-inputfield input.ui-state-filled ~ label, body .md-inputfield .md-inputwrapper-filled ~ label, body .md-inputfield textarea.ui-state-filled ~ label {
+	font-size: 14px;
+	top: -25px;
+}
+
+body .md-inputfield input:focus ~ label, body .md-inputfield .md-inputwrapper-focus ~ label, body .md-inputfield textarea:focus ~ label {
+	font-size: 14px;
+	top: -25px;
+}

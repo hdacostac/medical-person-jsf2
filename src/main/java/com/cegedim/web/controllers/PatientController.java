@@ -39,7 +39,7 @@ public class PatientController extends BaseActionForm {
 					.toLocalDate();
 			LocalDate currentDate = LocalDate.now();
 
-			patient.setEdad(new Float(Period.between(birthDate, currentDate).getYears()));
+			patient.setEdad(Float.valueOf(Period.between(birthDate, currentDate).getYears()));
 		}
 	}
 
