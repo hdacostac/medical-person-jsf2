@@ -9,13 +9,15 @@
 	
 	<view-state id="personaInput" view="/WEB-INF/jsf/patient.xhtml" parent="#parentFormState">
 		<on-entry>
-			<set name="viewScope.sexItems" value="patientController.buildSexItems()" />
+			<set name="viewScope.sexItems" value="personServiceRestHandler.getSexItems()" />
 			<set name="viewScope.bloodGroupsItems" value="personServiceRestHandler.getBloodGroups()" />
 		</on-entry>
 		<on-render>
 			<evaluate expression="patientController.updatePatientAge(patientBean)" />
 		</on-render>
-	
+		<transition on="save">
+			<evaluate expression="patientController.save(patientBean)" />
+		</transition>
 	</view-state>
 	
 </flow>

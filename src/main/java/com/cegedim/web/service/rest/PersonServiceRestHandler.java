@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.mvc.TypeReferences;
@@ -12,8 +13,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.cegedim.web.service.PersonService;
+import com.gvt.commons.dto.v1.simple.SimpleDTO;
 import com.gvt.commons.helper.PersonListHolder;
-import com.gvt.main.hibernate.model.TipoSangre;
 import com.gvt.support.rest.handlers.URLRestHandler;
 
 @Component
@@ -31,7 +32,7 @@ public class PersonServiceRestHandler implements PersonService {
 			extends TypeReferences.PagedResourcesType<PersonListHolder> {
 	}
 
-	private static final class BloodGroupsParametrizedReturnType extends ParameterizedTypeReference<List<TipoSangre>> {
+	private static final class SimpleDTOParametrizedReturnType extends ParameterizedTypeReference<List<SimpleDTO>> {
 	}
 
 	@Override
@@ -48,9 +49,17 @@ public class PersonServiceRestHandler implements PersonService {
 	}
 
 	@Override
-	public List<TipoSangre> getBloodGroups() {
+	@Cacheable(value = "simpleDomainCacheBloodGroups")
+	public List<SimpleDTO> getBloodGroups() {
 		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/bloodGroups"), HttpMethod.GET, null,
-				new BloodGroupsParametrizedReturnType()).getBody();
+				new SimpleDTOParametrizedReturnType()).getBody();
+	}
+
+	@Override
+	@Cacheable(value = "simpleDomainCacheSexItems")
+	public List<SimpleDTO> getSexItems() {
+		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/sex"), HttpMethod.GET, null,
+				new SimpleDTOParametrizedReturnType()).getBody();
 	}
 
 }
