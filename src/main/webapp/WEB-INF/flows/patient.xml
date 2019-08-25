@@ -5,9 +5,9 @@
 		http://www.springframework.org/schema/webflow/spring-webflow.xsd"
 	parent="parent-flow">
 	
-	<var name="patientBean" class="com.gvt.main.hibernate.model.Persona"/>
+	<var name="patientBean" class="com.gvt.commons.dto.v1.patient.PatientDTO" />
 	
-	<view-state id="personaInput" view="/WEB-INF/jsf/patient.xhtml" parent="#parentFormState">
+	<view-state id="personaInput" view="/WEB-INF/jsf/patient.xhtml" parent="#parentFormState" model="patientBean">
 		<on-entry>
 			<set name="viewScope.sexItems" value="personServiceRestHandler.getSexItems()" />
 			<set name="viewScope.bloodGroupsItems" value="personServiceRestHandler.getBloodGroups()" />
