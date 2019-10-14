@@ -13,4 +13,12 @@
 		</resource-bundle>
 	</application>
 
+	<render-kit>
+		<renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.FileUploadRenderer</renderer-type>
+			<renderer-class>com.cegedim.web.components.CustomFileUploadRenderer</renderer-class>
+		</renderer>
+	</render-kit>
+
 </faces-config>

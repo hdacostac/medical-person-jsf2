@@ -24,7 +24,11 @@
 								<h1>#{bundle['patient.personal.information']}</h1>
 							</div>
 							<div class="ui-g-3">
-								 <p:panel header="#{bundle['patient.form.panel.photo']}" styleClass="ui-shadow-content">
+								 <p:panel id="patientImage" header="#{bundle['patient.form.panel.photo']}" styleClass="ui-shadow-content">
+								 	<p:graphicImage value="#{patientController.image}" rendered="#{not empty entity.url1}" width="190">
+										<f:param name="filename" value="#{entity.url1}" />
+									</p:graphicImage>
+								 	<p:fileUpload value="#{patientController.file}" mode="simple" skinSimple="true"/>
 								 </p:panel>
 							</div>
 							<div class="ui-g-9">
@@ -111,8 +115,12 @@
 					</p:tab>
 				</p:tabView>
 				<div style="height: 20px; margin-top: 20px">
-					<p:commandButton action="save" value="#{commonBundle['button.save']}" icon="ui-icon-check" update="@form" validateClient="true" 
-						style="float: right"/>
+					<p:commandButton action="save" value="#{commonBundle['button.save']}" icon="ui-icon-check" validateClient="true" 
+						style="float: right" ajax="false"/>
+						
+					<h:commandButton style="float: right" action="save" value="#{commonBundle['button.save']}" styleClass="ui-button ui-widget ui-state-default ui-corner-all">
+						<f:ajax execute="@all" render="patientForm-idTabView-patientImage"/>
+					</h:commandButton> 
 				</div>
 			</h:form>
 			<p:focus for="patientForm-idTabView-patientName-patientNameControl" />
