@@ -12,6 +12,11 @@
 			.patientAddress-component-panel {
 				height: 145px;
 			}
+			
+			.avatar-size {
+				max-width: 190px; 
+				max-height: 400px;
+			}
 		</style>
 	
 		<div class="card card-w-title" style="max-width: 1000px;margin: 0 auto;">
@@ -25,7 +30,8 @@
 							</div>
 							<div class="ui-g-3">
 								 <p:panel id="patientImage" header="#{bundle['patient.form.panel.photo']}" styleClass="ui-shadow-content">
-								 	<p:graphicImage value="#{patientController.image}" rendered="#{not empty entity.url1}" width="190">
+								 	<p:graphicImage value="#{patientController.image}" rendered="#{not empty entity.url1}" 
+								 		styleClass="avatar-size">
 										<f:param name="filename" value="#{entity.url1}" />
 									</p:graphicImage>
 								 	<p:fileUpload value="#{patientController.file}" mode="simple" skinSimple="true"/>
@@ -117,10 +123,6 @@
 				<div style="height: 20px; margin-top: 20px">
 					<p:commandButton action="save" value="#{commonBundle['button.save']}" icon="ui-icon-check" validateClient="true" 
 						style="float: right" ajax="false"/>
-						
-					<h:commandButton style="float: right" action="save" value="#{commonBundle['button.save']}" styleClass="ui-button ui-widget ui-state-default ui-corner-all">
-						<f:ajax execute="@all" render="patientForm-idTabView-patientImage"/>
-					</h:commandButton> 
 				</div>
 			</h:form>
 			<p:focus for="patientForm-idTabView-patientName-patientNameControl" />
