@@ -21,6 +21,7 @@ import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.webflow.execution.RequestContextHolder;
 
 import com.cegedim.web.service.PersonService;
 import com.gvt.commons.dto.v1.patient.PatientDTO;
@@ -45,6 +46,18 @@ public class PatientController extends BaseActionForm<PatientDTO> {
 			LocalDate currentDate = LocalDate.now();
 
 			patient.setAge(Float.valueOf(Period.between(birthDate, currentDate).getYears()));
+		}
+	}
+
+	public void updateAvatarType(PatientDTO patient) {
+		if (patient.getSexId() != null) {
+			if (patient.getSexId() == 1) {
+				RequestContextHolder.getRequestContext().getViewScope().put("avatarType",
+						"/images/male_photo_placeholder.jpg");
+			} else {
+				RequestContextHolder.getRequestContext().getViewScope().put("avatarType",
+						"/images/female_photo_placeholder.png");
+			}
 		}
 	}
 

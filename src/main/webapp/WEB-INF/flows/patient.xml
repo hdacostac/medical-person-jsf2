@@ -11,9 +11,12 @@
 		<on-entry>
 			<set name="viewScope.sexItems" value="personServiceRestHandler.getSexItems()" />
 			<set name="viewScope.bloodGroupsItems" value="personServiceRestHandler.getBloodGroups()" />
+			
+			<set name="viewScope.avatarType" value="'/images/unisex_photo_placeholder.jpg'" />
 		</on-entry>
 		<on-render>
 			<evaluate expression="patientController.updatePatientAge(entity)" />
+			<evaluate expression="patientController.updateAvatarType(entity)" />
 		</on-render>
 		<transition on="save">
 			<evaluate expression="patientController.save(entity)" />

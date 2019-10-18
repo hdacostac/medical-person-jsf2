@@ -14,14 +14,23 @@
 			}
 			
 			.avatar-size {
-				max-width: 190px; 
-				max-height: 400px;
+				max-width: 188px;
+				max-height: 223px;
+			}
+			
+			.ui-fileupload-filename {
+				display: inline-block;
+				width: 180px;
+				white-space: nowrap;
+				overflow: hidden !important;
+				text-overflow: ellipsis;
 			}
 		</style>
 	
 		<div class="card card-w-title" style="max-width: 1000px;margin: 0 auto;">
 			<h1>#{bundle['patient.card']}</h1>
 			<h:form id="patientForm" enctype="multipart/form-data">
+				<p:remoteCommand action="changeAvatar" ></p:remoteCommand>
 				<p:tabView id="idTabView">
 					<p:tab title="#{bundle['patient.info']}">
 						<div class="ui-g ui-fluid">
@@ -31,9 +40,12 @@
 							<div class="ui-g-3">
 								 <p:panel id="patientImage" header="#{bundle['patient.form.panel.photo']}" styleClass="ui-shadow-content">
 								 	<p:graphicImage value="#{patientController.image}" rendered="#{not empty entity.url1}" 
-								 		styleClass="avatar-size">
+								 		styleClass="avatar-size" alt="avatar_photo">
 										<f:param name="filename" value="#{entity.url1}" />
 									</p:graphicImage>
+									<h:graphicImage library="custom" name="#{avatarType}" rendered="#{empty entity.url1}" 
+								 		styleClass="avatar-size" alt="avatar_photo">
+									</h:graphicImage>
 								 	<p:fileUpload value="#{patientController.file}" mode="simple" skinSimple="true"/>
 								 </p:panel>
 							</div>
@@ -57,6 +69,7 @@
 									<div class="ui-g-6">
 										<cegedim:selectOneRadio id="patientSex" bundleLabel="#{bundle['patient.form.sex']}" showLabel="true"
 											inputValue="#{entity.sexId}">
+											<p:ajax event="change" update="patientForm-idTabView-patientImage" process="@this" />
 											<f:selectItems value="#{sexItems}" var="sexItem" itemValue="#{sexItem.id}" itemLabel="#{sexItem.description}" />
 										</cegedim:selectOneRadio>
 									</div>
