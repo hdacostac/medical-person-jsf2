@@ -62,8 +62,12 @@ public class PatientController extends BaseActionForm<PatientDTO> {
 	}
 
 	@Override
-	public PatientDTO saveObjectMethod(PatientDTO entity) throws Exception {
-		saveImageToDisk(entity);
+	public PatientDTO saveObjectMethod(PatientDTO entity) {
+		try {
+			saveImageToDisk(entity);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		return personService.savePatient(entity);
 	}

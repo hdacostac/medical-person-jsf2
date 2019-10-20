@@ -52,14 +52,14 @@ public class PersonServiceRestHandler implements PersonService {
 	}
 
 	@Override
-	@Cacheable(value = "simpleDomainCacheBloodGroups")
+//	@Cacheable(value = "simpleDomainCacheBloodGroups")
 	public List<SimpleDTO> getBloodGroups() {
 		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/bloodGroups"), HttpMethod.GET, null,
 				new SimpleDTOParametrizedReturnType()).getBody();
 	}
 
 	@Override
-	@Cacheable(value = "simpleDomainCacheSexItems")
+//	@Cacheable(value = "simpleDomainCacheSexItems")
 	public List<SimpleDTO> getSexItems() {
 		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/sex"), HttpMethod.GET, null,
 				new SimpleDTOParametrizedReturnType()).getBody();

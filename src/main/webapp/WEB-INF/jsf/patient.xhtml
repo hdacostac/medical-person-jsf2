@@ -111,6 +111,7 @@
 							<div class="ui-g-6">
 								<cegedim:inputText id="patientMobile" bundleLabel="#{bundle['patient.form.mobile']}"
 									inputValue="#{entity.mobilePhone}">
+									<f:converter converterId="phoneConverter" for="component" />
 								</cegedim:inputText>
 							</div>
 							<div class="ui-g-6">
