@@ -9,8 +9,11 @@
 	
 	<view-state id="personaInput" view="/WEB-INF/jsf/patient.xhtml" parent="#parentFormState" model="entity">
 		<on-entry>
+			<evaluate expression="patientController.init(entity)" />
+		
 			<set name="viewScope.sexItems" value="personServiceRestHandler.getSexItems()" />
 			<set name="viewScope.bloodGroupsItems" value="personServiceRestHandler.getBloodGroups()" />
+			<set name="viewScope.familyRelationshipsItems" value="simpleDTOsBuilder.getRelationShips()" />
 			
 			<set name="viewScope.avatarType" value="'/images/unisex_photo_placeholder.jpg'" />
 		</on-entry>
