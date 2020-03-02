@@ -5,10 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.mvc.TypeReferences;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.server.core.TypeReferences.PagedModelType;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
@@ -31,15 +30,14 @@ public class PersonServiceRestHandler implements PersonService {
 		this.urlHrRestHandler = urlHrRestHandler;
 	}
 
-	private static final class PatientParametrizedReturnType
-			extends TypeReferences.PagedResourcesType<PersonListHolder> {
+	private static final class PatientParametrizedReturnType extends PagedModelType<PersonListHolder> {
 	}
 
 	private static final class SimpleDTOParametrizedReturnType extends ParameterizedTypeReference<List<SimpleDTO>> {
 	}
 
 	@Override
-	public PagedResources<PersonListHolder> getPatients(int first, int pageSize, String sortField, String sortOrder,
+	public PagedModel<PersonListHolder> getPatients(int first, int pageSize, String sortField, String sortOrder,
 			Map<String, Object> filters) {
 		Map<String, Object> params = urlHrRestHandler.buildFilterParams(first, pageSize, sortField, sortOrder, filters);
 
