@@ -1,4 +1,4 @@
-package com.cegedim.web;
+package com.cegedim.web.config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +63,7 @@ public class RestTemplatesConfiguration {
 		RestTemplate restTemplate = new RestTemplate();
 
 		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+		messageConverters.add(new FormHttpMessageConverter());
 		messageConverters.add(new StringHttpMessageConverter());
 		messageConverters.add(mappingJackson2HttpMessageConverter);
 

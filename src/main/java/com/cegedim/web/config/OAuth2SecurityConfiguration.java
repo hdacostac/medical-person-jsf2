@@ -1,4 +1,4 @@
-package com.cegedim.web;
+package com.cegedim.web.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
