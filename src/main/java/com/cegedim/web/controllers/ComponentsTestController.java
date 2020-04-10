@@ -69,7 +69,7 @@ public class ComponentsTestController extends BaseFaces implements Serializable 
 
 	public String divByZero() {
 		int x = 100 / 0;
-		
+
 		return "";
 	}
 

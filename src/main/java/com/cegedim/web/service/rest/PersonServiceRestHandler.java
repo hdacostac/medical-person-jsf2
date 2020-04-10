@@ -16,16 +16,16 @@ import com.cegedim.web.service.PersonService;
 import com.gvt.commons.dto.v1.patient.PatientDTO;
 import com.gvt.commons.dto.v1.patient.PatientListDTO;
 import com.gvt.commons.dto.v1.simple.SimpleDTO;
-import com.gvt.support.rest.handlers.RestResponsePage;
-import com.gvt.support.rest.handlers.URLRestHandler;
+import com.gvt.data.domain.PageableRestResponse;
+import com.gvt.support.rest.handlers.UrlRestHandler;
 
 @Component
 public class PersonServiceRestHandler implements PersonService {
 
 	private RestTemplate restTemplate;
-	private URLRestHandler urlHrRestHandler;
+	private UrlRestHandler urlHrRestHandler;
 
-	public PersonServiceRestHandler(RestTemplate restTemplate, URLRestHandler urlHrRestHandler) {
+	public PersonServiceRestHandler(RestTemplate restTemplate, UrlRestHandler urlHrRestHandler) {
 		this.restTemplate = restTemplate;
 		this.urlHrRestHandler = urlHrRestHandler;
 	}
@@ -33,7 +33,7 @@ public class PersonServiceRestHandler implements PersonService {
 	private static final class SimpleDTOParametrizedReturnType extends ParameterizedTypeReference<List<SimpleDTO>> {
 	}
 
-	private ParameterizedTypeReference<RestResponsePage<PatientListDTO>> responseType = new ParameterizedTypeReference<RestResponsePage<PatientListDTO>>() {
+	private ParameterizedTypeReference<PageableRestResponse<PatientListDTO>> responseType = new ParameterizedTypeReference<PageableRestResponse<PatientListDTO>>() {
 	};
 
 //	@Override
@@ -79,12 +79,12 @@ public class PersonServiceRestHandler implements PersonService {
 	}
 
 	@Override
-	public RestResponsePage<PatientListDTO> getPatients(int first, int pageSize, String sortField, String sortOrder,
+	public PageableRestResponse<PatientListDTO> getPatients(int first, int pageSize, String sortField, String sortOrder,
 			Map<String, Object> filters) {
 		HttpHeaders requestHeaders = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(requestHeaders);
 
-		ResponseEntity<RestResponsePage<PatientListDTO>> response = restTemplate.exchange(
+		ResponseEntity<PageableRestResponse<PatientListDTO>> response = restTemplate.exchange(
 				urlHrRestHandler.buildURI("/api/v1/patients/paginated",
 						urlHrRestHandler.buildFilterParams(first, pageSize, sortField, sortOrder, filters), null),
 				HttpMethod.GET, requestEntity, responseType);

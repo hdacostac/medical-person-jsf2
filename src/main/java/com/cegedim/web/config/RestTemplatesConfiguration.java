@@ -19,8 +19,8 @@ import org.springframework.security.oauth2.client.http.OAuth2ErrorResponseErrorH
 import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import com.gvt.support.rest.handlers.CustomResponseErrorHandler;
-import com.gvt.support.rest.handlers.URLRestHandler;
+import com.gvt.support.rest.handlers.UrlRestHandler;
+import com.gvt.web.client.CustomResponseErrorHandler;
 import com.gvt.web.security.converters.CustomTokenResponseConverter;
 import com.gvt.web.security.interceptors.AuthorizationHeaderInterceptor;
 import com.gvt.web.security.interceptors.LocaleHeaderInterceptor;
@@ -45,8 +45,8 @@ public class RestTemplatesConfiguration {
 	private String clientId;
 
 	@Bean
-	public URLRestHandler urlHrRestHandler() {
-		URLRestHandler baseRestHandler = new URLRestHandler();
+	public UrlRestHandler urlHrRestHandler() {
+		UrlRestHandler baseRestHandler = new UrlRestHandler();
 
 		baseRestHandler.setRestContext(restContext);
 		baseRestHandler.setRestHost(restHost);

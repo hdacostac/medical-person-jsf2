@@ -80,8 +80,8 @@ public class PatientController extends BaseActionForm<PatientDTO> {
 			e.printStackTrace();
 		}
 
-		PatientDTO patientDTOUpdated =  personService.updatePatient(entity);
-		
+		PatientDTO patientDTOUpdated = personService.updatePatient(entity);
+
 		return patientDTOUpdated;
 	}
 

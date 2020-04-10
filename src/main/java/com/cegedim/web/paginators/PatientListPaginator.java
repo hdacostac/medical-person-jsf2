@@ -6,7 +6,7 @@ import org.primefaces.model.SortOrder;
 
 import com.cegedim.web.service.PersonService;
 import com.gvt.commons.dto.v1.patient.PatientListDTO;
-import com.gvt.support.rest.handlers.RestResponsePage;
+import com.gvt.data.domain.PageableRestResponse;
 import com.gvt.web.context.CustomApplicationContext;
 import com.gvt.web.controllers.BaseActionList;
 
@@ -33,7 +33,7 @@ public class PatientListPaginator extends BaseActionList<PatientListDTO> {
 	}
 
 	@Override
-	protected RestResponsePage<PatientListDTO> dataSource(int first, int pageSize, String sortField,
+	protected PageableRestResponse<PatientListDTO> dataSource(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, Object> filters) {
 		PersonService restHandler = CustomApplicationContext.getContext().getBean(PersonService.class);
 

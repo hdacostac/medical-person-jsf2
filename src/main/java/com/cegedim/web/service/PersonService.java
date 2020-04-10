@@ -6,11 +6,11 @@ import java.util.Map;
 import com.gvt.commons.dto.v1.patient.PatientDTO;
 import com.gvt.commons.dto.v1.patient.PatientListDTO;
 import com.gvt.commons.dto.v1.simple.SimpleDTO;
-import com.gvt.support.rest.handlers.RestResponsePage;
+import com.gvt.data.domain.PageableRestResponse;
 
 public interface PersonService {
 
-	RestResponsePage<PatientListDTO> getPatients(int first, int pageSize, String sortField, String sortOrder,
+	PageableRestResponse<PatientListDTO> getPatients(int first, int pageSize, String sortField, String sortOrder,
 			Map<String, Object> filters);
 
 	PatientDTO savePatient(PatientDTO patientDTO);
