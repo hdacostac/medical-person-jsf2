@@ -15,11 +15,11 @@ import com.cegedim.web.image.ResourcesHandler;
 import com.cegedim.web.service.PersonService;
 import com.gvt.commons.dto.v1.patient.FamilyRelationshipDTO;
 import com.gvt.commons.dto.v1.patient.PatientDTO;
-import com.gvt.web.controllers.BaseActionForm;
+import com.gvt.web.controllers.AbstractActionForm;
 
 @Controller
 @RequestScope
-public class PatientController extends BaseActionForm<PatientDTO> {
+public class PatientController extends AbstractActionForm<PatientDTO> {
 
 	private PersonService personService;
 	private ResourcesHandler resourcesHandler;

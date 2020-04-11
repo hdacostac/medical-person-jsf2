@@ -9,14 +9,14 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 
-import com.gvt.web.BaseConfiguration;
+import com.gvt.web.config.DefaultServletConfiguration;
 
 @SpringBootApplication(exclude = { DispatcherServletAutoConfiguration.class, ErrorMvcAutoConfiguration.class,
 		UserDetailsServiceAutoConfiguration.class })
 @ServletComponentScan(basePackages = { "com.gvt", "com.cegedim" })
 @ComponentScan(basePackages = { "com.gvt", "com.cegedim" })
 @EnableCaching
-public class WebConfiguration extends BaseConfiguration {
+public class WebConfiguration extends DefaultServletConfiguration {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebConfiguration.class, args);

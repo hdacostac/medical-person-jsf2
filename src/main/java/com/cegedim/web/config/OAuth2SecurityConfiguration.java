@@ -8,16 +8,16 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
-import com.gvt.web.security.BaseOAuth2SecurityConfiguration;
-import com.gvt.web.security.signature.DefaultJWTSecretKeyFactory;
-import com.gvt.web.security.signature.JWTSecretKeyFactory;
+import com.gvt.security.config.DefaultOAuth2SecurityConfiguration;
+import com.gvt.security.oauth2.secret.DefaultJwtSecretKeyFactory;
+import com.gvt.security.oauth2.secret.JwtSecretKeyFactory;
 
 @Configuration
 @EnableWebSecurity
 @EnableOAuth2Sso
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 //@Order(3)
-public class OAuth2SecurityConfiguration extends BaseOAuth2SecurityConfiguration {
+public class OAuth2SecurityConfiguration extends DefaultOAuth2SecurityConfiguration {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -27,7 +27,7 @@ public class OAuth2SecurityConfiguration extends BaseOAuth2SecurityConfiguration
 	}
 
 	@Bean
-	public JWTSecretKeyFactory jwtSecretKeyFactory(@Value("${app.jwt.secretKey}") String secretKey) {
-		return new DefaultJWTSecretKeyFactory(secretKey);
+	public JwtSecretKeyFactory jwtSecretKeyFactory(@Value("${app.jwt.secretKey}") String secretKey) {
+		return new DefaultJwtSecretKeyFactory(secretKey);
 	}
 }

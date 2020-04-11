@@ -6,11 +6,11 @@ import org.primefaces.model.SortOrder;
 
 import com.cegedim.web.service.PersonService;
 import com.gvt.commons.dto.v1.patient.PatientListDTO;
+import com.gvt.context.CustomApplicationContext;
 import com.gvt.data.domain.PageableRestResponse;
-import com.gvt.web.context.CustomApplicationContext;
-import com.gvt.web.controllers.BaseActionList;
+import com.gvt.web.controllers.AbstractActionList;
 
-public class PatientListPaginator extends BaseActionList<PatientListDTO> {
+public class PatientListPaginator extends AbstractActionList<PatientListDTO> {
 
 	private static final long serialVersionUID = 7652225764105360134L;
 

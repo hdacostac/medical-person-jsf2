@@ -19,12 +19,12 @@ import org.springframework.security.oauth2.client.http.OAuth2ErrorResponseErrorH
 import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import com.gvt.http.client.support.AuthorizationHeaderInterceptor;
+import com.gvt.http.client.support.LocaleHeaderInterceptor;
+import com.gvt.http.client.support.LoggerInterceptor;
+import com.gvt.security.oauth2.core.http.converter.CustomTokenResponseConverter;
 import com.gvt.support.rest.handlers.UrlRestHandler;
 import com.gvt.web.client.CustomResponseErrorHandler;
-import com.gvt.web.security.converters.CustomTokenResponseConverter;
-import com.gvt.web.security.interceptors.AuthorizationHeaderInterceptor;
-import com.gvt.web.security.interceptors.LocaleHeaderInterceptor;
-import com.gvt.web.security.interceptors.LoggerInterceptor;
 
 @Configuration
 public class RestTemplatesConfiguration {
