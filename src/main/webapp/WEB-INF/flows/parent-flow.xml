@@ -7,6 +7,6 @@
 	<view-state id="parentFormState">
 	</view-state>
 
-	<exception-handler bean="flowExceptionHandler" />
+	<exception-handler bean="customFlowExceptionHandler" />
 
 </flow>

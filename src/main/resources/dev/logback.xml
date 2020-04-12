@@ -34,7 +34,7 @@
 	<logger name="com.ocpsoft.pretty.faces.config.annotation" level="error" />
 <!-- 	<logger name="org.springframework.security.web.FilterChainProxy" level="trace" /> -->
 <!-- 	<logger name="org.springframework.security.oauth2" level="trace" /> -->
-<!-- 	<logger name="org.springframework.security.web" level="debug" /> -->
+	<logger name="org.springframework.security" level="trace" />
 
 	<logger name="MonitorLogging" level="INFO" additivity="true">
 		<appender-ref ref="STDOUT"/>
