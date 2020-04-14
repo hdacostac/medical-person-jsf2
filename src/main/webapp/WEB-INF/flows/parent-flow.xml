@@ -5,6 +5,9 @@
 		http://www.springframework.org/schema/webflow/spring-webflow.xsd">
 
 	<view-state id="parentFormState">
+		<on-entry>
+			<evaluate expression="localeHandler.getLocale()" />
+		</on-entry>
 	</view-state>
 
 	<exception-handler bean="customFlowExceptionHandler" />

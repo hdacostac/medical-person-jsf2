@@ -16,13 +16,11 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.http.OAuth2ErrorResponseErrorHandler;
-import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import com.gvt.http.client.support.AuthorizationHeaderInterceptor;
 import com.gvt.http.client.support.LocaleHeaderInterceptor;
 import com.gvt.http.client.support.LoggerInterceptor;
-import com.gvt.security.oauth2.core.http.converter.CustomTokenResponseConverter;
 import com.gvt.support.rest.handlers.UrlRestHandler;
 import com.gvt.web.client.CustomResponseErrorHandler;
 
@@ -43,6 +41,9 @@ public class RestTemplatesConfiguration {
 
 	@Value("${security.oauth2.client.clientId}")
 	private String clientId;
+
+	@Value("${security.oauth2.client.clientSecret}")
+	private String clientSecret;
 
 	@Bean
 	public UrlRestHandler urlHrRestHandler() {
@@ -80,8 +81,8 @@ public class RestTemplatesConfiguration {
 	@Bean
 	public RestTemplate oauth2RestTemplate(MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter,
 			ClientHttpRequestFactory clientHttpRequestFactory) {
-		OAuth2AccessTokenResponseHttpMessageConverter tokenResponseHttpMessageConverter = new OAuth2AccessTokenResponseHttpMessageConverter();
-		tokenResponseHttpMessageConverter.setTokenResponseConverter(new CustomTokenResponseConverter());
+//		OAuth2AccessTokenResponseHttpMessageConverter tokenResponseHttpMessageConverter = new OAuth2AccessTokenResponseHttpMessageConverter();
+//		tokenResponseHttpMessageConverter.setTokenResponseConverter(new CustomTokenResponseConverter());
 
 		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
 		messageConverters.add(new FormHttpMessageConverter());
@@ -91,7 +92,8 @@ public class RestTemplatesConfiguration {
 		return new RestTemplateBuilder().additionalMessageConverters(messageConverters)
 				.requestFactory(new ClientHttpRequestFactorySupplier())
 				.interceptors(new LocaleHeaderInterceptor(), new LoggerInterceptor())
-				.errorHandler(new OAuth2ErrorResponseErrorHandler()).basicAuthentication(clientId, "").build();
+				.errorHandler(new OAuth2ErrorResponseErrorHandler()).basicAuthentication(clientId, clientSecret)
+				.build();
 	}
 
 }

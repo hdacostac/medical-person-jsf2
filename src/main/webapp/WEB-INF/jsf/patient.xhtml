@@ -52,7 +52,7 @@
 								<div class="ui-g">
 									<div class="ui-g-6">
 										<cegedim:inputText id="patientName" bundleLabel="#{bundle['patient.form.name']}"
-											inputValue="#{entity.name}">
+											inputValue="#{entity.name}" required="true">
 										</cegedim:inputText>
 									</div>
 									<div class="ui-g-6">
@@ -159,7 +159,7 @@
 					</p:tab>
 				</p:tabView>
 				<div style="height: 20px; margin-top: 20px">
-					<p:commandButton action="save" value="#{commonBundle['button.save']}" icon="ui-icon-check" validateClient="true" 
+					<p:commandButton action="save" value="#{commonBundle['button.save']}" icon="ui-icon-check" validateClient="false" 
 						style="float: right" ajax="false"/>
 				</div>
 			</h:form>

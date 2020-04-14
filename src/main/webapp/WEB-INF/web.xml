@@ -7,7 +7,7 @@
 	version="3.1">
 
 	<welcome-file-list>
-		<welcome-file>/index.html</welcome-file>
+		<welcome-file>/app/patient</welcome-file>
 	</welcome-file-list>
 
 	<servlet>
