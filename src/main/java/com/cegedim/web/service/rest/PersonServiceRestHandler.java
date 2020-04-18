@@ -75,7 +75,7 @@ public class PersonServiceRestHandler implements PersonService {
 		pathParams.put("id", String.valueOf(patientDTO.getId()));
 
 		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/patients/{id}", null, pathParams),
-				HttpMethod.PUT, new HttpEntity<>(patientDTO), PatientDTO.class).getBody();
+				HttpMethod.PATCH, new HttpEntity<>(patientDTO), PatientDTO.class).getBody();
 	}
 
 	@Override

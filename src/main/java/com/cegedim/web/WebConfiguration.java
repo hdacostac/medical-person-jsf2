@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConf
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.PropertySource;
 
 import com.gvt.web.config.DefaultServletConfiguration;
 
@@ -16,7 +15,6 @@ import com.gvt.web.config.DefaultServletConfiguration;
 		UserDetailsServiceAutoConfiguration.class })
 @ServletComponentScan(basePackages = { "com.gvt", "com.cegedim" })
 @ComponentScan(basePackages = { "com.gvt", "com.cegedim" })
-//@PropertySource({ "classpath:root-web-application.properties", "classpath:application.properties" })
 @EnableCaching
 public class WebConfiguration extends DefaultServletConfiguration {
 

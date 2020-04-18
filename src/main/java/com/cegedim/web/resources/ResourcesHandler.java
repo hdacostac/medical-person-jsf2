@@ -1,4 +1,4 @@
-package com.cegedim.web.image;
+package com.cegedim.web.resources;
 
 import java.io.IOException;
 

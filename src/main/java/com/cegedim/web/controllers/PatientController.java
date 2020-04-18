@@ -1,20 +1,23 @@
 package com.cegedim.web.controllers;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.ArrayList;
 
-import org.primefaces.model.UploadedFile;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.webflow.execution.RequestContextHolder;
 
-import com.cegedim.web.image.ResourcesHandler;
+import com.cegedim.web.resources.ResourcesHandler;
+import com.cegedim.web.resources.UploadHandler;
 import com.cegedim.web.service.PersonService;
 import com.gvt.commons.dto.v1.patient.FamilyRelationshipDTO;
 import com.gvt.commons.dto.v1.patient.PatientDTO;
+import com.gvt.core.reflect.ReflectionUtils;
 import com.gvt.web.controllers.AbstractActionForm;
 
 @Controller
@@ -22,13 +25,13 @@ import com.gvt.web.controllers.AbstractActionForm;
 public class PatientController extends AbstractActionForm<PatientDTO> {
 
 	private PersonService personService;
-	private ResourcesHandler resourcesHandler;
+//	private ResourcesHandler resourcesHandler;
 
-	private UploadedFile file;
+//	private UploadedFile file;
 
-	public PatientController(PersonService personService, ResourcesHandler resourcesHandler) {
+	public PatientController(PersonService personService) {
 		this.personService = personService;
-		this.resourcesHandler = resourcesHandler;
+//		this.resourcesHandler = resourcesHandler;
 	}
 
 	public void init(PatientDTO patient) {
@@ -49,7 +52,8 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 		}
 	}
 
-	public void updateAvatarType(PatientDTO patient) {
+	public void updateAvatarType(PatientDTO patient, UploadHandler uploadHandler, ResourcesHandler resourcesHandler)
+			throws IOException {
 		if (patient.getSexId() != null) {
 			if (patient.getSexId() == 1) {
 				RequestContextHolder.getRequestContext().getViewScope().put("avatarType",
@@ -59,48 +63,73 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 						"/images/female_photo_placeholder.png");
 			}
 		}
+
+		saveImageToDisk(patient, uploadHandler, resourcesHandler);
+	}
+
+	@Override
+	protected void validate(PatientDTO entity, int validatingOnAction) throws Exception {
+		super.validate(entity, validatingOnAction);
+
+		if (validatingOnAction == VALIDATING_ON_UPDATE) {
+			if (StringUtils.isBlank(entity.getHomePhone())) {
+				entity.setHomePhone(ReflectionUtils.DELETE_CODE_FOR_STRING);
+			}
+			if (StringUtils.isBlank(entity.getEmail())) {
+				entity.setEmail(ReflectionUtils.DELETE_CODE_FOR_STRING);
+			}
+			if (entity.getBirthDate() == null) {
+				entity.setBirthDate(ReflectionUtils.DELETE_CODE_FOR_DATE);
+
+				if (logger.isTraceEnabled()) {
+					SimpleDateFormat sdf = new SimpleDateFormat();
+					logger.trace("BirthDate value to remove send from view:{}", sdf.format(entity.getBirthDate()));
+				}
+			}
+		}
 	}
 
 	@Override
 	public PatientDTO saveObjectMethod(PatientDTO entity) {
-		try {
-			saveImageToDisk(entity);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			saveImageToDisk(entity,
+//					(UploadHandler) RequestContextHolder.getRequestContext().getFlowScope().get("uploadHandler"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
 		return personService.savePatient(entity);
 	}
 
 	@Override
 	protected PatientDTO updateObjectMethod(PatientDTO entity) {
-		try {
-			saveImageToDisk(entity);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			saveImageToDisk(entity,
+//					(UploadHandler) RequestContextHolder.getRequestContext().getFlowScope().get("uploadHandler"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
-		PatientDTO patientDTOUpdated = personService.updatePatient(entity);
-
-		return patientDTOUpdated;
+		return personService.updatePatient(entity);
 	}
 
-	private void saveImageToDisk(PatientDTO entity) throws IOException {
-		if (file == null) {
+	private void saveImageToDisk(PatientDTO entity, UploadHandler uploadHandler, ResourcesHandler resourcesHandler)
+			throws IOException {
+		if (uploadHandler.getFile() == null) {
 			return;
 		}
 
-		entity.setUrl1(resourcesHandler.saveImage(file));
-		entity.setUrl1FileName(file.getFileName());
-		entity.setUrl1FileSize(Double.valueOf(file.getSize()));
+		entity.setUrl1(resourcesHandler.saveImage(uploadHandler.getFile()));
+		entity.setUrl1FileName(uploadHandler.getFile().getFileName());
+		entity.setUrl1FileSize(Double.valueOf(uploadHandler.getFile().getSize()));
 	}
 
-	public UploadedFile getFile() {
-		return file;
-	}
-
-	public void setFile(UploadedFile file) {
-		this.file = file;
-	}
+//	public UploadedFile getFile() {
+//		return file;
+//	}
+//
+//	public void setFile(UploadedFile file) {
+//		this.file = file;
+//	}
 
 }

@@ -31,9 +31,9 @@
 <!-- 	<logger name="com.gvt.web.config.security.filters.TokenValidatorFilter" level="debug" /> -->
 	<logger name="com.gvt" level="trace" />
 	<logger name="com.cegedim" level="trace" />
-	<logger name="com.ocpsoft.pretty.faces.config.annotation" level="error" />
-	<logger name="org.springframework.security.oauth2" level="trace" />
-	<logger name="org.springframework.security.web" level="trace" />
+<!-- 	<logger name="com.ocpsoft.pretty.faces.config.annotation" level="error" /> -->
+<!-- 	<logger name="org.springframework.security.oauth2" level="trace" /> -->
+<!-- 	<logger name="org.springframework.security.web" level="trace" /> -->
 
 	<logger name="MonitorLogging" level="INFO" additivity="true">
 		<appender-ref ref="STDOUT"/>

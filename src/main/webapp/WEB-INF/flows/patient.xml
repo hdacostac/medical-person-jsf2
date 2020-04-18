@@ -6,6 +6,7 @@
 	parent="parent-flow">
 	
 	<var name="entity" class="com.gvt.commons.dto.v1.patient.PatientDTO" />
+<!-- 	<var name="uploadHandler" class="com.cegedim.web.resources.UploadHandler"/> -->
 	
 	<view-state id="personaInput" view="/WEB-INF/jsf/patient.xhtml" parent="#parentFormState" model="entity">
 		<on-entry>
@@ -19,7 +20,7 @@
 		</on-entry>
 		<on-render>
 			<evaluate expression="patientController.updatePatientAge(entity)" />
-			<evaluate expression="patientController.updateAvatarType(entity)" />
+			<evaluate expression="patientController.updateAvatarType(entity,uploadHandler,resourcesOnDiskHandler)" />
 		</on-render>
 		<transition on="save">
 			<evaluate expression="patientController.save(entity)" />

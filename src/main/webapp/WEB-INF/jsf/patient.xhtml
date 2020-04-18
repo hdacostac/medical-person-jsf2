@@ -25,11 +25,15 @@
 				overflow: hidden !important;
 				text-overflow: ellipsis;
 			}
+			
+			.ui-fileupload-content {
+				display: none;
+			}
 		</style>
 	
 		<div class="card card-w-title" style="max-width: 1000px;margin: 0 auto;">
 			<h1>#{bundle['patient.card']}</h1>
-			<h:form id="patientForm" enctype="multipart/form-data">
+			<h:form id="patientForm">
 				<p:tabView id="idTabView">
 					<p:tab title="#{bundle['patient.info']}">
 						<div class="ui-g ui-fluid">
@@ -37,22 +41,28 @@
 								<h1>#{bundle['patient.personal.information']}</h1>
 							</div>
 							<div class="ui-g-3">
-								 <p:panel id="patientImage" header="#{bundle['patient.form.panel.photo']}" styleClass="ui-shadow-content">
-								 	<p:graphicImage value="#{resourcesOnDiskHandler.image}" rendered="#{not empty entity.url1}" 
-								 		styleClass="avatar-size" alt="avatar_photo">
-										<f:param name="filename" value="#{entity.url1}" />
-									</p:graphicImage>
-									<h:graphicImage library="custom" name="#{avatarType}" rendered="#{empty entity.url1}" 
-								 		styleClass="avatar-size" alt="avatar_photo">
-									</h:graphicImage>
-								 	<p:fileUpload value="#{patientController.file}" mode="simple" skinSimple="true"/>
-								 </p:panel>
+								<p:fragment>
+									<p:panel id="patientImage" header="#{bundle['patient.form.panel.photo']}" styleClass="ui-shadow-content">
+										<p:graphicImage value="#{resourcesOnDiskHandler.image}" rendered="#{not empty entity.url1}" 
+											styleClass="avatar-size" alt="avatar_photo">
+											<f:param name="filename" value="#{entity.url1}" />
+										</p:graphicImage>
+										<h:graphicImage library="custom" name="#{avatarType}" rendered="#{empty entity.url1}" 
+											styleClass="avatar-size" alt="avatar_photo">
+										</h:graphicImage>
+										<p:fileUpload fileUploadListener="#{uploadHandler.handleFileUpload}" sizeLimit="30720000"  
+                                  			allowTypes="/(\.|\/)(jpe?g|png)$/" mode="advanced" process="@this"
+                                  			onstart="PF('blockUIWidget').show();" 
+                                  			oncomplete="PF('blockUIWidget').hide();"
+                                  			auto="true" update="@parent" accept="/(\.|\/)(jpe?g|png)$/" />
+									</p:panel>
+								</p:fragment>
 							</div>
 							<div class="ui-g-9">
 								<div class="ui-g">
 									<div class="ui-g-6">
 										<cegedim:inputText id="patientName" bundleLabel="#{bundle['patient.form.name']}"
-											inputValue="#{entity.name}" required="true">
+											inputValue="#{entity.name}">
 										</cegedim:inputText>
 									</div>
 									<div class="ui-g-6">
@@ -75,6 +85,7 @@
 									<div class="ui-g-6">
 										<cegedim:selectOneMenu id="patientBloodGroup" bundleLabel="#{bundle['patient.form.blood.groups']}" showLabel="true"
 											inputValue="#{entity.bloodGroupId}">
+											<f:selectItem noSelectionOption="true" itemValue="0" itemLabel="#{commonBundle['select.item.none']}" />
 											<f:selectItems value="#{bloodGroupsItems}" var="bloodGroupsItem" itemValue="#{bloodGroupsItem.id}" itemLabel="#{bloodGroupsItem.description}" />
 										</cegedim:selectOneMenu>
 									</div>
@@ -159,8 +170,8 @@
 					</p:tab>
 				</p:tabView>
 				<div style="height: 20px; margin-top: 20px">
-					<p:commandButton action="save" value="#{commonBundle['button.save']}" icon="ui-icon-check" validateClient="false" 
-						style="float: right" ajax="false"/>
+					<p:commandButton action="save" value="#{commonBundle['button.save']}" icon="ui-icon-check" validateClient="true" 
+						style="float: right" update="@form"/>
 				</div>
 			</h:form>
 			<p:focus for="patientForm-idTabView-patientName-patientNameControl" />
