@@ -71,12 +71,17 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 	protected void validate(PatientDTO entity, int validatingOnAction) throws Exception {
 		super.validate(entity, validatingOnAction);
 
+		logger.trace("Valor del combo:{}", entity.getBloodGroupId());
+
 		if (validatingOnAction == VALIDATING_ON_UPDATE) {
 			if (StringUtils.isBlank(entity.getHomePhone())) {
 				entity.setHomePhone(ReflectionUtils.DELETE_CODE_FOR_STRING);
 			}
 			if (StringUtils.isBlank(entity.getEmail())) {
 				entity.setEmail(ReflectionUtils.DELETE_CODE_FOR_STRING);
+			}
+			if (entity.getBloodGroupId() == null) {
+				entity.setBloodGroupId(ReflectionUtils.DELETE_CODE_FOR_COMBOS_VALUE);
 			}
 			if (entity.getBirthDate() == null) {
 				entity.setBirthDate(ReflectionUtils.DELETE_CODE_FOR_DATE);
