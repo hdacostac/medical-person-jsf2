@@ -25,11 +25,17 @@
 				overflow: hidden !important;
 				text-overflow: ellipsis;
 			}
-			
-/* 			.ui-fileupload-content { */
-/* 				display: none; */
-/* 			} */
 		</style>
+		
+		<script>
+			function validateDate(inputElement) {
+				try {
+					jQuery.datepicker.parseDate('dd/mm/yy', PF(inputElement).input.val());
+				} catch (e) {
+					PF(inputElement).input.val('');
+				}
+			}
+		</script>
 	
 		<div class="card card-w-title" style="max-width: 1000px;margin: 0 auto;">
 			<h1>#{bundle['patient.card']}</h1>
@@ -57,7 +63,6 @@
                                   			auto="true" update="@parent" messageTemplate=" "
                                   			invalidFileMessage="No es valido" dragDropSupport="true"
                                   			invalidSizeMessage="Muy largo" />
-                                  		<p:message for="avatarFileUpload" showDetail="true" />
                                   		<div>#{commonBundle['avatar.file.size.limit']}<h:outputText value="#{appProps['app.avatar-file-size-limit'] / 1000000}"><f:convertNumber type="number" integerOnly="true" pattern="0MB" /></h:outputText></div>
 									</p:panel>
 								</p:fragment>
@@ -94,10 +99,10 @@
 										</cegedim:selectOneMenu>
 									</div>
 									<div class="ui-g-6">
-										<cegedim:calendar id="patientBirthDate" bundleLabel="#{bundle['patient.form.birthdate']}"
-											inputValue="#{entity.birthDate}">
+										<cegedim:calendar id="patientBirthDate" bundleLabel="#{bundle['patient.form.birthdate']}" widgetVar="patientBirthDate"
+											inputValue="#{entity.birthDate}" maskForControl="patientForm-idTabView-patientBirthDate-patientBirthDateControl_input">
 											<p:ajax event="dateSelect" update="patientForm-idTabView-patientAgeCalculationPanel" process="@this" />
-											<p:ajax event="blur" update="patientForm-idTabView-patientAgeCalculationPanel" process="@this" />
+											<p:ajax event="blur" update="patientForm-idTabView-patientAgeCalculationPanel" process="@this" onstart="return validateDate('patientBirthDate')" />
 										</cegedim:calendar>
 									</div>
 									<div class="ui-g-6">

@@ -42,13 +42,18 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 	}
 
 	public void updatePatientAge(PatientDTO patient) {
-		logger.debug("Calculating the age of a patient");
+		logger.debug("Possible value in the date:{}", patient.getBirthDate());
 
 		if (patient.getBirthDate() != null) {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			logger.debug("Calculating the age of a patient:{}", sdf.format(patient.getBirthDate()));
+
 			LocalDate birthDate = patient.getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			LocalDate currentDate = LocalDate.now();
 
 			patient.setAge(Float.valueOf(Period.between(birthDate, currentDate).getYears()));
+		} else {
+			patient.setAge(null);
 		}
 	}
 
@@ -85,6 +90,7 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 			}
 			if (entity.getBirthDate() == null) {
 				entity.setBirthDate(ReflectionUtils.DELETE_CODE_FOR_DATE);
+				entity.setAge(ReflectionUtils.DELETE_CODE_FOR_FLOAT);
 
 				if (logger.isTraceEnabled()) {
 					SimpleDateFormat sdf = new SimpleDateFormat();
