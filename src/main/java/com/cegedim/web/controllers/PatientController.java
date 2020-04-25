@@ -45,9 +45,6 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 		logger.debug("Possible value in the date:{}", patient.getBirthDate());
 
 		if (patient.getBirthDate() != null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-			logger.debug("Calculating the age of a patient:{}", sdf.format(patient.getBirthDate()));
-
 			LocalDate birthDate = patient.getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			LocalDate currentDate = LocalDate.now();
 
@@ -75,8 +72,6 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 	@Override
 	protected void validate(PatientDTO entity, int validatingOnAction) throws Exception {
 		super.validate(entity, validatingOnAction);
-
-		logger.trace("Valor del combo:{}", entity.getBloodGroupId());
 
 		if (validatingOnAction == VALIDATING_ON_UPDATE) {
 			if (StringUtils.isBlank(entity.getHomePhone())) {

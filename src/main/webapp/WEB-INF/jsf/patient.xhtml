@@ -27,16 +27,6 @@
 			}
 		</style>
 		
-		<script>
-			function validateDate(inputElement) {
-				try {
-					jQuery.datepicker.parseDate('dd/mm/yy', PF(inputElement).input.val());
-				} catch (e) {
-					PF(inputElement).input.val('');
-				}
-			}
-		</script>
-	
 		<div class="card card-w-title" style="max-width: 1000px;margin: 0 auto;">
 			<h1>#{bundle['patient.card']}</h1>
 			<h:form id="patientForm">
@@ -57,12 +47,12 @@
 											styleClass="avatar-size" alt="avatar_photo">
 										</h:graphicImage>
 										<p:fileUpload id="avatarFileUpload" fileUploadListener="#{uploadHandler.handleFileUpload}" 
-											sizeLimit="#{appProps['app.avatar-file-size-limit']}"  
+											sizeLimit="#{appProps['app.avatar-file-size-limit']}"
                                   			allowTypes="/(\.|\/)(jpe?g|png)$/" mode="advanced" process="@this"
                                   			onstart="PF('blockUIWidget').show();" oncomplete="PF('blockUIWidget').hide();"
                                   			auto="true" update="@parent" messageTemplate=" "
-                                  			invalidFileMessage="No es valido" dragDropSupport="true"
-                                  			invalidSizeMessage="Muy largo" />
+                                  			invalidFileMessage="#{commonBundle['avatar.file.type.invalid']}" dragDropSupport="true"
+                                  			invalidSizeMessage="#{commonBundle['avatar.file.size.invalid']}" />
                                   		<div>#{commonBundle['avatar.file.size.limit']}<h:outputText value="#{appProps['app.avatar-file-size-limit'] / 1000000}"><f:convertNumber type="number" integerOnly="true" pattern="0MB" /></h:outputText></div>
 									</p:panel>
 								</p:fragment>
@@ -141,7 +131,7 @@
 							</div>
 							<div class="ui-g-12">
 								<cegedim:inputText id="patientEmail" bundleLabel="#{bundle['patient.form.email']}"
-									inputValue="#{entity.email}">
+									inputValue="#{entity.email}" type="email">
 								</cegedim:inputText>
 							</div>
 							<div class="ui-g-12">
