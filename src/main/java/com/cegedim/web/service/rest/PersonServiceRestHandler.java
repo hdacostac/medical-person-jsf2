@@ -62,6 +62,13 @@ public class PersonServiceRestHandler implements PersonService {
 		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/sex"), HttpMethod.GET, null,
 				new SimpleDTOParametrizedReturnType()).getBody();
 	}
+	
+	@Override
+//	@Cacheable(value = "simpleDomainCacheSexItems")
+	public List<SimpleDTO> getProvinceItems() {
+		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/provinces"), HttpMethod.GET, null,
+				new SimpleDTOParametrizedReturnType()).getBody();
+	}
 
 	@Override
 	public PatientDTO savePatient(PatientDTO patientDTO) {

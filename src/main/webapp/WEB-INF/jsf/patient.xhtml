@@ -69,9 +69,14 @@
 											inputValue="#{entity.lastName}">
 										</cegedim:inputText>
 									</div>
-									<div class="ui-g-12">
+									<div class="ui-g-6">
 										<cegedim:inputText id="patientIdentityDocument" bundleLabel="#{bundle['patient.form.identity.document']}"
 											inputValue="#{entity.identityDocument}">
+										</cegedim:inputText>
+									</div>
+									<div class="ui-g-6">
+										<cegedim:inputText id="patientSanitaryDocument" bundleLabel="#{bundle['patient.form.sanitary.document']}"
+											inputValue="#{entity.sanitaryDocument}">
 										</cegedim:inputText>
 									</div>
 									<div class="ui-g-6">
@@ -113,7 +118,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="ui-g ui-fluid">
+						<div class="ui-g ui-fluid" style="padding-top: 10px">
 							<div class="ui-g-12">
 								<h1>#{bundle['patient.contact.information']}</h1>
 							</div>
@@ -135,9 +140,35 @@
 								</cegedim:inputText>
 							</div>
 							<div class="ui-g-12">
-								<cegedim:inputTextarea id="patientAddress" bundleLabel="#{bundle['patient.form.address']}"
-									inputValue="#{entity.address}">
-								</cegedim:inputTextarea>
+								<cegedim:inputText id="patientAddressLine1" bundleLabel="#{bundle['patient.form.address']}"
+									inputValue="#{entity.addressLine1}">
+								</cegedim:inputText>
+							</div>
+							<div class="ui-g-12">
+								<cegedim:inputText id="patientAddressLine2" bundleLabel="#{bundle['patient.form.address']}"
+									inputValue="#{entity.addressLine2}">
+								</cegedim:inputText>
+							</div>
+							<div class="ui-g-4">
+								<cegedim:selectOneMenu id="patientProvince" bundleLabel="#{bundle['patient.form.province']}" showLabel="true"
+									inputValue="#{entity.province}">
+									<f:selectItem noSelectionOption="true" itemLabel="#{commonBundle['select.item.none']}" />
+									<f:selectItems value="#{bloodGroupsItems}" var="bloodGroupsItem" itemValue="#{bloodGroupsItem.id}" itemLabel="#{bloodGroupsItem.description}" />
+								</cegedim:selectOneMenu>
+							</div>
+							<div class="ui-g-4">
+								<cegedim:selectOneMenu id="patientMunicipality" bundleLabel="#{bundle['patient.form.municipality']}" showLabel="true"
+									inputValue="#{entity.municipality}">
+									<f:selectItem noSelectionOption="true" itemLabel="#{commonBundle['select.item.none']}" />
+									<f:selectItems value="#{bloodGroupsItems}" var="bloodGroupsItem" itemValue="#{bloodGroupsItem.id}" itemLabel="#{bloodGroupsItem.description}" />
+								</cegedim:selectOneMenu>
+							</div>
+							<div class="ui-g-4">
+								<cegedim:selectOneMenu id="patientPostalCode" bundleLabel="#{bundle['patient.form.postal.code']}" showLabel="true"
+									inputValue="#{entity.postalCode}">
+									<f:selectItem noSelectionOption="true" itemLabel="#{commonBundle['select.item.none']}" />
+									<f:selectItems value="#{bloodGroupsItems}" var="bloodGroupsItem" itemValue="#{bloodGroupsItem.id}" itemLabel="#{bloodGroupsItem.description}" />
+								</cegedim:selectOneMenu>
 							</div>
 						</div>
 						<div class="ui-g ui-fluid">
