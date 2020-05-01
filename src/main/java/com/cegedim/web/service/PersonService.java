@@ -17,8 +17,10 @@ public interface PersonService {
 
 	PatientDTO updatePatient(PatientDTO patientDTO);
 
-	List<SimpleDTO> getBloodGroups();
+	List<SimpleDTO> getBloodGroupsItems();
 
 	List<SimpleDTO> getSexItems();
+
+	List<SimpleDTO> getProvinceItems();
 
 }

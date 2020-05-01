@@ -151,9 +151,9 @@
 							</div>
 							<div class="ui-g-4">
 								<cegedim:selectOneMenu id="patientProvince" bundleLabel="#{bundle['patient.form.province']}" showLabel="true"
-									inputValue="#{entity.province}">
+									inputValue="#{entity.province}" filter="true" filterMatchMode="contains">
 									<f:selectItem noSelectionOption="true" itemLabel="#{commonBundle['select.item.none']}" />
-									<f:selectItems value="#{bloodGroupsItems}" var="bloodGroupsItem" itemValue="#{bloodGroupsItem.id}" itemLabel="#{bloodGroupsItem.description}" />
+									<f:selectItems value="#{provinceItems}" var="provinceItem" itemValue="#{provinceItem.id}" itemLabel="#{provinceItem.description}" />
 								</cegedim:selectOneMenu>
 							</div>
 							<div class="ui-g-4">

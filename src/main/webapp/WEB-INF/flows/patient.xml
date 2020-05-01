@@ -13,8 +13,9 @@
 			<evaluate expression="patientController.init(entity)" />
 		
 			<set name="viewScope.sexItems" value="personServiceRestHandler.getSexItems()" />
-			<set name="viewScope.bloodGroupsItems" value="personServiceRestHandler.getBloodGroups()" />
+			<set name="viewScope.bloodGroupsItems" value="personServiceRestHandler.getBloodGroupsItems()" />
 			<set name="viewScope.familyRelationshipsItems" value="simpleDTOsBuilder.getRelationShips()" />
+			<set name="viewScope.provinceItems" value="personServiceRestHandler.getProvinceItems()" />
 			
 			<set name="viewScope.avatarType" value="'/images/unisex_photo_placeholder.jpg'" />
 		</on-entry>
