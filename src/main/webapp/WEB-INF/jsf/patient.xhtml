@@ -153,21 +153,26 @@
 								<cegedim:selectOneMenu id="patientProvince" bundleLabel="#{bundle['patient.form.province']}" showLabel="true"
 									inputValue="#{entity.province}" filter="true" filterMatchMode="contains">
 									<f:selectItem noSelectionOption="true" itemLabel="#{commonBundle['select.item.none']}" />
-									<f:selectItems value="#{provinceItems}" var="provinceItem" itemValue="#{provinceItem.id}" itemLabel="#{provinceItem.description}" />
+									<f:selectItems value="#{provinceItems}" var="provinceItem" itemValue="#{provinceItem}" itemLabel="#{provinceItem.description}" />
+									<f:param name="municipalityItemsToChange" value="municipalityItems" />
+									<p:ajax event="change" listener="#{postalCodeController.onProvinceChange}" update="patientForm-idTabView-patientMunicipality-patientMunicipalityControl patientForm-idTabView-patientPostalCode-patientPostalCodeControl" process="@this" />
 								</cegedim:selectOneMenu>
 							</div>
 							<div class="ui-g-4">
 								<cegedim:selectOneMenu id="patientMunicipality" bundleLabel="#{bundle['patient.form.municipality']}" showLabel="true"
 									inputValue="#{entity.municipality}">
 									<f:selectItem noSelectionOption="true" itemLabel="#{commonBundle['select.item.none']}" />
-									<f:selectItems value="#{bloodGroupsItems}" var="bloodGroupsItem" itemValue="#{bloodGroupsItem.id}" itemLabel="#{bloodGroupsItem.description}" />
+									<f:selectItems value="#{municipalityItems}" var="municipalityItem" itemValue="#{municipalityItem}" itemLabel="#{municipalityItem.description}" />
+									<f:param name="postalCodeItemsToChange" value="postalCodeItems" />
+									<f:param name="provinceItemIdSelected" value="#{entity.province.id}" />
+									<p:ajax event="change" listener="#{postalCodeController.onMunicipalityChange}" update="patientForm-idTabView-patientPostalCode-patientPostalCodeControl" process="@this" />
 								</cegedim:selectOneMenu>
 							</div>
 							<div class="ui-g-4">
 								<cegedim:selectOneMenu id="patientPostalCode" bundleLabel="#{bundle['patient.form.postal.code']}" showLabel="true"
 									inputValue="#{entity.postalCode}">
 									<f:selectItem noSelectionOption="true" itemLabel="#{commonBundle['select.item.none']}" />
-									<f:selectItems value="#{bloodGroupsItems}" var="bloodGroupsItem" itemValue="#{bloodGroupsItem.id}" itemLabel="#{bloodGroupsItem.description}" />
+									<f:selectItems value="#{postalCodeItems}" var="postalCodeItem" itemValue="#{postalCodeItem}" itemLabel="#{postalCodeItem.code}" />
 								</cegedim:selectOneMenu>
 							</div>
 						</div>
