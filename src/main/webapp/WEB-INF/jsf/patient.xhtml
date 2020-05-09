@@ -39,14 +39,14 @@
 							<div class="ui-g-3">
 								<p:fragment>
 									<p:panel id="patientImage" header="#{bundle['patient.form.panel.photo']}" styleClass="ui-shadow-content">
-										<p:graphicImage value="#{resourcesOnDiskHandler.image}" rendered="#{not empty entity.url1}" 
+										<p:graphicImage value="#{imagesResourceHandler.image}" rendered="#{not empty entity.url1}" 
 											styleClass="avatar-size" alt="avatar_photo">
 											<f:param name="filename" value="#{entity.url1}" />
 										</p:graphicImage>
 										<h:graphicImage library="custom" name="#{avatarType}" rendered="#{empty entity.url1}" 
 											styleClass="avatar-size" alt="avatar_photo">
 										</h:graphicImage>
-										<p:fileUpload id="avatarFileUpload" fileUploadListener="#{uploadHandler.handleFileUpload}" 
+										<p:fileUpload id="avatarFileUpload" fileUploadListener="#{uploadResourcesHandler.handleFileUpload}" 
 											sizeLimit="#{appProps['app.avatar-file-size-limit']}"
                                   			allowTypes="/(\.|\/)(jpe?g|png)$/" mode="advanced" process="@this"
                                   			onstart="PF('blockUIWidget').show();" oncomplete="PF('blockUIWidget').hide();"
@@ -155,12 +155,13 @@
 									<f:selectItem noSelectionOption="true" itemLabel="#{commonBundle['select.item.none']}" />
 									<f:selectItems value="#{provinceItems}" var="provinceItem" itemValue="#{provinceItem}" itemLabel="#{provinceItem.description}" />
 									<f:param name="municipalityItemsToChange" value="municipalityItems" />
+									<f:param name="postalCodeItemsToChange" value="postalCodeItems" />
 									<p:ajax event="change" listener="#{postalCodeController.onProvinceChange}" update="patientForm-idTabView-patientMunicipality-patientMunicipalityControl patientForm-idTabView-patientPostalCode-patientPostalCodeControl" process="@this" />
 								</cegedim:selectOneMenu>
 							</div>
 							<div class="ui-g-4">
 								<cegedim:selectOneMenu id="patientMunicipality" bundleLabel="#{bundle['patient.form.municipality']}" showLabel="true"
-									inputValue="#{entity.municipality}">
+									inputValue="#{entity.municipality}" filter="true" filterMatchMode="contains">
 									<f:selectItem noSelectionOption="true" itemLabel="#{commonBundle['select.item.none']}" />
 									<f:selectItems value="#{municipalityItems}" var="municipalityItem" itemValue="#{municipalityItem}" itemLabel="#{municipalityItem.description}" />
 									<f:param name="postalCodeItemsToChange" value="postalCodeItems" />

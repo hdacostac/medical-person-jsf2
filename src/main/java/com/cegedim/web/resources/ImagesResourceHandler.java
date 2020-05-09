@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
-public interface ResourcesHandler {
+public interface ImagesResourceHandler {
 
 	StreamedContent getImage() throws IOException;
 

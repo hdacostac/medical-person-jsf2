@@ -6,22 +6,22 @@
 	parent="parent-flow">
 	
 	<var name="entity" class="com.gvt.commons.dto.v1.patient.PatientDTO" />
-<!-- 	<var name="uploadHandler" class="com.cegedim.web.resources.UploadHandler"/> -->
+<!-- 	<var name="uploadHandler" class="com.cegedim.web.resources.UploadResourcesHandler"/> -->
 	
 	<view-state id="personaInput" view="/WEB-INF/jsf/patient.xhtml" parent="#parentFormState" model="entity">
 		<on-entry>
 			<evaluate expression="patientController.init(entity)" />
 		
-			<set name="viewScope.sexItems" value="personServiceRestHandler.getSexItems()" />
-			<set name="viewScope.bloodGroupsItems" value="personServiceRestHandler.getBloodGroupsItems()" />
+			<set name="viewScope.sexItems" value="personService.getSexItems()" />
+			<set name="viewScope.bloodGroupsItems" value="personService.getBloodGroupsItems()" />
 			<set name="viewScope.familyRelationshipsItems" value="simpleDTOsBuilder.getRelationShips()" />
-			<set name="viewScope.provinceItems" value="personServiceRestHandler.getProvinceItems()" />
+			<set name="viewScope.provinceItems" value="postalCodesService.getProvinceItems()" />
 			
 			<set name="viewScope.avatarType" value="'/images/unisex_photo_placeholder.jpg'" />
 		</on-entry>
 		<on-render>
 			<evaluate expression="patientController.updatePatientAge(entity)" />
-			<evaluate expression="patientController.updateAvatarType(entity,uploadHandler,resourcesOnDiskHandler)" />
+			<evaluate expression="patientController.updateAvatarType(entity,uploadResourcesHandler,imagesResourceHandler)" />
 		</on-render>
 		<transition on="save">
 			<evaluate expression="patientController.save(entity)" />

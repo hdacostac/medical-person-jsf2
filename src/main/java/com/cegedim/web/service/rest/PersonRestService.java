@@ -19,13 +19,13 @@ import com.gvt.commons.dto.v1.simple.SimpleDTO;
 import com.gvt.data.domain.PageableRestResponse;
 import com.gvt.support.rest.handlers.UrlRestHandler;
 
-@Component
-public class PersonServiceRestHandler implements PersonService {
+@Component("personService")
+public class PersonRestService implements PersonService {
 
 	private RestTemplate restTemplate;
 	private UrlRestHandler urlHrRestHandler;
 
-	public PersonServiceRestHandler(RestTemplate restTemplate, UrlRestHandler urlHrRestHandler) {
+	public PersonRestService(RestTemplate restTemplate, UrlRestHandler urlHrRestHandler) {
 		this.restTemplate = restTemplate;
 		this.urlHrRestHandler = urlHrRestHandler;
 	}
@@ -50,49 +50,15 @@ public class PersonServiceRestHandler implements PersonService {
 //	}
 
 	@Override
-//	@Cacheable(value = "simpleDomainCacheBloodGroups")
 	public List<SimpleDTO> getBloodGroupsItems() {
 		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/bloodGroups"), HttpMethod.GET, null,
 				new SimpleDTOParametrizedReturnType()).getBody();
 	}
 
 	@Override
-//	@Cacheable(value = "simpleDomainCacheSexItems")
 	public List<SimpleDTO> getSexItems() {
 		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/sex"), HttpMethod.GET, null,
 				new SimpleDTOParametrizedReturnType()).getBody();
-	}
-
-	@Override
-//	@Cacheable(value = "simpleDomainCacheSexItems")
-	public List<SimpleDTO> getProvinceItems() {
-		List<SimpleDTO> list = restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/provinces"),
-				HttpMethod.GET, null, new SimpleDTOParametrizedReturnType()).getBody();
-
-//		list.add(0, new SimpleDTO());
-
-		return list;
-	}
-
-	@Override
-//	@Cacheable(value = "simpleDomainCacheSexItems")
-	public List<SimpleDTO> getMunicipalityItems(Long provinceId) {
-		Map<String, Object> queryParams = new HashMap<>();
-		queryParams.put("provinceId", provinceId);
-
-		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/municipalities", queryParams, null),
-				HttpMethod.GET, null, new SimpleDTOParametrizedReturnType()).getBody();
-	}
-
-	@Override
-//	@Cacheable(value = "simpleDomainCacheSexItems")
-	public List<SimpleDTO> getPostalCodeItems(Long provinceId, Long municipalityId) {
-		Map<String, Object> queryParams = new HashMap<>();
-		queryParams.put("provinceId", provinceId);
-		queryParams.put("municipalityId", municipalityId);
-
-		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/postal-codes", queryParams, null),
-				HttpMethod.GET, null, new SimpleDTOParametrizedReturnType()).getBody();
 	}
 
 	@Override

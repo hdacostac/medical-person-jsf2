@@ -21,10 +21,4 @@ public interface PersonService {
 
 	List<SimpleDTO> getSexItems();
 
-	List<SimpleDTO> getProvinceItems();
-
-	List<SimpleDTO> getMunicipalityItems(Long provinceId);
-
-	List<SimpleDTO> getPostalCodeItems(Long provinceId, Long municipalityId);
-
 }

@@ -1,4 +1,4 @@
-package com.cegedim.web.resources;
+package com.cegedim.web.resources.disk;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,8 +19,10 @@ import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
-public class ResourcesOnDiskHandler implements ResourcesHandler {
+import com.cegedim.web.resources.ImagesResourceHandler;
+
+@Component("imagesResourceHandler")
+public class LocalImagesResourceHandler implements ImagesResourceHandler {
 
 	@Value("${app.resources.disk.directory}")
 	private String resourcesDirectory;

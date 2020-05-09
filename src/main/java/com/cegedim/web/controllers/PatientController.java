@@ -12,8 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.webflow.execution.RequestContextHolder;
 
-import com.cegedim.web.resources.ResourcesHandler;
-import com.cegedim.web.resources.UploadHandler;
+import com.cegedim.web.resources.ImagesResourceHandler;
+import com.cegedim.web.resources.UploadResourcesHandler;
 import com.cegedim.web.service.PersonService;
 import com.gvt.commons.dto.v1.patient.FamilyRelationshipDTO;
 import com.gvt.commons.dto.v1.patient.PatientDTO;
@@ -25,7 +25,7 @@ import com.gvt.web.controllers.AbstractActionForm;
 public class PatientController extends AbstractActionForm<PatientDTO> {
 
 	private PersonService personService;
-//	private ResourcesHandler resourcesHandler;
+//	private ImagesResourceHandler resourcesHandler;
 
 //	private UploadedFile file;
 
@@ -54,8 +54,8 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 		}
 	}
 
-	public void updateAvatarType(PatientDTO patient, UploadHandler uploadHandler, ResourcesHandler resourcesHandler)
-			throws IOException {
+	public void updateAvatarType(PatientDTO patient, UploadResourcesHandler uploadResourcesHandler,
+			ImagesResourceHandler imagesResourceHandler) throws IOException {
 		if (patient.getSexId() != null) {
 			if (patient.getSexId() == 1) {
 				RequestContextHolder.getRequestContext().getViewScope().put("avatarType",
@@ -66,7 +66,7 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 			}
 		}
 
-		saveImageToDisk(patient, uploadHandler, resourcesHandler);
+		setImageToEntity(patient, uploadResourcesHandler, imagesResourceHandler);
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 	public PatientDTO saveObjectMethod(PatientDTO entity) {
 //		try {
 //			saveImageToDisk(entity,
-//					(UploadHandler) RequestContextHolder.getRequestContext().getFlowScope().get("uploadHandler"));
+//					(UploadResourcesHandler) RequestContextHolder.getRequestContext().getFlowScope().get("uploadHandler"));
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
@@ -111,7 +111,7 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 	protected PatientDTO updateObjectMethod(PatientDTO entity) {
 //		try {
 //			saveImageToDisk(entity,
-//					(UploadHandler) RequestContextHolder.getRequestContext().getFlowScope().get("uploadHandler"));
+//					(UploadResourcesHandler) RequestContextHolder.getRequestContext().getFlowScope().get("uploadHandler"));
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
@@ -119,15 +119,15 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 		return personService.updatePatient(entity);
 	}
 
-	private void saveImageToDisk(PatientDTO entity, UploadHandler uploadHandler, ResourcesHandler resourcesHandler)
-			throws IOException {
-		if (uploadHandler.getFile() == null) {
+	private void setImageToEntity(PatientDTO entity, UploadResourcesHandler uploadResourcesHandler,
+			ImagesResourceHandler imagesResourceHandler) throws IOException {
+		if (uploadResourcesHandler.getFile() == null) {
 			return;
 		}
 
-		entity.setUrl1(resourcesHandler.saveImage(uploadHandler.getFile()));
-		entity.setUrl1FileName(uploadHandler.getFile().getFileName());
-		entity.setUrl1FileSize(Double.valueOf(uploadHandler.getFile().getSize()));
+		entity.setUrl1(imagesResourceHandler.saveImage(uploadResourcesHandler.getFile()));
+		entity.setUrl1FileName(uploadResourcesHandler.getFile().getFileName());
+		entity.setUrl1FileSize(Double.valueOf(uploadResourcesHandler.getFile().getSize()));
 	}
 
 //	public UploadedFile getFile() {

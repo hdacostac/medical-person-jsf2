@@ -31,7 +31,7 @@
 			<h1>#{bundle['patient.card']}</h1>
 			<h:form id="patientForm" enctype="multipart/form-data">
 				<p:panel id="patientImage" header="#{bundle['patient.form.panel.photo']}" styleClass="ui-shadow-content">
-					<p:graphicImage value="#{resourcesOnDiskHandler.image}" rendered="#{not empty entity.url1}" 
+					<p:graphicImage value="#{imagesResourceHandler.image}" rendered="#{not empty entity.url1}" 
 						styleClass="avatar-size" alt="avatar_photo">
 						<f:param name="filename" value="#{entity.url1}" />
 					</p:graphicImage>

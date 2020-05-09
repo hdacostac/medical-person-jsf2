@@ -12,19 +12,11 @@ import org.springframework.web.context.annotation.RequestScope;
 
 @Controller
 @RequestScope
-public class UploadHandler {
+public class UploadResourcesHandler {
 
-	private static final Logger logger = LoggerFactory.getLogger(UploadHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(UploadResourcesHandler.class);
 
 	private UploadedFile file;
-
-	public UploadedFile getFile() {
-		return file;
-	}
-
-	public void setFile(UploadedFile file) {
-		this.file = file;
-	}
 
 	public void upload() {
 		if (file != null) {
@@ -36,13 +28,14 @@ public class UploadHandler {
 	public void handleFileUpload(FileUploadEvent event) {
 		logger.trace("Uploading file {}", event.getFile().getFileName());
 
-//		try {
-//			Thread.sleep(10000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-
 		file = event.getFile();
+	}
+
+	public UploadedFile getFile() {
+		return file;
+	}
+
+	public void setFile(UploadedFile file) {
+		this.file = file;
 	}
 }
