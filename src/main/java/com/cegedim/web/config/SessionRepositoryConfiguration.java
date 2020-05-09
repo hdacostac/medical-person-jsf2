@@ -2,12 +2,12 @@ package com.cegedim.web.config;
 
 import java.util.Arrays;
 
-import org.omnifaces.util.Faces;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.session.web.http.SessionRepositoryFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
@@ -25,6 +25,11 @@ public class SessionRepositoryConfiguration {
 		filterRegistrationBean.setUrlPatterns(Arrays.asList("/*"));
 
 		return filterRegistrationBean;
+	}
+
+	@Bean
+	public HttpSessionEventPublisher httpSessionEventPublisher() {
+		return new HttpSessionEventPublisher();
 	}
 
 	@Bean

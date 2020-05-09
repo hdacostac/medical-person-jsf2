@@ -15,7 +15,7 @@ import com.gvt.web.config.DefaultServletConfiguration;
 		UserDetailsServiceAutoConfiguration.class })
 @ServletComponentScan(basePackages = { "com.gvt", "com.cegedim" })
 @ComponentScan(basePackages = { "com.gvt", "com.cegedim" })
-@EnableCaching
+//@EnableCaching
 public class WebConfiguration extends DefaultServletConfiguration {
 
 	public static void main(String[] args) {
