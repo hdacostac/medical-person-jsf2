@@ -75,17 +75,17 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 
 		if (validatingOnAction == VALIDATING_ON_UPDATE) {
 			if (StringUtils.isBlank(entity.getHomePhone())) {
-				entity.setHomePhone(ReflectionUtils.DELETE_CODE_FOR_STRING);
+				entity.setHomePhone(ReflectionUtils.getDeleteCodeForString());
 			}
 			if (StringUtils.isBlank(entity.getEmail())) {
-				entity.setEmail(ReflectionUtils.DELETE_CODE_FOR_STRING);
+				entity.setEmail(ReflectionUtils.getDeleteCodeForString());
 			}
 			if (entity.getBloodGroupId() == null) {
-				entity.setBloodGroupId(ReflectionUtils.DELETE_CODE_FOR_COMBOS_VALUE);
+				entity.setBloodGroupId(ReflectionUtils.getDeleteCodeForCombosValue());
 			}
 			if (entity.getBirthDate() == null) {
-				entity.setBirthDate(ReflectionUtils.DELETE_CODE_FOR_DATE);
-				entity.setAge(ReflectionUtils.DELETE_CODE_FOR_FLOAT);
+				entity.setBirthDate(ReflectionUtils.getDeleteCodeForDate());
+				entity.setAge(ReflectionUtils.getDeleteCodeForFloat());
 
 				if (logger.isTraceEnabled()) {
 					SimpleDateFormat sdf = new SimpleDateFormat();
