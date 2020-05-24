@@ -32,7 +32,7 @@ public class CustomMenuComponent implements MenuComponent, Serializable {
 		DefaultMenuItem item = new DefaultMenuItem("Listado");
 		item.setUrl("/app/specialities");
 		item.setIcon("fa fa-list");
-		firstSubmenu.addElement(item);
+//		firstSubmenu.addElement(item);
 
 		model.addElement(firstSubmenu);
 
@@ -42,12 +42,12 @@ public class CustomMenuComponent implements MenuComponent, Serializable {
 		item = new DefaultMenuItem("Listado");
 		item.setUrl("/app/list");
 		item.setIcon("fa fa-list");
-		thirdMenu.addElement(item);
+//		thirdMenu.addElement(item);
 
 		item = new DefaultMenuItem("Nuevo");
 		item.setUrl("/app/patient");
 		item.setIcon("fa fa-plus");
-		thirdMenu.addElement(item);
+//		thirdMenu.addElement(item);
 
 		model.addElement(thirdMenu);
 
@@ -57,12 +57,12 @@ public class CustomMenuComponent implements MenuComponent, Serializable {
 		item = new DefaultMenuItem("Listado");
 		item.setUrl("/app/list");
 		item.setIcon("fa fa-list");
-		fourthMenu.addElement(item);
+//		fourthMenu.addElement(item);
 
 		item = new DefaultMenuItem("Nuevo");
 		item.setUrl("/app/patient");
 		item.setIcon("fa fa-plus");
-		fourthMenu.addElement(item);
+//		fourthMenu.addElement(item);
 
 		model.addElement(fourthMenu);
 	}

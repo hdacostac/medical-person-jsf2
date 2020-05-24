@@ -1,10 +1,8 @@
 package com.cegedim.web.controllers;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.ZoneId;
 import java.util.ArrayList;
 
 import org.apache.commons.lang3.StringUtils;
@@ -45,10 +43,10 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 		logger.debug("Possible value in the date:{}", patient.getBirthDate());
 
 		if (patient.getBirthDate() != null) {
-			LocalDate birthDate = patient.getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//			LocalDate birthDate = patient.getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			LocalDate currentDate = LocalDate.now();
 
-			patient.setAge(Float.valueOf(Period.between(birthDate, currentDate).getYears()));
+			patient.setAge(Float.valueOf(Period.between(patient.getBirthDate(), currentDate).getYears()));
 		} else {
 			patient.setAge(null);
 		}
@@ -84,13 +82,13 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 				entity.setBloodGroupId(ReflectionUtils.getDeleteCodeForCombosValue());
 			}
 			if (entity.getBirthDate() == null) {
-				entity.setBirthDate(ReflectionUtils.getDeleteCodeForDate());
+				entity.setBirthDate(ReflectionUtils.getDeleteCodeForLocalDate());
 				entity.setAge(ReflectionUtils.getDeleteCodeForFloat());
 
-				if (logger.isTraceEnabled()) {
-					SimpleDateFormat sdf = new SimpleDateFormat();
-					logger.trace("BirthDate value to remove send from view:{}", sdf.format(entity.getBirthDate()));
-				}
+//				if (logger.isTraceEnabled()) {
+//					SimpleDateFormat sdf = new SimpleDateFormat();
+//					logger.trace("BirthDate value to remove send from view:{}", sdf.format(entity.getBirthDate()));
+//				}
 			}
 		}
 	}

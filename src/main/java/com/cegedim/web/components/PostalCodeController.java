@@ -13,7 +13,6 @@ import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.webflow.execution.RequestContextHolder;
 
 import com.cegedim.web.service.PostalCodesService;
-import com.gvt.commons.dto.v1.simple.SimpleDTO;
 
 @Controller
 @RequestScope
@@ -28,23 +27,23 @@ public class PostalCodeController {
 	}
 
 	public void onProvinceChange(AjaxBehaviorEvent event) {
-		SimpleDTO provinceSelected = (SimpleDTO) ((SelectOneMenu) event.getSource()).getValue();
+		Long provinceSelected = (Long) ((SelectOneMenu) event.getSource()).getValue();
 
 		RequestContextHolder.getRequestContext().getViewScope().put(
 				Faces.getRequestParameter("municipalityItemsToChange"),
-				postalCodesService.getMunicipalityItems(provinceSelected.getId()));
+				postalCodesService.getMunicipalityItems(provinceSelected));
 
 		RequestContextHolder.getRequestContext().getViewScope()
 				.put(Faces.getRequestParameter("postalCodeItemsToChange"), new ArrayList<>());
 	}
 
 	public void onMunicipalityChange(AjaxBehaviorEvent event) {
-		SimpleDTO municipalitySelected = (SimpleDTO) ((SelectOneMenu) event.getSource()).getValue();
+		Long municipalitySelected = (Long) ((SelectOneMenu) event.getSource()).getValue();
 		String provinceIdSelected = Faces.getRequestParameter("provinceItemIdSelected");
 
 		RequestContextHolder.getRequestContext().getViewScope().put(
 				Faces.getRequestParameter("postalCodeItemsToChange"),
-				postalCodesService.getPostalCodeItems(Long.valueOf(provinceIdSelected), municipalitySelected.getId()));
+				postalCodesService.getPostalCodeItems(Long.valueOf(provinceIdSelected), municipalitySelected));
 	}
 
 }

@@ -40,7 +40,7 @@ public class PostalCodesRestService implements PostalCodesService {
 	@Override
 	public List<SimpleDTO> getMunicipalityItems(Long provinceId) {
 		Map<String, Object> queryParams = new HashMap<>();
-		queryParams.put("provinceId", provinceId);
+		queryParams.put("province_id", provinceId);
 
 		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/municipalities", queryParams, null),
 				HttpMethod.GET, null, new SimpleDTOParametrizedReturnType()).getBody();
@@ -49,8 +49,8 @@ public class PostalCodesRestService implements PostalCodesService {
 	@Override
 	public List<SimpleDTO> getPostalCodeItems(Long provinceId, Long municipalityId) {
 		Map<String, Object> queryParams = new HashMap<>();
-		queryParams.put("provinceId", provinceId);
-		queryParams.put("municipalityId", municipalityId);
+		queryParams.put("province_id", provinceId);
+		queryParams.put("municipality_id", municipalityId);
 
 		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/postal-codes", queryParams, null),
 				HttpMethod.GET, null, new SimpleDTOParametrizedReturnType()).getBody();

@@ -2,6 +2,7 @@ package com.cegedim.web.resources.disk;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -15,7 +16,7 @@ import javax.faces.event.PhaseId;
 import org.apache.commons.io.FilenameUtils;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
-import org.primefaces.model.UploadedFile;
+import org.primefaces.model.file.UploadedFile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +41,18 @@ public class LocalImagesResourceHandler implements ImagesResourceHandler {
 			// image bytes.
 			String filename = context.getExternalContext().getRequestParameterMap().get("filename");
 
-			return new DefaultStreamedContent(new FileInputStream(new File(resourcesDirectory, filename)));
+			return DefaultStreamedContent.builder().stream(() -> {
+				try {
+					return new FileInputStream(new File(resourcesDirectory, filename));
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				return null;
+			}).build();
+//			DefaultStreamedContent.builder().stream(is) .stream(new FileInputStream(new File(resourcesDirectory, filename)))
+//			return new DefaultStreamedContent(new FileInputStream(new File(resourcesDirectory, filename)));
 		}
 	}
 
@@ -55,7 +67,7 @@ public class LocalImagesResourceHandler implements ImagesResourceHandler {
 		String extension = FilenameUtils.getExtension(file.getFileName());
 		Path filePath = Files.createTempFile(folder, filename + "-", "." + extension);
 
-		try (InputStream input = file.getInputstream()) {
+		try (InputStream input = file.getInputStream()) {
 			Files.copy(input, filePath, StandardCopyOption.REPLACE_EXISTING);
 		}
 

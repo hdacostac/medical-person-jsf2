@@ -46,7 +46,7 @@
 										<h:graphicImage library="custom" name="#{avatarType}" rendered="#{empty entity.url1}" 
 											styleClass="avatar-size" alt="avatar_photo">
 										</h:graphicImage>
-										<p:fileUpload id="avatarFileUpload" fileUploadListener="#{uploadResourcesHandler.handleFileUpload}" 
+										<p:fileUpload id="avatarFileUpload" listener="#{uploadResourcesHandler.handleFileUpload}" 
 											sizeLimit="#{appProps['app.avatar-file-size-limit']}"
                                   			allowTypes="/(\.|\/)(jpe?g|png)$/" mode="advanced" process="@this"
                                   			onstart="PF('blockUIWidget').show();" oncomplete="PF('blockUIWidget').hide();"
@@ -151,29 +151,29 @@
 							</div>
 							<div class="ui-g-4">
 								<cegedim:selectOneMenu id="patientProvince" bundleLabel="#{bundle['patient.form.province']}" showLabel="true"
-									inputValue="#{entity.province}" filter="true" filterMatchMode="contains">
+									inputValue="#{entity.provinceId}" filter="true" filterMatchMode="contains">
 									<f:selectItem noSelectionOption="true" itemLabel="#{commonBundle['select.item.none']}" />
-									<f:selectItems value="#{provinceItems}" var="provinceItem" itemValue="#{provinceItem}" itemLabel="#{provinceItem.description}" />
+									<f:selectItems value="#{provinceItems}" var="provinceItem" itemValue="#{provinceItem.id}" itemLabel="#{provinceItem.description}" />
 									<f:param name="municipalityItemsToChange" value="municipalityItems" />
 									<f:param name="postalCodeItemsToChange" value="postalCodeItems" />
-									<p:ajax event="change" listener="#{postalCodeController.onProvinceChange}" update="patientForm-idTabView-patientMunicipality-patientMunicipalityControl patientForm-idTabView-patientPostalCode-patientPostalCodeControl" process="@this" />
+									<p:ajax event="change" listener="#{postalCodeController.onProvinceChange}" update="patientForm-idTabView-patientMunicipality-patientMunicipalityComponent patientForm-idTabView-patientPostalCode-patientPostalCodeComponent" process="@this" />
 								</cegedim:selectOneMenu>
 							</div>
 							<div class="ui-g-4">
 								<cegedim:selectOneMenu id="patientMunicipality" bundleLabel="#{bundle['patient.form.municipality']}" showLabel="true"
-									inputValue="#{entity.municipality}" filter="true" filterMatchMode="contains">
+									inputValue="#{entity.municipalityId}" filter="true" filterMatchMode="contains">
 									<f:selectItem noSelectionOption="true" itemLabel="#{commonBundle['select.item.none']}" />
-									<f:selectItems value="#{municipalityItems}" var="municipalityItem" itemValue="#{municipalityItem}" itemLabel="#{municipalityItem.description}" />
+									<f:selectItems value="#{municipalityItems}" var="municipalityItem" itemValue="#{municipalityItem.id}" itemLabel="#{municipalityItem.description}" />
 									<f:param name="postalCodeItemsToChange" value="postalCodeItems" />
-									<f:param name="provinceItemIdSelected" value="#{entity.province.id}" />
-									<p:ajax event="change" listener="#{postalCodeController.onMunicipalityChange}" update="patientForm-idTabView-patientPostalCode-patientPostalCodeControl" process="@this" />
+									<f:param name="provinceItemIdSelected" value="#{entity.provinceId}" />
+									<p:ajax event="change" listener="#{postalCodeController.onMunicipalityChange}" update="patientForm-idTabView-patientPostalCode-patientPostalCodeComponent" process="@this" />
 								</cegedim:selectOneMenu>
 							</div>
 							<div class="ui-g-4">
 								<cegedim:selectOneMenu id="patientPostalCode" bundleLabel="#{bundle['patient.form.postal.code']}" showLabel="true"
-									inputValue="#{entity.postalCode}">
+									inputValue="#{entity.postalCodeId}">
 									<f:selectItem noSelectionOption="true" itemLabel="#{commonBundle['select.item.none']}" />
-									<f:selectItems value="#{postalCodeItems}" var="postalCodeItem" itemValue="#{postalCodeItem}" itemLabel="#{postalCodeItem.code}" />
+									<f:selectItems value="#{postalCodeItems}" var="postalCodeItem" itemValue="#{postalCodeItem.id}" itemLabel="#{postalCodeItem.code}" />
 								</cegedim:selectOneMenu>
 							</div>
 						</div>
