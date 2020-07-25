@@ -32,7 +32,7 @@
 	<logger name="com.gvt" level="trace" />
 	<logger name="com.cegedim" level="trace" />
 	<logger name="com.gvt.web.servlet.i18n" level="debug" />
-<!-- 	<logger name="com.ocpsoft.pretty.faces.config.annotation" level="error" /> -->
+	<logger name="com.ocpsoft.pretty.faces.config.annotation" level="error" />
 <!-- 	<logger name="org.springframework.security.oauth2" level="trace" /> -->
 <!-- 	<logger name="org.springframework.security.web" level="trace" /> -->
 
