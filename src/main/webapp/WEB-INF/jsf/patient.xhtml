@@ -91,6 +91,7 @@
 											inputValue="#{entity.bloodGroupId}">
 											<f:selectItem noSelectionOption="true" itemLabel="#{commonBundle['select.item.none']}" />
 											<f:selectItems value="#{bloodGroupsItems}" var="bloodGroupsItem" itemValue="#{bloodGroupsItem.id}" itemLabel="#{bloodGroupsItem.description}" />
+											<p:ajax event="focus" listener="#{patientController.checkValues(this,flowRequestContext)}"></p:ajax>
 										</cegedim:selectOneMenu>
 									</div>
 									<div class="ui-g-6">

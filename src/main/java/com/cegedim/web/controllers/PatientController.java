@@ -5,9 +5,13 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 
+import javax.faces.component.UIComponentBase;
+import javax.faces.event.AjaxBehaviorEvent;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.execution.RequestContextHolder;
 
 import com.cegedim.web.resources.ImagesResourceHandler;
@@ -32,11 +36,41 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 //		this.resourcesHandler = resourcesHandler;
 	}
 
-	public void init(PatientDTO patient) {
+	public void init(PatientDTO patient, final RequestContext scope) {
 		patient.setFamilyRelationships(new ArrayList<>(2));
 
 		patient.getFamilyRelationships().add(new FamilyRelationshipDTO());
 		patient.getFamilyRelationships().add(new FamilyRelationshipDTO());
+
+		personService.getBloodGroupsItems(scope);
+
+		dumpEvents(new org.primefaces.component.selectonemenu.SelectOneMenu());
+	}
+
+	private void dumpEvents(UIComponentBase comp) {
+		logger.debug(
+				(comp + ":\n\tdefaultEvent: " + comp.getDefaultEventName() + ";\n\tEvents: " + comp.getEventNames()));
+	}
+
+	public void checkValues(AjaxBehaviorEvent event, RequestContext context) {
+		logger.trace("click on combo!!");
+
+//		logger.trace("elementos:{}", ((SelectOneMenu) event.getComponent()).getChildren().size());
+//		logger.trace("id:{}", ((SelectOneMenu) event.getComponent()).getId());
+		if (RequestContextHolder.getRequestContext() != null) {
+//			if (!((List) RequestContextHolder.getRequestContext().getFlowScope().get("bloodGroupsItems")).isEmpty()) {
+			logger.trace("Trying to refresh component:{}", context.getFlowScope().get("bloodGroupsItems"));
+
+//				PrimeFaces.current().ajax()
+//						.update("patientForm-idTabView-patientBloodGroup-patientBloodGroupComponent");
+//			}
+		}
+
+//		PrimeFaces.current().ajax().update(expressions);
+
+//		if(!items.isEmpty()) {
+//			
+//		}
 	}
 
 	public void updatePatientAge(PatientDTO patient) {

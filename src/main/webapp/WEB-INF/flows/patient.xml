@@ -10,10 +10,10 @@
 	
 	<view-state id="personaInput" view="/WEB-INF/jsf/patient.xhtml" parent="#parentFormState" model="entity">
 		<on-entry>
-			<evaluate expression="patientController.init(entity)" />
+			<evaluate expression="patientController.init(entity, flowRequestContext)" />
 		
 			<set name="viewScope.sexItems" value="personService.getSexItems()" />
-			<set name="viewScope.bloodGroupsItems" value="personService.getBloodGroupsItems()" />
+<!-- 			<set name="viewScope.bloodGroupsItems" value="personService.getBloodGroupsItems(flowScope)" /> -->
 			<set name="viewScope.familyRelationshipsItems" value="simpleDTOsBuilder.getRelationShips()" />
 			<set name="viewScope.provinceItems" value="postalCodesService.getProvinceItems()" />
 			

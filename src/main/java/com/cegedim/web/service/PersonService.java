@@ -3,6 +3,8 @@ package com.cegedim.web.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.webflow.execution.RequestContext;
+
 import com.gvt.commons.dto.v1.patient.PatientDTO;
 import com.gvt.commons.dto.v1.patient.PatientListDTO;
 import com.gvt.commons.dto.v1.simple.SimpleDTO;
@@ -17,8 +19,10 @@ public interface PersonService {
 
 	PatientDTO updatePatient(PatientDTO patientDTO);
 
-	List<SimpleDTO> getBloodGroupsItems();
+//	void getBloodGroupsItems();
 
 	List<SimpleDTO> getSexItems();
+
+	void getBloodGroupsItems(final RequestContext scope);
 
 }
