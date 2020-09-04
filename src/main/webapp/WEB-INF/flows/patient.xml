@@ -7,13 +7,14 @@
 	
 	<var name="entity" class="com.gvt.commons.dto.v1.patient.PatientDTO" />
 <!-- 	<var name="uploadHandler" class="com.cegedim.web.resources.UploadResourcesHandler"/> -->
+	<var name="combosHolder" class="com.gvt.commons.dto.v1.simple.SimpleDTOHolder"/>
 	
 	<view-state id="personaInput" view="/WEB-INF/jsf/patient.xhtml" parent="#parentFormState" model="entity">
 		<on-entry>
-			<evaluate expression="patientController.init(entity, flowRequestContext)" />
+			<evaluate expression="patientController.init(entity, combosHolder)" />
 		
 			<set name="viewScope.sexItems" value="personService.getSexItems()" />
-<!-- 			<set name="viewScope.bloodGroupsItems" value="personService.getBloodGroupsItems(flowScope)" /> -->
+			<set name="viewScope.bloodGroupsItems" value="personService.getBloodGroupsItems()" />
 			<set name="viewScope.familyRelationshipsItems" value="simpleDTOsBuilder.getRelationShips()" />
 			<set name="viewScope.provinceItems" value="postalCodesService.getProvinceItems()" />
 			
@@ -25,6 +26,9 @@
 		</on-render>
 		<transition on="save">
 			<evaluate expression="patientController.save(entity)" />
+		</transition>
+		<transition on="showValues">
+			<evaluate expression="patientController.showValues(flowRequestContext)" />
 		</transition>
 	</view-state>
 	

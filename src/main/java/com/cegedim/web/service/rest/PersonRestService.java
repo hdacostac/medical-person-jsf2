@@ -20,6 +20,7 @@ import com.cegedim.web.service.PersonService;
 import com.gvt.commons.dto.v1.patient.PatientDTO;
 import com.gvt.commons.dto.v1.patient.PatientListDTO;
 import com.gvt.commons.dto.v1.simple.SimpleDTO;
+import com.gvt.commons.dto.v1.simple.SimpleDTOHolder;
 import com.gvt.data.domain.PageableRestResponse;
 import com.gvt.support.rest.handlers.UrlRestHandler;
 
@@ -54,30 +55,35 @@ public class PersonRestService implements PersonService {
 //		if (filters != null && StringUtils.isNotBlank((String) filters.get("globalFilter"))) {
 //			params.put("globalFilter", "%" + filters.get("globalFilter") + "%"); // Overwrite the globalFilter param
 //		}
-//
+//RequestContext
 //		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/persons", params, null), HttpMethod.GET, null,
 //				new PatientParametrizedReturnType()).getBody();
 //	}
 
 	@Override
-	public void getBloodGroupsItems(final RequestContext scope) {
+	public List<SimpleDTO> getBloodGroupsItems() {
 		logger.debug("Getting bloodgroups from DB");
+//
+//		Mono<List<SimpleDTO>> result = this.webClient.get().uri("/api/v1/simple/bloodGroups")
+////				.retrieve()
+////				.bodyToFlux(SimpleDTO.class);
+//				.exchange().flatMap(response -> response.bodyToMono(new SimpleDTOParametrizedReturnType()));
+//
+//		result.subscribe(items -> {
+//			logger.debug("Persona:{}", items);
+//
+//			combosHolder.setCombo1(items);
+//
+////			scope.getFlowScope().put("bloodGroupsItems", items);
+//
+////			logger.trace("Values for combos:{}", scope.getFlowScope().get("bloodGroupsItems"));
+//			logger.trace("Values for combos:{}", combosHolder.getCombo1());
+//
+////			RequestContextHolder.getRequestContext().getFlowScope().put("bloodGroupsItems", items);
+//		});
 
-		Mono<List<SimpleDTO>> result = this.webClient.get().uri("/api/v1/simple/bloodGroups")
-//				.retrieve()
-//				.bodyToFlux(SimpleDTO.class);
-				.exchange().flatMap(response -> response.bodyToMono(new SimpleDTOParametrizedReturnType()));
-
-		result.subscribe(items -> {
-			logger.debug("Persona:{}", items);
-
-			scope.getFlowScope().put("bloodGroupsItems", items);
-
-//			RequestContextHolder.getRequestContext().getFlowScope().put("bloodGroupsItems", items);
-		});
-
-//		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/bloodGroups"), HttpMethod.GET, null,
-//				new SimpleDTOParametrizedReturnType()).getBody();
+		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/bloodGroups"), HttpMethod.GET, null,
+				new SimpleDTOParametrizedReturnType()).getBody();
 	}
 
 	@Override

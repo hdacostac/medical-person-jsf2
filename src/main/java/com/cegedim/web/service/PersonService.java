@@ -8,6 +8,7 @@ import org.springframework.webflow.execution.RequestContext;
 import com.gvt.commons.dto.v1.patient.PatientDTO;
 import com.gvt.commons.dto.v1.patient.PatientListDTO;
 import com.gvt.commons.dto.v1.simple.SimpleDTO;
+import com.gvt.commons.dto.v1.simple.SimpleDTOHolder;
 import com.gvt.data.domain.PageableRestResponse;
 
 public interface PersonService {
@@ -23,6 +24,6 @@ public interface PersonService {
 
 	List<SimpleDTO> getSexItems();
 
-	void getBloodGroupsItems(final RequestContext scope);
+	List<SimpleDTO> getBloodGroupsItems();
 
 }

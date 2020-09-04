@@ -4,13 +4,16 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.component.UIComponentBase;
 import javax.faces.event.AjaxBehaviorEvent;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.execution.RequestContextHolder;
 
@@ -19,30 +22,59 @@ import com.cegedim.web.resources.UploadResourcesHandler;
 import com.cegedim.web.service.PersonService;
 import com.gvt.commons.dto.v1.patient.FamilyRelationshipDTO;
 import com.gvt.commons.dto.v1.patient.PatientDTO;
+import com.gvt.commons.dto.v1.simple.SimpleDTO;
+import com.gvt.commons.dto.v1.simple.SimpleDTOHolder;
 import com.gvt.core.reflect.ReflectionUtils;
 import com.gvt.web.controllers.AbstractActionForm;
+
+import reactor.core.publisher.Mono;
 
 @Controller
 @RequestScope
 public class PatientController extends AbstractActionForm<PatientDTO> {
 
 	private PersonService personService;
+	private WebClient webClient;
 //	private ImagesResourceHandler resourcesHandler;
 
 //	private UploadedFile file;
 
-	public PatientController(PersonService personService) {
-		this.personService = personService;
-//		this.resourcesHandler = resourcesHandler;
+	private static final class SimpleDTOParametrizedReturnType extends ParameterizedTypeReference<List<SimpleDTO>> {
 	}
 
-	public void init(PatientDTO patient, final RequestContext scope) {
+	public PatientController(PersonService personService, WebClient webClient) {
+		this.personService = personService;
+//		this.resourcesHandler = resourcesHandler;
+		this.webClient = webClient;
+	}
+
+	public void init(PatientDTO patient, final SimpleDTOHolder combosHolder) {
 		patient.setFamilyRelationships(new ArrayList<>(2));
 
 		patient.getFamilyRelationships().add(new FamilyRelationshipDTO());
 		patient.getFamilyRelationships().add(new FamilyRelationshipDTO());
 
-		personService.getBloodGroupsItems(scope);
+//		personService.getBloodGroupsItems(combosHolder);
+//		Mono<List<SimpleDTO>> result = this.webClient.get().uri("/api/v1/simple/bloodGroups")
+		Mono<List<SimpleDTO>> result = this.webClient.get().uri("/api/v1/simple/bloodGroups")
+//				.retrieve()
+//				.bodyToFlux(SimpleDTO.class);
+				.retrieve().bodyToMono(new SimpleDTOParametrizedReturnType());
+
+//		combosHolder.setCombo1(result);
+
+//		result.subscribe(items -> {
+//			logger.debug("Persona:{}", items);
+//
+//			combosHolder.setCombo1(items);
+//
+////			scope.getFlowScope().put("bloodGroupsItems", items);
+//
+////			logger.trace("Values for combos:{}", scope.getFlowScope().get("bloodGroupsItems"));
+//			logger.trace("Values for combos:{}", combosHolder.getCombo1());
+//
+////			RequestContextHolder.getRequestContext().getFlowScope().put("bloodGroupsItems", items);
+//		});
 
 		dumpEvents(new org.primefaces.component.selectonemenu.SelectOneMenu());
 	}
@@ -50,6 +82,10 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 	private void dumpEvents(UIComponentBase comp) {
 		logger.debug(
 				(comp + ":\n\tdefaultEvent: " + comp.getDefaultEventName() + ";\n\tEvents: " + comp.getEventNames()));
+	}
+
+	public void showValues(RequestContext scope) {
+		logger.trace("Values for combos:{}", scope.getFlowScope().get("bloodGroupsItems"));
 	}
 
 	public void checkValues(AjaxBehaviorEvent event, RequestContext context) {
