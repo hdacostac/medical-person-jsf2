@@ -16,10 +16,10 @@ import com.gvt.web.config.DefaultServletConfiguration;
 @ServletComponentScan(basePackages = { "com.gvt", "com.cegedim" })
 @ComponentScan(basePackages = { "com.gvt", "com.cegedim" })
 //@EnableCaching
-public class WebConfiguration extends DefaultServletConfiguration {
+public class WebApplication extends DefaultServletConfiguration {
 
 	public static void main(String[] args) {
-		SpringApplication.run(WebConfiguration.class, args);
+		SpringApplication.run(WebApplication.class, args);
 	}
 
 }

@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-public class ServletJSF2WebConfiguration extends SpringBootServletInitializer {
+public class ServletWebApplication extends SpringBootServletInitializer {
 
-	private static Class<WebConfiguration> applicationClass = WebConfiguration.class;
+	private static Class<WebApplication> applicationClass = WebApplication.class;
 
 	public static void main(String[] args) {
 		SpringApplication.run(applicationClass, args);

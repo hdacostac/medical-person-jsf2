@@ -193,9 +193,10 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 			return;
 		}
 
-		entity.setUrl1(imagesResourceHandler.saveImage(uploadResourcesHandler.getFile()));
-		entity.setUrl1FileName(uploadResourcesHandler.getFile().getFileName());
-		entity.setUrl1FileSize(Double.valueOf(uploadResourcesHandler.getFile().getSize()));
+//		entity.setUrl1(imagesResourceHandler.saveImage(uploadResourcesHandler.getFile()));
+		entity.setUrl1FileName(imagesResourceHandler.saveImage(uploadResourcesHandler.getFile()));
+//		entity.setUrl1FileName(uploadResourcesHandler.getFile().getFileName());
+//		entity.setUrl1FileSize(Double.valueOf(uploadResourcesHandler.getFile().getSize()));
 	}
 
 //	public UploadedFile getFile() {

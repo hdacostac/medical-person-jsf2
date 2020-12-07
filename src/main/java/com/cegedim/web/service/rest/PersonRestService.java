@@ -82,7 +82,7 @@ public class PersonRestService implements PersonService {
 ////			RequestContextHolder.getRequestContext().getFlowScope().put("bloodGroupsItems", items);
 //		});
 
-		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/bloodGroups"), HttpMethod.GET, null,
+		return restTemplate.exchange(urlHrRestHandler.buildURI("/api/v1/simple/blood-groups"), HttpMethod.GET, null,
 				new SimpleDTOParametrizedReturnType()).getBody();
 	}
 

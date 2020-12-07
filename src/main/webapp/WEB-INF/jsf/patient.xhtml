@@ -39,11 +39,11 @@
 							<div class="ui-g-3">
 								<p:fragment>
 									<p:panel id="patientImage" header="#{bundle['patient.form.panel.photo']}" styleClass="ui-shadow-content">
-										<p:graphicImage value="#{imagesResourceHandler.image}" rendered="#{not empty entity.url1}" 
+										<p:graphicImage value="#{imagesResourceHandler.image}" rendered="#{not empty entity.url1FileName}" 
 											styleClass="avatar-size" alt="avatar_photo">
-											<f:param name="filename" value="#{entity.url1}" />
+											<f:param name="filename" value="#{entity.url1FileName}" />
 										</p:graphicImage>
-										<h:graphicImage library="custom" name="#{avatarType}" rendered="#{empty entity.url1}" 
+										<h:graphicImage library="custom" name="#{avatarType}" rendered="#{empty entity.url1FileName}" 
 											styleClass="avatar-size" alt="avatar_photo">
 										</h:graphicImage>
 										<p:fileUpload id="avatarFileUpload" listener="#{uploadResourcesHandler.handleFileUpload}" 
