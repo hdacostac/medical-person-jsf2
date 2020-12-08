@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServic
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.gvt.web.config.DefaultServletConfiguration;
@@ -15,7 +14,6 @@ import com.gvt.web.config.DefaultServletConfiguration;
 		UserDetailsServiceAutoConfiguration.class })
 @ServletComponentScan(basePackages = { "com.gvt", "com.cegedim" })
 @ComponentScan(basePackages = { "com.gvt", "com.cegedim" })
-//@EnableCaching
 public class WebApplication extends DefaultServletConfiguration {
 
 	public static void main(String[] args) {
