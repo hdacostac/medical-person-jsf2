@@ -26,8 +26,5 @@ public class OAuth2SecurityConfiguration extends DefaultOAuth2SecurityConfigurat
 //		http.authorizeRequests().anyRequest().authenticated();
 	}
 
-	@Bean
-	public JwtSecretKeyFactory jwtSecretKeyFactory(@Value("${app.jwt.secretKey}") String secretKey) {
-		return new DefaultJwtSecretKeyFactory(secretKey);
-	}
+	
 }

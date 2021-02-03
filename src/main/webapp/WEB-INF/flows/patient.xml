@@ -7,11 +7,11 @@
 	
 	<var name="entity" class="com.gvt.commons.dto.v1.patient.PatientDTO" />
 <!-- 	<var name="uploadHandler" class="com.cegedim.web.resources.UploadResourcesHandler"/> -->
-	<var name="combosHolder" class="com.gvt.commons.dto.v1.simple.SimpleDTOHolder"/>
+<!-- 	<var name="combosHolder" class="com.gvt.commons.dto.v1.simple.SimpleDTOHolder"/> -->
 	
 	<view-state id="personaInput" view="/WEB-INF/jsf/patient.xhtml" parent="#parentFormState" model="entity">
 		<on-entry>
-			<evaluate expression="patientController.init(entity, combosHolder)" />
+			<evaluate expression="patientController.init(entity)" />
 		
 			<set name="viewScope.sexItems" value="personService.getSexItems()" />
 			<set name="viewScope.bloodGroupsItems" value="personService.getBloodGroupsItems()" />
@@ -31,5 +31,11 @@
 			<evaluate expression="patientController.showValues(flowRequestContext)" />
 		</transition>
 	</view-state>
+	
+	<global-transitions>
+		<transition on-exception="java.lang.Exception" to="personaInput">
+			<evaluate expression="loggerUtils.logFlowException(flashScope.rootCauseException, flashScope.stateException)" />
+		</transition>
+	</global-transitions>
 	
 </flow>

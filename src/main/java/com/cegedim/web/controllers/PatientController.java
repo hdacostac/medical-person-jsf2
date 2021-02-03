@@ -23,7 +23,6 @@ import com.cegedim.web.service.PersonService;
 import com.gvt.commons.dto.v1.patient.FamilyRelationshipDTO;
 import com.gvt.commons.dto.v1.patient.PatientDTO;
 import com.gvt.commons.dto.v1.simple.SimpleDTO;
-import com.gvt.commons.dto.v1.simple.SimpleDTOHolder;
 import com.gvt.core.reflect.ReflectionUtils;
 import com.gvt.web.controllers.AbstractActionForm;
 
@@ -48,7 +47,7 @@ public class PatientController extends AbstractActionForm<PatientDTO> {
 		this.webClient = webClient;
 	}
 
-	public void init(PatientDTO patient, final SimpleDTOHolder combosHolder) {
+	public void init(PatientDTO patient) {
 		patient.setFamilyRelationships(new ArrayList<>(2));
 
 		patient.getFamilyRelationships().add(new FamilyRelationshipDTO());

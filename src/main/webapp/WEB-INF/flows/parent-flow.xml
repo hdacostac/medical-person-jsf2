@@ -10,6 +10,8 @@
 		</on-entry>
 	</view-state>
 
-	<exception-handler bean="customFlowExceptionHandler" />
+	
+
+	<!-- <exception-handler bean="customFlowExceptionHandler" /> -->
 
 </flow>

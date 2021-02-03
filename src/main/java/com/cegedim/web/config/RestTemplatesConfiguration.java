@@ -21,6 +21,8 @@ import org.springframework.web.client.RestTemplate;
 import com.gvt.http.client.support.AuthorizationHeaderInterceptor;
 import com.gvt.http.client.support.LocaleHeaderInterceptor;
 import com.gvt.http.client.support.LoggerInterceptor;
+import com.gvt.security.oauth2.secret.DefaultJwtSecretKeyFactory;
+import com.gvt.security.oauth2.secret.JwtSecretKeyFactory;
 import com.gvt.support.rest.handlers.UrlRestHandler;
 import com.gvt.web.client.CustomResponseErrorHandler;
 
@@ -94,6 +96,11 @@ public class RestTemplatesConfiguration {
 				.interceptors(new LocaleHeaderInterceptor(), new LoggerInterceptor())
 				.errorHandler(new OAuth2ErrorResponseErrorHandler()).basicAuthentication(clientId, clientSecret)
 				.build();
+	}
+
+	@Bean
+	public JwtSecretKeyFactory jwtSecretKeyFactory(@Value("${app.jwt.secretKey}") String secretKey) {
+		return new DefaultJwtSecretKeyFactory(secretKey);
 	}
 
 }

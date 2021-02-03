@@ -14,17 +14,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.webflow.execution.RequestContext;
 
 import com.cegedim.web.service.PersonService;
 import com.gvt.commons.dto.v1.patient.PatientDTO;
 import com.gvt.commons.dto.v1.patient.PatientListDTO;
 import com.gvt.commons.dto.v1.simple.SimpleDTO;
-import com.gvt.commons.dto.v1.simple.SimpleDTOHolder;
 import com.gvt.data.domain.PageableRestResponse;
 import com.gvt.support.rest.handlers.UrlRestHandler;
-
-import reactor.core.publisher.Mono;
 
 @Component("personService")
 public class PersonRestService implements PersonService {
